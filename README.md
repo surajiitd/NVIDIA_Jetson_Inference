@@ -77,7 +77,7 @@
     - above `pytorch-cuda` is installed by some `conda install` command earlier (`conda install pytorch torchvision pytorch-cuda=11.7 -c pytorch -c nvidia`)  which was giving `AssertionError: Torch not compiled with CUDA enabled` when sending a tensor to "cuda".
     - above `torch` is installed right now which is working now.
 
-    ## Summary and some extra things to take care:**
+    ## Summary and some extra things to take care:
     - **[WHAT doesn't works]**: installing torch/pytorch directly from internet like with below commands that are given in pytorch website or in pypi website or in conda website... None of them worked. All gave output as `AssertionError: Torch not compiled with CUDA enabled` when sending a tensor to "cuda".
     - Both pytorch wheel files(1.14.0 and 2.0.0) from [jetson zoo](https://elinux.org/Jetson_Zoo#PyTorch_.28Caffe2.29) were working fine when installing with this command: `pip install --no-cache $TORCH_INSTALL`
     - `TORCH_INSTALL` can be `/home/vision/Downloads/torch-2.0.0a0+8aa34602.nv23.03-cp38-cp38-linux_aarch64.whl` or `/home/vision/Downloads/torch-1.14.0a0+44dac51c.nv23.01-cp38-cp38-linux_aarch64.whl`. From both, torch was able to use CUDA. (torch's tensor was able to sent to "cuda").
