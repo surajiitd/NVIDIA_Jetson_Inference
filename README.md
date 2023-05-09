@@ -1,7 +1,7 @@
 # NVIDIA Jetson Documentation
 
 ## Pixelformer
-- For summary you can directly skip to [this part of this documentation](https://gitlab.com/surajiitd/jetson-documentation#summary-and-some-extra-things-to-take-care).
+- For summary you can directly skip to [this part of this documentation](#summary-and-some-extra-things-to-take-care).
 - installing pytorch 
     - Python version:
         made a new conda env named `pixelformer` with python3 version `3.8.16` and python version `3.6.7`.
