@@ -91,5 +91,37 @@
     - one more thing that python version was 3.6 and python3 version was 3.8 in my env and all other conda env by default. 
         - And start interactive python interpretor by `python3` and not with `python`: because pytorch was not able to use cuda with `python`.
     - And use always `pip3` and `python3`.
+    - `nvcc -V`
+    ```
+    (pixelformer) vision@vision:~/suraj/Pixelformer_jetson$ nvcc -V
+    nvcc: NVIDIA (R) Cuda compiler driver
+    Copyright (c) 2005-2022 NVIDIA Corporation
+    Built on Sun_Oct_23_22:16:07_PDT_2022
+    Cuda compilation tools, release 11.4, V11.4.315
+    Build cuda_11.4.r11.4/compiler.31964100_0
+
+    (pixelformer) vision@vision:~/suraj/Pixelformer_jetson$ which nvcc
+    /usr/local/cuda-11.4/bin/nvcc
+    ```
+    In some other tab, it is like;
+    ```
+    (pixelformer) vision@vision:~/suraj/Pixelformer_jetson$ nvcc -V
+    nvcc: NVIDIA (R) Cuda compiler driver
+    Copyright (c) 2005-2022 NVIDIA Corporation
+    Built on Wed_Jun__8_16:59:16_PDT_2022
+    Cuda compilation tools, release 11.7, V11.7.99
+    Build cuda_11.7.r11.7/compiler.31442593_0
+    (pixelformer) vision@vision:~/suraj/Pixelformer_jetson$ echo $LD_LIBRARY_PATH
+    /usr/local/lib:/usr/local/lib:/usr/local/lib:/usr/local/lib:/usr/local/cuda-11.4/lib64:/usr/local/lib:/usr/local/lib:/usr/local/lib:/usr/local/lib:/usr/local/cuda-11.4/lib64::/usr/local/lib:/usr/local/lib
+    
+    (pixelformer) vision@vision:~/suraj/Pixelformer_jetson$ which nvcc
+    /home/vision/miniconda3/envs/pixelformer/bin/nvcc
+    ```
+    But both versions of nvcc were were working( I was able to run Pixelformer with both).
+
+
+
+
+    
 
 
