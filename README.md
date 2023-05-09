@@ -12,7 +12,7 @@
         bin  cuda  cuda-11  cuda-11.4  cuda-11.7  etc  games  include  jetson_stats  jtop  lib  man  sbin  share  src
         ```
         `nvcc -V` gave: 
-        ```
+        ``` bash
         nvcc: NVIDIA (R) Cuda compiler driver
         Copyright (c) 2005-2022 NVIDIA Corporation
         Built on Wed_Jun__8_16:59:16_PDT_2022
@@ -24,7 +24,7 @@
     - [worked] **Followed [this link](https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html#prereqs-install)** as mentioned by Pytorch expert [here](https://discuss.pytorch.org/t/how-to-install-pytorch-from-source-on-orin/170970/2).
     - downloaded pytorch v1.14.0 from [this link](https://elinux.org/Jetson_Zoo#PyTorch_.28Caffe2.29).
     - So the commands will be:
-    ```
+    ``` bash
     sudo apt-get -y update; 
     
     sudo apt-get -y install autoconf bc build-essential g++-8 gcc-8 clang-8 lld-8 gettext-base gfortran-8 iputils-ping libbz2-dev libc++-dev libcgal-dev libffi-dev libfreetype6-dev libhdf5-dev libjpeg-dev liblzma-dev libncurses5-dev libncursesw5-dev libpng-dev libreadline-dev libssl-dev libsqlite3-dev libxml2-dev libxslt-dev locales moreutils openssl python-openssl rsync scons python3-pip libopenblas-dev;
@@ -36,7 +36,7 @@
     python3 -m pip install --upgrade pip; python3 -m pip install aiohttp numpy=='1.19.4' scipy=='1.5.3' export "LD_LIBRARY_PATH=/usr/lib/llvm-8/lib:$LD_LIBRARY_PATH"; python3 -m pip install --upgrade protobuf; python3 -m pip install --no-cache $TORCH_INSTALL
     ```
     output of last command was like: 
-    ```
+    ``` bash
     (pixelformer) vision@vision:~/Downloads$ python3 -m pip install --upgrade pip; python3 -m pip install aiohttp numpy=='1.19.4' scipy=='1.5.3' export "LD_LIBRARY_PATH=/usr/lib/llvm-8/lib:$LD_LIBRARY_PATH"; python3 -m pip install --upgrade protobuf; python3 -m pip install --no-cache $TORCH_INSTALL
     Looking in indexes: https://pypi.org/simple, https://pypi.ngc.nvidia.com
     Requirement already satisfied: pip in /home/vision/miniconda3/envs/pixelformer/lib/python3.8/site-packages (23.1.2)
@@ -56,7 +56,7 @@
     Successfully installed torch-1.14.0a0+44dac51c.nv23.1
     ```
     then it worked: 
-    ```
+    ``` bash
     (pixelformer) vision@vision:~/Downloads$ python3
     Python 3.8.16 (default, Mar  2 2023, 03:16:31) 
     [GCC 11.2.0] :: Anaconda, Inc. on linux
@@ -68,7 +68,7 @@
     ```
 
     Also see this : 
-    ```
+    ``` bash
     (pixelformer) vision@vision:~/Downloads$ conda list|grep torch
     pytorch-cuda              11.7                 h67b0de4_2    pytorch
     torch                     1.14.0a0+44dac51c.nv23.1          pypi_0    pypi
@@ -93,7 +93,7 @@
         - And start interactive python interpretor by `python3` and not with `python`: because pytorch was not able to use cuda with `python`.
     - And use always `pip3` and `python3`.
     - `nvcc -V`
-    ```
+    ``` bash
     (pixelformer) vision@vision:~/suraj/Pixelformer_jetson$ nvcc -V
     nvcc: NVIDIA (R) Cuda compiler driver
     Copyright (c) 2005-2022 NVIDIA Corporation
@@ -105,7 +105,7 @@
     /usr/local/cuda-11.4/bin/nvcc
     ```
     In some other tab, it is like;
-    ```
+    ``` bash
     (pixelformer) vision@vision:~/suraj/Pixelformer_jetson$ nvcc -V
     nvcc: NVIDIA (R) Cuda compiler driver
     Copyright (c) 2005-2022 NVIDIA Corporation
