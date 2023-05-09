@@ -20,7 +20,7 @@
         ```
     (Now see below for Pytorch installation)
     - [didn't worked] Earlier: using "Build from Source" from [this link](https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048).
-    - [worked] Followed [link](https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html#prereqs-install) as mentioned by Pytorch expert [here](https://discuss.pytorch.org/t/how-to-install-pytorch-from-source-on-orin/170970/2).
+    - [worked] **Followed [this link](https://docs.nvidia.com/deeplearning/frameworks/install-pytorch-jetson-platform/index.html#prereqs-install)** as mentioned by Pytorch expert [here](https://discuss.pytorch.org/t/how-to-install-pytorch-from-source-on-orin/170970/2).
     - downloaded pytorch v1.14.0 from [this link](https://elinux.org/Jetson_Zoo#PyTorch_.28Caffe2.29).
     - So the commands will be:
     ```
