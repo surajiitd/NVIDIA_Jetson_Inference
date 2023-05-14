@@ -124,16 +124,11 @@ def to_tensor(pic):
     else:
         return img
 
-def to_tensor2(pic):
-
-    if isinstance(pic, np.ndarray):
-        img = torch.from_numpy(pic.transpose((2, 0, 1)))
-        return img
 
 
 def preprocess_image(img_path):
     image = np.asarray(Image.open(img_path), dtype=np.float32) / 255.0
-    image = to_tensor2(image)
+    image = torch.from_numpy(image.transpose((2, 0, 1)))
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
     image = normalize(image)
     return image
@@ -177,8 +172,9 @@ def main():
     print(f"Took {y-x:.2f} seconds for one image!!")
     print(f"Took {y-a:.2f} seconds from start!!")
     print(output_data.shape)
+    cv2.imshow("depth",output_data)
     #print(output_data[0])
-    - try what happens when using FP16 while converting to onnx
+    #- try what happens when using FP16 while converting to onnx
 
 if __name__ == '__main__':
     main()

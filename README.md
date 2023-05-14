@@ -120,6 +120,10 @@
     ```
     But both versions of nvcc were were working( I was able to run Pixelformer with both).
 
+### ORB-SLAM2
+
+- install opencv from [this link](https://forums.developer.nvidia.com/t/best-way-to-install-opencv-with-cuda-on-jetpack-5-xavier-nx-opencv-for-tegra/222777)
+- build orbslam2(git clone [this pull request's repo](https://github.com/IHKYoung/ORB_SLAM2/tree/baseline)) from [this pull request](https://github.com/raulmur/ORB_SLAM2/pull/1075) to build opencv for 4.x 
 
 
 
