@@ -51,7 +51,9 @@
 ![Image](sample_output_images/nyu/014.png) -->
 
 #### Kitti Dataset
-[Video: Live Inference in Kitti]()
+
+[Video: Live Inference in Kitti]()  
+---
 ![Image](sample_output_images/kitti/000.png)
 ---
 ![Image](sample_output_images/kitti/001.png)
