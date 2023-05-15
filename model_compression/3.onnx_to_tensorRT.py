@@ -1,29 +1,30 @@
 import torch
 import cv2
-import onnx
+#import onnx
 import os
 import time
-# from albumentations import Resize, Compose
-# from albumentations.pytorch.transforms import  ToTensor
-# from albumentations.augmentations.transforms import Normalize
+from torchvision import transforms
+from PIL import Image
 import pycuda.driver as cuda
 import pycuda.autoinit
 import numpy as np
 import tensorrt as trt
+import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore",category=DeprecationWarning)
 
-onnx_model_path='/home/vision/Gaurav/TensorRT_main/convertedFiles_onnx_IR/DINO/DINO_3Dec.onnx'
-tensorrt_engine_path='./DINO_tensorrt.engine'
+
 engine_precision='FP16'
-img_size=[3, 224, 224]
+img_size=[3, 480, 640]
 batch_size=1
-
-onnx_model = onnx.load(onnx_model_path)
-onnx.checker.check_model(onnx_model)
 
 TRT_LOGGER = trt.Logger()
  
 def build_engine(onnx_model_path, tensorrt_engine_path, engine_precision, img_size, batch_size):
-    
+    print(f"TensorRT model will be saved in {tensorrt_engine_path}")
+    onnx_model = onnx.load(onnx_model_path)
+    onnx_model.checker.check_model(onnx_model)
+
     logger = trt.Logger(trt.Logger.ERROR)
     builder = trt.Builder(logger)
     network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
@@ -69,26 +70,20 @@ def build_engine(onnx_model_path, tensorrt_engine_path, engine_precision, img_si
 
 
 def preprocess_image(img_path):
-    transforms = Compose([
-        Resize(224, 224, interpolation=cv2.INTER_NEAREST),
-        Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ToTensor(),
-    ])
-     
-    input_img = cv2.imread(img_path)
-    input_img = np.asarray( input_img)
-    input_data = transforms(image=input_img)["image"]
-    batch_data = torch.unsqueeze(input_data, 0)
-    return batch_data
- 
+    image = np.asarray(Image.open(img_path), dtype=np.float32) / 255.0
+    image = torch.from_numpy(image.transpose((2, 0, 1)))
+    normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    image = normalize(image)
+    return image
 
-
-def main():
-    #build_engine(onnx_model_path, tensorrt_engine_path, engine_precision, img_size, batch_size)
+def tensorrt_inference(tensorrt_engine_path):
+    
+    a = time.time()
     trt.init_libnvinfer_plugins(None, "")
-    with open('/home/vision/Gaurav/TensorRT/engines/DINO_new.engine', "rb") as f, trt.Runtime(TRT_LOGGER) as runtime: 
+    with open(tensorrt_engine_path, "rb") as f, trt.Runtime(TRT_LOGGER) as runtime: 
         engine = runtime.deserialize_cuda_engine(f.read()) 
-          
+    b = time.time()
+    print(f"Took {(b-a):.2f} seconds for loading model!!")
     context = engine.create_execution_context()
 
     for binding in engine:
@@ -102,25 +97,36 @@ def main():
             device_output = cuda.mem_alloc(4*host_output.nbytes)
 
     stream = cuda.Stream()
-    data = preprocess_image("/home/vision/Gaurav/TensorRT_main/coco_100_images/100_images_for_inference_time_calc/test_images/000000000139.jpg").numpy()
+    sample_img_path = "/home/vision/suraj/Pixelformer_jetson/datasets/nyu_depth_v2_small/test/bathroom/rgb_00045.jpg"
+    data = preprocess_image(sample_img_path).numpy()
     x = time.time()
     host_input = np.array(data, dtype=np.float32, order='C')
     cuda.memcpy_htod_async(device_input, host_input, stream)
 
-    
     context.execute_async(bindings=[int(device_input), int(device_output)], stream_handle=stream.handle)
     cuda.memcpy_dtoh_async(host_output, device_output, stream)
     stream.synchronize()
     
 
-    output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, 900, -1)
+    output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, 480, 640)
+    #output_data = host_output.reshape(engine.max_batch_size, 900, -1)
     
     y = time.time()
-    print(y-x)
-    
-    print(output_data.shape)
-    print(output_data[0])
-    
+    print(f"Took {y-x:.2f} seconds for one image!!")
+    print(f"Took {y-a:.2f} seconds from start!!")
+    pred_depth = output_data.cpu().numpy().squeeze()
+    plt.imsave("pred_depth_tensorrt.png",pred_depth,cmap="magma",vmin=0,vmax=3)
+
 
 if __name__ == '__main__':
-    main()
+    onnx_model_path = "/home/vision/suraj/jetson-documentation/model_compression/onnx_models/from_vision04/nyu_model-64000-best_abs_rel_0.09021.onnx"
+    tensorrt_engine_path = os.path.join("tensorRT_engines",os.path.basename(onnx_model_path)[:-5]+".trt")
+    #convert onnx to tensorRT
+    if not os.path.exists(tensorrt_engine_path):
+        build_engine(onnx_model_path, tensorrt_engine_path, engine_precision, img_size, batch_size)
+
+    #inference tensorrt
+    tensorrt_inference(tensorrt_engine_path)
+
+
+
