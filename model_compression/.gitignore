@@ -3,5 +3,5 @@
 *.engine
 onnx_models
 tensorRT_engines
-*.png
+./*.png
 
