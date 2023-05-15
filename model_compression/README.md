@@ -39,8 +39,8 @@
 ---
 ![Image](sample_output_images/kitti/020.png)
 ---
-![Image](sample_output_images/kitti/030.png)
----
+<!-- ![Image](sample_output_images/kitti/030.png)
+--- -->
 ![Image](sample_output_images/kitti/040.png)
 ---
 
