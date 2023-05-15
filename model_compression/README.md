@@ -37,4 +37,3 @@
 ![Image](sample_output_images/012.png)
 ![Image](sample_output_images/013.png)
 ![Image](sample_output_images/014.png)
-![Image](sample_output_images/015.png)
