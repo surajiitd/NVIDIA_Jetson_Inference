@@ -26,6 +26,35 @@
         While I/O demo:         Took 13.10 seconds for 60 image!! = 4.5fps
 
 ### Sample Depth Outputs:
+
+#### Kitti Dataset
+
+[Video: Live Inference in Kitti]()  
+---
+![Image](sample_output_images/kitti/000.png)
+---
+![Image](sample_output_images/kitti/001.png)
+---
+![Image](sample_output_images/kitti/010.png)
+---
+![Image](sample_output_images/kitti/020.png)
+---
+![Image](sample_output_images/kitti/030.png)
+---
+![Image](sample_output_images/kitti/040.png)
+---
+
+<!-- ![Image](sample_output_images/kitti/050.png)
+![Image](sample_output_images/kitti/060.png)
+![Image](sample_output_images/kitti/070.png)
+![Image](sample_output_images/kitti/080.png)
+![Image](sample_output_images/kitti/090.png)
+![Image](sample_output_images/kitti/100.png)
+![Image](sample_output_images/kitti/110.png)
+![Image](sample_output_images/kitti/120.png)
+![Image](sample_output_images/kitti/130.png) -->
+---
+
 #### NYUv2 Dataset
 ![Image](sample_output_images/nyu/000.png)
 ---
@@ -49,29 +78,3 @@
 ![Image](sample_output_images/nyu/012.png)
 ![Image](sample_output_images/nyu/013.png)
 ![Image](sample_output_images/nyu/014.png) -->
-
-#### Kitti Dataset
-
-[Video: Live Inference in Kitti]()  
----
-![Image](sample_output_images/kitti/000.png)
----
-![Image](sample_output_images/kitti/001.png)
----
-![Image](sample_output_images/kitti/010.png)
----
-![Image](sample_output_images/kitti/020.png)
----
-![Image](sample_output_images/kitti/030.png)
----
-![Image](sample_output_images/kitti/040.png)
----
-<!-- ![Image](sample_output_images/kitti/050.png)
-![Image](sample_output_images/kitti/060.png)
-![Image](sample_output_images/kitti/070.png)
-![Image](sample_output_images/kitti/080.png)
-![Image](sample_output_images/kitti/090.png)
-![Image](sample_output_images/kitti/100.png)
-![Image](sample_output_images/kitti/110.png)
-![Image](sample_output_images/kitti/120.png)
-![Image](sample_output_images/kitti/130.png) -->
