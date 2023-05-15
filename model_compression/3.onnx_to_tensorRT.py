@@ -99,7 +99,7 @@ def tensorrt_inference(tensorrt_engine_path):
 
     stream = cuda.Stream()
     sample_img_path = "/home/vision/suraj/Pixelformer_jetson/datasets/nyu_depth_v2_small/test/bathroom/rgb_00045.jpg" #for NYUv2
-    sample_img_path = "/home/vision/suraj/Pixelformer_jetson/datasets/kitti_small/KITTI/2011_09_26/2011_09_26_drive_0002_sync/image_02/image_02/data/0000000000.png" #for kitti
+    sample_img_path = "/home/vision/suraj/Pixelformer_jetson/datasets/kitti_small/KITTI/2011_09_26/2011_09_26_drive_0002_sync/image_02/data/0000000000.png" #for kitti
     data = preprocess_image(sample_img_path).numpy()
     x = time.time()
     host_input = np.array(data, dtype=np.float32, order='C')
@@ -117,7 +117,7 @@ def tensorrt_inference(tensorrt_engine_path):
     print(f"Took {y-x:.2f} seconds for one image!!")
     print(f"Took {y-a:.2f} seconds from start!!")
     pred_depth = output_data.cpu().numpy().squeeze()
-    plt.imsave("pred_depth_tensorrt.png",pred_depth,cmap="magma",vmin=0,vmax=3)
+    plt.imsave("pred_depth_tensorrt.png",pred_depth,cmap="magma",vmin=0,vmax=np.max(pred_depth))
 
 
 if __name__ == '__main__':
