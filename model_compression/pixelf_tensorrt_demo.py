@@ -10,6 +10,7 @@ import pycuda.autoinit
 import numpy as np
 import tensorrt as trt
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import warnings
 warnings.filterwarnings("ignore",category=DeprecationWarning)
 
@@ -39,6 +40,14 @@ def preprocess_image(img_path):
     image = normalize(image)
     return image
 
+def colorize(depth,cmap="inferno", vmin=0,vmax=10):
+    depth = np.clip(depth,vmin,vmax)
+    colormap = cm.get_cmap(cmap)
+    colored_depth = colormap((depth-vmin)/(vmax-vmin))
+    colored_depth_rgb = (colored_depth[:,:,:3]*255).astype(np.uint8)
+    return colored_depth_rgb
+
+
 def tensorrt_inference(tensorrt_engine_path):
     
     a = time.time()
@@ -65,9 +74,11 @@ def tensorrt_inference(tensorrt_engine_path):
     data_splits_file_path = "/home/vision/suraj/Pixelformer_jetson/data_splits/nyudepthv2_test_files_with_gt_small_jetson.txt"
     rgb_path_list, gt_depth_path_list = get_image_lists(data_path,data_splits_file_path)
 
-
+    window_name = "Pixelformer Depth Prediction"
+    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+    cv2.resizeWindow(window_name, 1200,400)
     start_time = time.time()
-    for image_path,gt_depth_path in zip(rgb_path_list, gt_depth_path_list):
+    for idx,(image_path,gt_depth_path) in enumerate(zip(rgb_path_list, gt_depth_path_list)):
         data = preprocess_image(image_path).numpy()
         host_input = np.array(data, dtype=np.float32, order='C')
         cuda.memcpy_htod_async(device_input, host_input, stream)
@@ -75,12 +86,31 @@ def tensorrt_inference(tensorrt_engine_path):
         context.execute_async(bindings=[int(device_input), int(device_output)], stream_handle=stream.handle)
         cuda.memcpy_dtoh_async(host_output, device_output, stream)
         stream.synchronize()
-        
 
         output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, 480, 640)
         pred_depth = output_data.cpu().numpy().squeeze()
+        image = cv2.imread(image_path,-1)
+        gt_depth = cv2.imread(gt_depth_path,-1)/1000.0
+        pred_depth[gt_depth==0] = 0
+        vmax = max(np.max(pred_depth),np.max(gt_depth))
+        print("vmax = ",vmax)
+        cmap='inferno'
+        gt_depth = colorize(gt_depth, cmap=cmap, vmin=0, vmax=vmax)
+        pred_depth = colorize(pred_depth, cmap=cmap, vmin=0, vmax=vmax)
+        thickness=2
+        cv2.rectangle(image,(0,5), (210,30), (0,0,0,1),-1)
+        cv2.putText(image,"RGB Image",(10,20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), thickness, cv2.LINE_AA)
+        cv2.putText(gt_depth,"Groundtruth depth",(10,20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), thickness, cv2.LINE_AA)
+        cv2.putText(pred_depth,"Predicted depth",(10,20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), thickness, cv2.LINE_AA)
+        
+        combined = np.hstack((image,gt_depth,pred_depth))
+        cv2.imwrite(f"sample_output_images/{idx:03d}.png",combined)
+        cv2.imshow(window_name, combined)
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            break
 
-
+    cv2.destroyAllWindows()
     end_time = time.time()
     print(f"Took {end_time-start_time:.2f} seconds for {len(rgb_path_list)} image!!")
     print(f"Took {end_time-a:.2f} seconds from start!!")
