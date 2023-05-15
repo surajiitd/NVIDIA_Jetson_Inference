@@ -28,29 +28,43 @@
 ### Sample Depth Outputs:
 #### NYUv2 Dataset
 ![Image](sample_output_images/nyu/000.png)
+---
 ![Image](sample_output_images/nyu/001.png)
+---
 ![Image](sample_output_images/nyu/002.png)
+---
 ![Image](sample_output_images/nyu/003.png)
+---
 ![Image](sample_output_images/nyu/004.png)
+---
 ![Image](sample_output_images/nyu/005.png)
+---
 ![Image](sample_output_images/nyu/006.png)
-![Image](sample_output_images/nyu/007.png)
+---
+<!-- ![Image](sample_output_images/nyu/007.png)
 ![Image](sample_output_images/nyu/008.png)
 ![Image](sample_output_images/nyu/009.png)
 ![Image](sample_output_images/nyu/010.png)
 ![Image](sample_output_images/nyu/011.png)
 ![Image](sample_output_images/nyu/012.png)
 ![Image](sample_output_images/nyu/013.png)
-![Image](sample_output_images/nyu/014.png)
+![Image](sample_output_images/nyu/014.png) -->
 
 #### Kitti Dataset
+[Video: Live Inference in Kitti]()
 ![Image](sample_output_images/kitti/000.png)
+---
 ![Image](sample_output_images/kitti/001.png)
+---
 ![Image](sample_output_images/kitti/010.png)
+---
 ![Image](sample_output_images/kitti/020.png)
+---
 ![Image](sample_output_images/kitti/030.png)
+---
 ![Image](sample_output_images/kitti/040.png)
-![Image](sample_output_images/kitti/050.png)
+---
+<!-- ![Image](sample_output_images/kitti/050.png)
 ![Image](sample_output_images/kitti/060.png)
 ![Image](sample_output_images/kitti/070.png)
 ![Image](sample_output_images/kitti/080.png)
@@ -58,4 +72,4 @@
 ![Image](sample_output_images/kitti/100.png)
 ![Image](sample_output_images/kitti/110.png)
 ![Image](sample_output_images/kitti/120.png)
-![Image](sample_output_images/kitti/130.png)
+![Image](sample_output_images/kitti/130.png) -->
