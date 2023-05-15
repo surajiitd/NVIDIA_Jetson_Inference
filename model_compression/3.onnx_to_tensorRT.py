@@ -1,6 +1,6 @@
 import torch
 import cv2
-#import onnx
+import onnx
 import os
 import time
 from torchvision import transforms
@@ -15,15 +15,16 @@ warnings.filterwarnings("ignore",category=DeprecationWarning)
 
 
 engine_precision='FP16'
-img_size=[3, 480, 640]
+#img_size = [3, 480, 640] # for NYUv2
+img_size = [3, 352, 1216] # for kitti
 batch_size=1
 
 TRT_LOGGER = trt.Logger()
  
 def build_engine(onnx_model_path, tensorrt_engine_path, engine_precision, img_size, batch_size):
     print(f"TensorRT model will be saved in {tensorrt_engine_path}")
-    onnx_model = onnx.load(onnx_model_path)
-    onnx_model.checker.check_model(onnx_model)
+    # onnx_model = onnx.load(onnx_model_path)
+    # onnx_model.checker.check_model(onnx_model)
 
     logger = trt.Logger(trt.Logger.ERROR)
     builder = trt.Builder(logger)
@@ -97,7 +98,8 @@ def tensorrt_inference(tensorrt_engine_path):
             device_output = cuda.mem_alloc(4*host_output.nbytes)
 
     stream = cuda.Stream()
-    sample_img_path = "/home/vision/suraj/Pixelformer_jetson/datasets/nyu_depth_v2_small/test/bathroom/rgb_00045.jpg"
+    sample_img_path = "/home/vision/suraj/Pixelformer_jetson/datasets/nyu_depth_v2_small/test/bathroom/rgb_00045.jpg" #for NYUv2
+    sample_img_path = "/home/vision/suraj/Pixelformer_jetson/datasets/kitti_small/KITTI/2011_09_26/2011_09_26_drive_0002_sync/image_02/image_02/data/0000000000.png" #for kitti
     data = preprocess_image(sample_img_path).numpy()
     x = time.time()
     host_input = np.array(data, dtype=np.float32, order='C')
@@ -108,7 +110,7 @@ def tensorrt_inference(tensorrt_engine_path):
     stream.synchronize()
     
 
-    output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, 480, 640)
+    output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, img_size[1], img_size[2])
     #output_data = host_output.reshape(engine.max_batch_size, 900, -1)
     
     y = time.time()
@@ -119,11 +121,12 @@ def tensorrt_inference(tensorrt_engine_path):
 
 
 if __name__ == '__main__':
-    onnx_model_path = "/home/vision/suraj/jetson-documentation/model_compression/onnx_models/from_vision04/nyu_model-64000-best_abs_rel_0.09021.onnx"
+    onnx_model_path = "/home/vision/suraj/jetson-documentation/model_compression/onnx_models/from_vision04/kitti_model-55000-best_abs_rel_0.05135.onnx"
     tensorrt_engine_path = os.path.join("tensorRT_engines",os.path.basename(onnx_model_path)[:-5]+".trt")
     #convert onnx to tensorRT
     if not os.path.exists(tensorrt_engine_path):
         build_engine(onnx_model_path, tensorrt_engine_path, engine_precision, img_size, batch_size)
+        print("Built TensorRT Engine Successfully!!")
 
     #inference tensorrt
     tensorrt_inference(tensorrt_engine_path)

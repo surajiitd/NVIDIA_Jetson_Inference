@@ -15,22 +15,26 @@ import warnings
 warnings.filterwarnings("ignore",category=DeprecationWarning)
 
 engine_precision='FP16'
-img_size=[3, 480, 640]
+#img_size = [3, 480, 640] # for NYUv2
+img_size = [3, 352, 1216] # for kitti
 batch_size=1
-
+dataset = "kitti"
 TRT_LOGGER = trt.Logger()
 
-def get_image_lists(data_path,data_splits_file_path):
+def get_image_path_lists(rgb_path, gt_depth_path, data_splits_file_path):
     with open(data_splits_file_path,'r') as f:
         filenames = f.readlines()
     rgb_path_list = []
     gt_depth_path_list = []
     for line in filenames:
         rgb_file = line.split()[0]
-        depth_file = line.split()[1]
+        if dataset == "kitti":
+            depth_file = os.path.join(line.split()[0].split('/')[0], line.split()[1])
+        else:
+            depth_file = line.split()[1]
 
-        rgb_path_list.append(os.path.join(data_path,rgb_file))
-        gt_depth_path_list.append(os.path.join(data_path,depth_file))
+        rgb_path_list.append(os.path.join(rgb_path,rgb_file))
+        gt_depth_path_list.append(os.path.join(gt_depth_path,depth_file))
     return rgb_path_list, gt_depth_path_list
 
 def preprocess_image(img_path):
@@ -69,10 +73,10 @@ def tensorrt_inference(tensorrt_engine_path):
             device_output = cuda.mem_alloc(4*host_output.nbytes)
 
     stream = cuda.Stream()
-
-    data_path = "/home/vision/suraj/Pixelformer_jetson/datasets/nyu_depth_v2_small/test"
-    data_splits_file_path = "/home/vision/suraj/Pixelformer_jetson/data_splits/nyudepthv2_test_files_with_gt_small_jetson.txt"
-    rgb_path_list, gt_depth_path_list = get_image_lists(data_path,data_splits_file_path)
+    rgb_path = "/home/vision/suraj/Pixelformer_jetson/datasets/kitti_small/kitti_gt"
+    gt_depth_path = "/home/vision/suraj/Pixelformer_jetson/datasets/kitti_small/kitti_gt"
+    data_splits_file_path = "/home/vision/suraj/Pixelformer_jetson/data_splits/eigen_test_files_with_gt.txt"
+    rgb_path_list, gt_depth_path_list = get_image_path_lists(rgb_path, gt_depth_path, data_splits_file_path)
 
     window_name = "Pixelformer Depth Prediction"
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
@@ -87,7 +91,7 @@ def tensorrt_inference(tensorrt_engine_path):
         cuda.memcpy_dtoh_async(host_output, device_output, stream)
         stream.synchronize()
 
-        output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, 480, 640)
+        output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, img_size[1], img_size[2])
         pred_depth = output_data.cpu().numpy().squeeze()
         image = cv2.imread(image_path,-1)
         gt_depth = cv2.imread(gt_depth_path,-1)/1000.0
@@ -103,8 +107,8 @@ def tensorrt_inference(tensorrt_engine_path):
         cv2.putText(gt_depth,"Groundtruth depth",(10,20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), thickness, cv2.LINE_AA)
         cv2.putText(pred_depth,"Predicted depth",(10,20), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), thickness, cv2.LINE_AA)
         
-        combined = np.hstack((image,gt_depth,pred_depth))
-        cv2.imwrite(f"sample_output_images/{idx:03d}.png",combined)
+        combined = np.vstack((image,gt_depth,pred_depth))
+        cv2.imwrite(f"sample_output_images/kitti/{idx:03d}.png",combined)
         cv2.imshow(window_name, combined)
         key = cv2.waitKey(1)
         if key == ord('q'):
