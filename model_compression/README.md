@@ -29,7 +29,7 @@
 
 #### Kitti Dataset
 
-[Video: Live Inference in Kitti]()  
+[Video: Live Inference in Kitti](https://drive.google.com/file/d/17UpKqsdO0PNUBKludpkqcmQxtyF_YTBG/view?usp=sharing)  
 ---
 ![Image](sample_output_images/kitti/000.png)
 ---
