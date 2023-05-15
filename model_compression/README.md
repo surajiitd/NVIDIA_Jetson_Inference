@@ -12,6 +12,6 @@
 
 ### Time Requirement:
 - For one image [of size=(480,640)]:   
-    pytorch model takes:    0.5 sec  
-    onnx model takes:       2.46 sec  
-    TensorRT is taking:     **0.25 sec** [Took 9.32 seconds for 60 image!! = **6.5fps**]  
+        pytorch model takes:    0.5 sec  
+        onnx model takes:       2.46 sec  
+        TensorRT is taking:     **0.25 sec** [Took 9.32 seconds for 60 image!! = **6.5fps**]  
