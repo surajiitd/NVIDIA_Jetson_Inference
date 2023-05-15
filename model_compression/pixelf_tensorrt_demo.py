@@ -99,7 +99,7 @@ def tensorrt_inference(tensorrt_engine_path):
         
         data = preprocess_image(image_path).numpy()
         
-        print(data.shape)
+        #print(data.shape)
         #import ipdb;ipdb.set_trace()
         host_input = np.array(data, dtype=np.float32, order='C')
         cuda.memcpy_htod_async(device_input, host_input, stream)
@@ -129,13 +129,13 @@ def tensorrt_inference(tensorrt_engine_path):
         pred_depth[np.isnan(pred_depth)] = min_depth_eval
         
         scale = get_scale_shift(pred_depth, gt_depth, min_depth=min_depth_eval, max_depth=max_depth_eval )
-        print(f"scale = {scale}")
+        #print(f"scale = {scale}")
         pred_depth = pred_depth*scale
 
         pred_depth[gt_depth==0] = 0
         vmax = max(np.max(pred_depth),np.max(gt_depth))
         #vmax=80.0
-        print("vmax = ",vmax)
+        #print("vmax = ",vmax)
         cmap='magma' #'magma', 'inferno'
         gt_depth = colorize(gt_depth, cmap=cmap, vmin=0, vmax=vmax)
         pred_depth = colorize(pred_depth, cmap=cmap, vmin=0, vmax=vmax)
