@@ -22,4 +22,5 @@
 
 ### Sample Depth Outputs:
 
-![](sample_output_images/000.png)
+![Image](sample_output_images/000.png)
+![Image](sample_output_images/001.png)
