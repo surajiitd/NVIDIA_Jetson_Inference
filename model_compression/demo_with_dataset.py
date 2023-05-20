@@ -91,12 +91,14 @@ def tensorrt_inference(tensorrt_engine_path):
     stream = cuda.Stream()
     rgb_path = "/home/vision/suraj/Pixelformer_jetson/datasets/kitti_small/KITTI"
     gt_depth_path = "/home/vision/suraj/Pixelformer_jetson/datasets/kitti_small/kitti_gt"
-    data_splits_file_path = "/home/vision/suraj/Pixelformer_jetson/data_splits/eigen_test_files_with_gt.txt"
+    data_splits_file_path = "/home/vision/suraj/Pixelformer_jetson/data_splits/kitti_continuous_split_for_demo.txt"
     rgb_path_list, gt_depth_path_list = get_image_path_lists(rgb_path, gt_depth_path, data_splits_file_path)
 
     start_time = time.time()
+    global_idx = 1
+
     for idx,(image_path,gt_depth_path) in enumerate(zip(rgb_path_list, gt_depth_path_list)):
-        
+        global_idx = idx
         data = preprocess_image(image_path).numpy()
         
         #print(data.shape)
@@ -110,7 +112,11 @@ def tensorrt_inference(tensorrt_engine_path):
 
         output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, img_size[1], img_size[2])
         pred_depth = output_data.cpu().numpy().squeeze()
+        # if idx == 30:
+        #     break
+        
         image = cv2.imread(image_path,-1)
+        print(gt_depth_path)
         gt_depth = cv2.imread(gt_depth_path,-1)/1000.0
 
         if dataset == "kitti": # do kb_crop
@@ -132,7 +138,7 @@ def tensorrt_inference(tensorrt_engine_path):
         #print(f"scale = {scale}")
         pred_depth = pred_depth*scale
 
-        pred_depth[gt_depth==0] = 0
+        #pred_depth[gt_depth==0] = 0
         vmax = max(np.max(pred_depth),np.max(gt_depth))
         #vmax=80.0
         #print("vmax = ",vmax)
@@ -161,8 +167,11 @@ def tensorrt_inference(tensorrt_engine_path):
             break
 
     cv2.destroyAllWindows()
+    
     end_time = time.time()
-    print(f"Took {end_time-start_time:.2f} seconds for {len(rgb_path_list)} image!!")
+    print(f"Took {end_time-start_time:.2f} seconds for {global_idx} images!!")
+    #print(f"{len(rgb_path_list)/(end_time-start_time)} FPS")
+    print(f"{global_idx/(end_time-start_time)} FPS")
     print(f"Took {end_time-a:.2f} seconds from start!!")
     
     #plt.imsave("pred_depth_tensorrt.png",pred_depth,cmap="magma",vmin=0,vmax=3)

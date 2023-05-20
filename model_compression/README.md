@@ -24,6 +24,14 @@
         pytorch model takes:    0.61 sec  
         TensorRT is taking:     **0.28 sec** [Took 27.70 seconds for 139 image!!!! = **5fps**]  
         While I/O demo:         Took 52.01 seconds for 139 image!! = 2.7fps
+Kitti:
+    FPS:
+    negroni: 7.5 and 4 FPS
+    jetson : 4.8 and 2.4 FPS
+
+    pytorch model:
+    negroni: 9fps
+    jetson: 2fps (after resizing the image 3-4 fps)
 
 ### Sample Depth Outputs:
 
