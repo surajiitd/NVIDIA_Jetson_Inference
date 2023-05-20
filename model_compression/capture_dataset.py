@@ -4,6 +4,7 @@ import depthai
 import threading
 import sys
 import os
+import time
 # Global variables
 selected_points = []
 completed = False
@@ -79,6 +80,7 @@ def store_points(event, x, y, flags, param):
     global selected_points, completed, frame, is_frame_available
     while not is_frame_available:
             pass
+    window_name = 'Select 4 Corners of your screen'
     if event == cv2.EVENT_LBUTTONDOWN:
         if len(selected_points) < 4:
             selected_points.append((x, y))
@@ -94,14 +96,15 @@ def store_points(event, x, y, flags, param):
 
 def select_points():
     # Create a window and set the mouse callback
-    screen_width, screen_height = 1920, 1080 #1920, 1080  # Replace with your screen resolution
+    # Capture a photo through webcam and save it in the same directory structure
+    screen_width, screen_height = 1920, 1080  # Replace with your screen resolution
     # Calculate the dimensions for the left half of the screen
     left_half_x = -10
     left_half_y = 0
     left_half_width = screen_width // 2
     left_half_height = screen_height
 
-    window_name = 'Sample Image'
+    window_name = 'Image to be captured'
     # Create a resizable window for the webcam feed
     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
     cv2.moveWindow(window_name, left_half_x, left_half_y)
@@ -109,17 +112,14 @@ def select_points():
     
     sample_image_path = "/home/vision/suraj/kitti_dataset/KITTI/2011_09_26/2011_09_26_drive_0001_sync/image_02/data/0000000000.png"
     image = cv2.imread(sample_image_path,-1)
-    if dataset == "kitti": # do kb_crop
-        height = img_size[1]
-        width = img_size[2]
-        top_margin = int(height - 352)
-        left_margin = int((width - 1216) / 2)
-        image = image[top_margin:top_margin + 352, left_margin:left_margin + 1216]
-    top_padding = np.zeros((508,1216,3),dtype=np.uint8)
-    bottom_padding = np.zeros((508,1216,3),dtype=np.uint8)
-    # print(top_padding.shape)
-    # print(bottom_padding.shape)
-
+    # if dataset == "kitti": # do kb_crop
+    #     height = img_size[1]
+    #     width = img_size[2]
+    #     top_margin = int(height - 352)
+    #     left_margin = int((width - 1216) / 2)
+    #     image = image[top_margin:top_margin + 352, left_margin:left_margin + 1216]
+    top_padding = np.zeros((511,1242,3),dtype=np.uint8)
+    bottom_padding = np.zeros((511,1242,3),dtype=np.uint8)
     image = np.vstack((top_padding,image,bottom_padding))
     cv2.imshow(window_name, image)
     # cv2.waitKey(1)
@@ -191,7 +191,8 @@ def display_frame(kitti_read_path,kitti_write_path,data_splits_file):
         # Load the RGB image
 
         rgb_image = cv2.imread(read_path,-1)
-        rgb_image = cv2.resize(rgb_image,(width, height))
+        #rgb_image = cv2.resize(rgb_image,(width, height))
+        
         if rgb_image is not None:
             # # Create a delay of 0.5 seconds
             # time.sleep(0.5)
@@ -203,28 +204,36 @@ def display_frame(kitti_read_path,kitti_write_path,data_splits_file):
             left_half_y = 0
             left_half_width = screen_width // 2
             left_half_height = screen_height
-
+            
+            top_padding = np.zeros((511,1242,3),dtype=np.uint8)
+            bottom_padding = np.zeros((511,1242,3),dtype=np.uint8)
+            rgb_image = np.vstack((top_padding,rgb_image,bottom_padding))
+            print(rgb_image.shape)
             window_name = 'Image to be captured'
             # Create a resizable window for the webcam feed
             cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
             cv2.moveWindow(window_name, left_half_x, left_half_y)
             cv2.resizeWindow(window_name, left_half_width, left_half_height)
-            cv2.putText(rgb_image,f"{idx}",(35,55), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
+            image_name_ = os.path.basename(read_path)
+            #cv2.putText(rgb_image,f"{image_name_}",(325,690), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
 
             # sample_image_path = "/home/vision/suraj/kitti_dataset/KITTI/2011_09_26/2011_09_26_drive_0001_sync/image_02/data/0000000000.png"
             # sample_image = cv2.imread(sample_image_path,-1)
             
             cv2.imshow(window_name,rgb_image)
-            cv2.waitKey(1500)
+            #global counter_video_started
+            cv2.waitKey(400)
+            #time.sleep(2)
 
             global frame, is_frame_available
             while not is_frame_available:
                 pass 
             captured_frame = frame.copy()
-
+            #cv2.waitKey(1000)
+            #time.sleep(2)
             # Warp the image
             modified_frame = cv2.warpPerspective(captured_frame, M, (width, height))
-            print("warped image's shape = ",modified_frame.shape)
+            #print("warped image's shape = ",modified_frame.shape)
             # Display the frame
             
             screen_width, screen_height = 1920, 1080  # Replace with your screen resolution
@@ -233,12 +242,13 @@ def display_frame(kitti_read_path,kitti_write_path,data_splits_file):
             right_half_y = screen_height
             right_half_width = screen_width // 2
             right_half_height = screen_height
-            window_name = 'Verify Captured Image'
+            # window_name = 'Verify Captured Image'
             # Create a resizable window for the camera feed
-            cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-            cv2.moveWindow(window_name, right_half_x, 0)
-            cv2.resizeWindow(window_name, right_half_width, right_half_height)
-            cv2.imshow(window_name, modified_frame)
+            # cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
+            # cv2.moveWindow(window_name, right_half_x, 0)
+            # cv2.resizeWindow(window_name, right_half_width, right_half_height)
+            # cv2.imshow(window_name, modified_frame)
+            cv2.imwrite(write_path, modified_frame)
             # Check for the 'q' key to exit
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 stop_capture.set() 
