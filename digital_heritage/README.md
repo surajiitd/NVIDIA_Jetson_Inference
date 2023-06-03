@@ -11,7 +11,7 @@
 8. In this database you can manually change the location coordinates, add, delete locations, etc.
 ---
 **Problem 1:**
-Bug to resolve in app: while entering a location's name and pressing "mark location" button, the location is not getting added, and the app is toggled to off mode. (actually the error was happening(printing) in the orbslam terminal)
+Bug to resolve in app: while entering a location's name and pressing "mark location" button, the location is not getting added, and the app is toggled to off mode. (actually the error was happening(printing) in the orbslam terminal).  
 **Problem 2:**
 - App with map code was deleted due to jetson got format. and map was not updated in github code. 
 - and in the new app code also, they didn't get time to complete the map part of the app, just made the frontend(html) for map, but not the js code,etc. So later from frontend also they removed the map part. So that has to be done.
