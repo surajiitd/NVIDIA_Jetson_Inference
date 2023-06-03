@@ -110,17 +110,22 @@ def select_points():
     cv2.moveWindow(window_name, left_half_x, left_half_y)
     cv2.resizeWindow(window_name, left_half_width, left_half_height)
     
-    sample_image_path = "/home/vision/suraj/kitti_dataset/KITTI/2011_09_26/2011_09_26_drive_0001_sync/image_02/data/0000000000.png"
+    sample_image_path = "/home/vision/suraj/kitti_dataset/KITTI/2011_09_28/2011_09_28_drive_0001_sync/image_02/data/0000000000.png"
     image = cv2.imread(sample_image_path,-1)
+    h,w,_ = image.shape
+    pad_x = int(w)
+    pad_y = int(((screen_height*w)/(screen_width*.5)-h)/2)
+    print(image.shape)
+    top_padding = np.zeros((pad_y,pad_x,3),dtype=np.uint8)
+    bottom_padding = np.zeros((pad_y,pad_x,3),dtype=np.uint8)
+    image = np.vstack((top_padding,image,bottom_padding))
+    
     # if dataset == "kitti": # do kb_crop
     #     height = img_size[1]
     #     width = img_size[2]
     #     top_margin = int(height - 352)
     #     left_margin = int((width - 1216) / 2)
     #     image = image[top_margin:top_margin + 352, left_margin:left_margin + 1216]
-    top_padding = np.zeros((511,1242,3),dtype=np.uint8)
-    bottom_padding = np.zeros((511,1242,3),dtype=np.uint8)
-    image = np.vstack((top_padding,image,bottom_padding))
     cv2.imshow(window_name, image)
     # cv2.waitKey(1)
     global selected_points, frame, is_frame_available
@@ -184,6 +189,8 @@ def display_frame(kitti_read_path,kitti_write_path,data_splits_file):
     # Process each image path
     for idx,line in enumerate(lines):
         image_path = line.strip().split(" ")[0]
+        if image_path.split("/")[0] == "2011_09_26":
+            continue # as 1st folder is done 
         read_path = os.path.join(kitti_read_path,image_path)
         write_path = os.path.join(kitti_write_path,image_path)
         save_dir = os.path.dirname(write_path)
@@ -204,17 +211,20 @@ def display_frame(kitti_read_path,kitti_write_path,data_splits_file):
             left_half_y = 0
             left_half_width = screen_width // 2
             left_half_height = screen_height
-            
-            top_padding = np.zeros((511,1242,3),dtype=np.uint8)
-            bottom_padding = np.zeros((511,1242,3),dtype=np.uint8)
+            h,w,_ = rgb_image.shape
+            pad_x = int(w)
+            pad_y = int(((screen_height*w)/(screen_width*.5)-h)/2)
+
+            top_padding = np.zeros((pad_y,pad_x,3),dtype=np.uint8)
+            bottom_padding = np.zeros((pad_y,pad_x,3),dtype=np.uint8)
             rgb_image = np.vstack((top_padding,rgb_image,bottom_padding))
-            print(rgb_image.shape)
+            #print(rgb_image.shape)
             window_name = 'Image to be captured'
             # Create a resizable window for the webcam feed
             cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
             cv2.moveWindow(window_name, left_half_x, left_half_y)
             cv2.resizeWindow(window_name, left_half_width, left_half_height)
-            image_name_ = os.path.basename(read_path)
+            #image_name_ = os.path.basename(read_path)
             #cv2.putText(rgb_image,f"{image_name_}",(325,690), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2, cv2.LINE_AA)
 
             # sample_image_path = "/home/vision/suraj/kitti_dataset/KITTI/2011_09_26/2011_09_26_drive_0001_sync/image_02/data/0000000000.png"
@@ -266,7 +276,7 @@ select_points()
 
 kitti_read_path = "/home/vision/suraj/kitti_dataset/KITTI"
 kitti_write_path = "/home/vision/suraj/kitti_dataset/KITTI_captured_from_oak1"
-data_splits_file = '/home/vision/suraj/Pixelformer_jetson/data_splits/kitti_all_data_for_data_capture_from_camera.txt'  # Replace with the actual path to your data splits file
+data_splits_file = '/home/vision/suraj/Pixelformer_jetson/data_splits/kitti_all_data_for_data_capture_from_camera_from_2nd.txt'  # Replace with the actual path to your data splits file
 display_frame(kitti_read_path,kitti_write_path,data_splits_file)
 
 

@@ -218,18 +218,6 @@ def tensorrt_inference(tensorrt_engine_path):
 
     start_time = time.time()
     idx=0
-    window_name = "Pixelformer Depth Prediction"   
-        
-    screen_width, screen_height = 1920, 1080  # Replace with your screen resolution
-    # Calculate the dimensions for the right half of the screen
-    right_half_x = screen_width // 2
-    right_half_y = screen_height
-    right_half_width = screen_width // 2
-    right_half_height = screen_height
-    # Create a resizable window for the camera feed
-    cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-    cv2.moveWindow(window_name, right_half_x, 0)
-    cv2.resizeWindow(window_name, right_half_width, right_half_height)
     while True:
         global_idx = idx+1
         # Read a frame from the webcam
@@ -265,9 +253,9 @@ def tensorrt_inference(tensorrt_engine_path):
         #pred_depth = colorize(pred_depth, cmap=cmap,vmin = 0,vmax=6)
         #new
         print(np.median(pred_depth),np.max(pred_depth),np.mean(pred_depth))
-        pred_depth = colorize(pred_depth, cmap=cmap,vmin = 0,vmax=2.4)
-        #plt.imsave('temp.png', (2-np.log(pred_depth))/2, cmap='plasma')
-        #pred_depth = cv2.imread('temp.png')
+        a = plt.imsave('temp.png', (3-np.log(pred_depth))/10, cmap='plasma')
+        print(a)
+        pred_depth = cv2.imread('temp.png')
         
         #sys.exit(0)
         thickness=2
@@ -279,9 +267,8 @@ def tensorrt_inference(tensorrt_engine_path):
         cv2.putText(pred_depth,"Predicted depth",(5,25), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), thickness, cv2.LINE_AA)
         #print(image.shape, pred_depth.shape)
         combined = np.vstack((image,pred_depth))
-        """
-        window_name = "Pixelformer Depth Prediction"   
-        
+
+        window_name = "Pixelformer Depth Prediction"    
         screen_width, screen_height = 1920, 1080  # Replace with your screen resolution
         # Calculate the dimensions for the right half of the screen
         right_half_x = screen_width // 2
@@ -292,21 +279,13 @@ def tensorrt_inference(tensorrt_engine_path):
         cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
         cv2.moveWindow(window_name, right_half_x, 0)
         cv2.resizeWindow(window_name, right_half_width, right_half_height)
-        """
         # cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
         # cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         #cv2.resizeWindow(window_name, 1800,1000)
-        
+
         #cv2.imwrite(f"sample_output_images/kitti/{idx:03d}.png",combined)
         # left_pad = np.zeros((704,1216,3))
         # combined = np.hstack(left_pad, combined)
-        # pad_x = 1216 #int(w)
-        # pad_y = 508 #int(((screen_height*w)/(screen_width*.5)-h)/2)
-        # top_padding = np.zeros((pad_y,pad_x,3),dtype=np.uint8)
-        # bottom_padding = np.zeros((pad_y,pad_x,3),dtype=np.uint8)
-        # combined = np.vstack((top_padding,combined,bottom_padding))
-        # combined = cv2.resize(combined,(950,1070))
-        
         cv2.imshow(window_name, combined)
         idx+=1
         #"""

@@ -4,5 +4,4 @@
 onnx_models
 tensorRT_engines
 ./*.png
-sample_output_images
 

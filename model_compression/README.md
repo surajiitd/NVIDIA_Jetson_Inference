@@ -12,26 +12,24 @@
 2. Use `2.onnx_runtime.py` to inference using onnx file(just for sanity check that the model is giving right output or not).
 3. Use `3.onnx_to_tensorRT.py` to convert onnx model to tensorRT and also to inference using tensorRT engine(which is saved).
 
+### Live domo of pixelformer in jetson with live oak(1) looking at the monitor.
+- Run : `python3 live_demo_with_homography_single_screen.py` from `pixelformer` conda environment.
+- before that to make tensorrt visible : execute what it is inside `run_global_tensorrt_in_conda_env.sh` file.
 
 ### Time Requirement:
-- For one image [of size=(480,640)]:   
-    NYUv2:
-        pytorch model takes:    0.5 sec  
-        onnx model takes:       2.46 sec  
-        TensorRT is taking:     **0.25 sec** [Took 9.32 seconds for 60 image!! = **6.5fps**]  
-        While I/O demo:         Took 13.10 seconds for 60 image!! = 4.5fps
-    Kitti:
-        pytorch model takes:    0.61 sec  
-        TensorRT is taking:     **0.28 sec** [Took 27.70 seconds for 139 image!!!! = **5fps**]  
-        While I/O demo:         Took 52.01 seconds for 139 image!! = 2.7fps
-Kitti:
-    FPS:
-    negroni: 7.5 and 4 FPS
-    jetson : 4.8 and 2.4 FPS
 
-    pytorch model:
-    negroni: 9fps
-    jetson: 2fps (after resizing the image 3-4 fps)
+
+| Device         | Dataset | PyTorch Model                                | ONNX Model | TensorRT | I/O Demo (with Preprocessing) |
+|----------------|---------|----------------------------------------------|------------|----------|----------|
+| Jetson AGX Orin | NYUv2   | 2FPS                                     | 2.46 sec(per img)   | **0.25 sec**[**6.5 FPS**] |  4.5 FPS |
+| Jetson AGX Orin | Kitti   | 1.63 FPS(3.33 FPS on resizing image to half)     | -          | **0.28 sec**[**5 FPS**] | 2.7 FPS |
+| NVIDIA A100 GPU | NYUv2   | 6.57 FPS                                           | -          | Nil       | Nil        |
+| NVIDIA A100 GPU | Kitti   | 5.66 FPS             | -          | **7.2 FPS**        | 4 FPS        |
+
+*Size of Images*:
+- NYUv2 has image of size (480,640).
+- Kitti has image of size (352, 1216) [which is kb_crop-ed from original size (375, 1242)]
+
 
 ### Sample Depth Outputs:
 
@@ -45,11 +43,11 @@ Kitti:
 ---
 ![Image](sample_output_images/kitti/010.png)
 ---
-![Image](sample_output_images/kitti/020.png)
+<!-- ![Image](sample_output_images/kitti/020.png) -->
 ---
 <!-- ![Image](sample_output_images/kitti/030.png)
 --- -->
-![Image](sample_output_images/kitti/040.png)
+<!-- ![Image](sample_output_images/kitti/040.png) -->
 ---
 
 <!-- ![Image](sample_output_images/kitti/050.png)
