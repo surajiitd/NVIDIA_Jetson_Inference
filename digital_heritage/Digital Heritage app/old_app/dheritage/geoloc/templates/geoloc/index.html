@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DIGITAL HERITAGE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="topnav">
+        <!-- <img src="AFR_Logo.png" alt="logo" class="nav-logo" /> -->
+    </div>
+    <div class="main">
+        <div class="heading">
+            <p>DIGITAL HERITAGE</p>
+        </div>
+        <div class="section">
+            <button id="play-button" onclick=buttonPress()>OFF</button>
+        </div>
+
+        <div class="cards"></div>
+        <div class="nearby invisible">
+            <div class="nearby-sub">Nearby locations : </div>
+            <div class="nearby-list"></div>
+        </div>
+
+        <form class="section mark invisible">
+            <input type="text" id="name" name="name" placeholder="Name">
+            <input type="button" id="geo-button" value="MARK LOCATION" onclick=mark()>
+        </form>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

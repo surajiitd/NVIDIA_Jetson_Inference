@@ -1,0 +1,64 @@
+html {
+    font-family: sans-serif;
+    display: inline-block;
+}
+body {
+    margin: 0;
+    text-align: center;
+}
+.main {
+    margin-bottom: 100px;
+}
+.heading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 10px;
+    color: black;
+    font-size: x-large;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    background: #FAEB9D;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5);
+}
+.subheading {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #191414;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin: 20px 0;
+}
+.section {
+    margin: 10px;
+    padding: 10px;
+}
+#play-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: green;
+    color: white;
+    border: solid 2px white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.card {
+    margin: 20px;
+    padding: 20px 20px 40px 20px;
+    border-radius: 20px;
+    border: solid 2px white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.invisible {
+    display: none;
+}
+.nearby-sub {
+    padding: 20px;
+}
+.nearby {
+    padding-bottom: 20px;
+}
