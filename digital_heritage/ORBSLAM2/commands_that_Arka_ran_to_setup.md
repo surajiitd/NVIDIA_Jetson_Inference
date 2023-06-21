@@ -1,4 +1,5 @@
 These are the commands that I extracted from history of terminal which Arka ran to setup orbslam2 again and integrate with app.
+```
  1366  vim ~/.bashrc
  1367  git clone https://github.com/luxonis/depthai-python.git
  1368  cd depthai-python/examples
@@ -79,9 +80,10 @@ These are the commands that I extracted from history of terminal which Arka ran 
  1443  cmake --build build --target install
  1444  cd /usr
  1445  grep -r "depthai"
-
+```
 
 ****************************************************
+```
  1527  find ./ -iname install_opencv*
  1528  ls /usr/inc
  1529  ls /usr/include/
@@ -240,9 +242,10 @@ These are the commands that I extracted from history of terminal which Arka ran 
  1682  ls /usr/local
  1683  sudo cp -r ./* /usr/local/include/
  1684  ls /usr/local/include
-
+```
 
 ********************************************
+```
  1769  ls /usr/local/
  1770  cp -r ./include /usr/local
  1771  sudo cp -r ./include /usr/local
@@ -313,8 +316,9 @@ These are the commands that I extracted from history of terminal which Arka ran 
  1836  cd /usr/local/cuda
  1837  cd ..
  1838  ls
-
+```
 ********************************************** 
+```
  1870  ./build.sh
  1871  ifconfig
  1872  ./build.sh
@@ -329,4 +333,4 @@ These are the commands that I extracted from history of terminal which Arka ran 
  1881  python manage.py runserver 172.10.20.4:8080
  1882  python manage.py runserver 172.20.10.15:8080
  1883  python manage.py runserver 172.20.10.4:8080
-
+```
