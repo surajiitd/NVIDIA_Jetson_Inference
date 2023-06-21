@@ -1,4 +1,4 @@
-These are the commands that I extracted from history of terminal which Arka ran to setup orbslam2 again and integrate with app.
+These are the commands that I extracted from history of terminal which Arka ran to setup orbslam2 again and integrate with app.  
 1. 
  ```
   1366  vim ~/.bashrc
