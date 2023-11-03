@@ -80,9 +80,9 @@
     ## Summary and some extra things to take care:
     - **[WHAT doesn't works]**: installing torch/pytorch directly from internet like with below commands that are given in pytorch website or in pypi website or in conda website... None of them worked. All gave output as `AssertionError: Torch not compiled with CUDA enabled` when sending a tensor to "cuda".
     - Both pytorch wheel files(1.14.0 and 2.0.0) from [jetson zoo](https://elinux.org/Jetson_Zoo#PyTorch_.28Caffe2.29) were working fine when installing with this command: `pip install --no-cache $TORCH_INSTALL`
-    - `TORCH_INSTALL` can be `/home/vision/Downloads/torch-2.0.0a0+8aa34602.nv23.03-cp38-cp38-linux_aarch64.whl` or `/home/vision/Downloads/torch-1.14.0a0+44dac51c.nv23.01-cp38-cp38-linux_aarch64.whl`. From both, torch was able to use CUDA. (torch's tensor was able to sent to "cuda").
+    - `TORCH_INSTALL` can be `/home/vision/Downloads/torch-2.0.0a0+8aa34602.nv23.03-cp38-cp38-linux_aarch64.whl` or `/home/vision/Downloads/torch-1.14.0a0+44dac51c.nv23.01-cp38-cp38-linux_aarch64.whl`. From both, torch was able to use CUDA. (torch's tensor was able to sent to "cuda"). BUT INSTSLL 2.0.0 version.
     - I ignored this error from pip install by above command: `torchvision 0.15.1 requires torch==2.0.0, but you have torch 2.0.0a0+8aa34602.nv23.3 which is incompatible.`
-    - But in order to run Pixelformer: we also need to install these libraries: `pip install matplotlib tqdm tensorboardX timm mmcv` 
+    - But in order to run Pixelformer: we also need to install these libraries: `pip install matplotlib tqdm tensorboardX timm depthai` 
     - But in above libraries: `timm` and `mmcv` was creating some problem. 
         1. `timm`: was automatically installing torch 2.0.0 and uninstalling 1.14.0. So I installed `torch-2.0.0` from **Jetson zoo**. So timm was default latest version of timm was installed (i.e: 0.6.13 ).
         2. `mmcv`: while running the code of pixelformer, it was throwing this error `AttributeError: module 'torch.distributed' has no attribute 'ReduceOp'` on closely looking at the stack trace, the error was originated from `from mmcv.cnn import ConvModule` so **mmcv** was the problem.
