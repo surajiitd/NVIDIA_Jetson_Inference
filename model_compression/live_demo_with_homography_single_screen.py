@@ -54,6 +54,7 @@ def colorize(depth,cmap, vmin=None,vmax=None):
     colormap = cm.get_cmap(cmap)
     colored_depth = colormap((depth-vmin)/(vmax-vmin)) #first convert from 0-1 then from 0-255 in below line.
     #colored_depth = colormap(depth)
+    # colored_depth = colored_depth[:,:,::-1]
     colored_depth_rgb = (colored_depth[:,:,:3]*255).astype(np.uint8)
     return colored_depth_rgb
 
@@ -258,7 +259,7 @@ def tensorrt_inference(tensorrt_engine_path):
         output_data = torch.Tensor(host_output).reshape(engine.max_batch_size, img_size[1], img_size[2])
         pred_depth = output_data.cpu().numpy().squeeze()
 
-        cmap='inferno' #'magma', 'inferno'
+        cmap='magma' #'magma', 'inferno'
         #gt_depth = colorize(gt_depth, cmap=cmap, vmin=0, vmax=vmax)
         #print(f"min = {np.min(pred_depth), np.max(pred_depth)}")
         #old
@@ -266,6 +267,10 @@ def tensorrt_inference(tensorrt_engine_path):
         #new
         print(np.median(pred_depth),np.max(pred_depth),np.mean(pred_depth))
         pred_depth = colorize(pred_depth, cmap=cmap,vmin = 0,vmax=2.4)
+        pred_depth = cv2.cvtColor(pred_depth, cv2.COLOR_BGR2RGB)
+        # import ipdb;ipdb.set_trace()
+        # [:,:,::-1]
+        # print("pred_depth.shape = ",pred_depth.shape)
         #plt.imsave('temp.png', (2-np.log(pred_depth))/2, cmap='plasma')
         #pred_depth = cv2.imread('temp.png')
         

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# default commit message
+file_to_stage="."
+commit_msg="updates"
+
+if [ $# -eq 1 ]; then
+    commit_msg="$1"
+elif [ $# -eq 2 ]; then
+    file_to_stage="$1"
+    commit_msg="$2"
+elif [ $# -gt 2 ]; then
+    echo "Usage: `$0 <file-to-stage> <commit-message>` or `$0 <commit-message>` or `$0`"
+    exit 1
+fi
+
+echo command: git add "$file_to_stage"
+git add "$file_to_stage"
+
+echo command: git commit -m "$commit_msg"
+git commit -m "$commit_msg"
+# Push to the main branch on GitHub (assuming 'origin' points to your GitHub repository)
+git push origin main

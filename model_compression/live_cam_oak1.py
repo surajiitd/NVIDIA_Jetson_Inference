@@ -60,7 +60,7 @@ if __name__ == '__main__':
     camRgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_4_K)
     # camRgb.setPreviewSize(1280,720)
     camRgb.setPreviewSize(300,300)
-    camRgb.initialControl.setManualFocus(1)
+    #camRgb.initialControl.setManualFocus(1)
     #camRgb.setAutoWhiteBalanceMode( AutoWhiteBalanceMode.OFF)
 
     xoutRgb = pipeline.createXLinkOut()
