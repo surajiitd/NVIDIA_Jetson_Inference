@@ -341,8 +341,8 @@ capture_thread.start()
 select_points()
 
 #perform homography 
-tensorrt_engine_path = "/home/vision/suraj/jetson-documentation/model_compression/tensorRT_engines/kitti_model-55000-best_abs_rel_0.05135.trt"
-tensorrt_engine_path = "/home/vision/suraj/jetson-documentation/model_compression/tensorRT_engines/kitti_model-55000-best_abs_rel_0.05135.trt"
+tensorrt_engine_path = "./tensorRT_engines/kitti_model-55000-best_abs_rel_0.05135.trt"
+tensorrt_engine_path = "./tensorRT_engines/kitti_model-55000-best_abs_rel_0.05135.trt"
 tensorrt_inference(tensorrt_engine_path)
 
 # Wait for the frame capture thread to finish
