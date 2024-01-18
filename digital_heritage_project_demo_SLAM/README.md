@@ -43,25 +43,6 @@ cd ORB_SLAM2
 chmod +x build.sh
 ./build.sh
 
-
-Optional: If encountering issues related to libdepthai-opencv.so, make the following modifications to CMakeLists.txt:
-
-cmake
-# Comment out lines 118-121:
-# add_executable(test Examples/Monocular/test.cc)
-# target_link_libraries(test /home/vision/slam/depthai-core/build/libdepthai-opencv.so -lcurl ${PROJECT_NAME})
-
-# Modify lines 73-81:
-target_link_libraries(${PROJECT_NAME}
-   ${OpenCV_LIBS}
-   ${EIGEN3_LIBS}
-   ${Pangolin_LIBRARIES}
-   ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
-   ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
-   -lcurl
-)
-
-
 ## 4. To Test the Build
 
 bash
