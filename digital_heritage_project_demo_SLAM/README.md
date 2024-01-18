@@ -1,5 +1,78 @@
 ## Digital Heritage app.
 
+# ORB-SLAM2 Setup on NVIDIA Jetson AGX Xavier
+
+This guide outlines the steps to set up ORB-SLAM2 on NVIDIA Jetson AGX Xavier, integrating it with NVIDIA Jetson Inference and using Pangolin for visualization.
+
+## 1. Install Pangolin
+
+bash
+git clone --recursive https://github.com/stevenlovegrove/Pangolin.git
+cd Pangolin
+./scripts/install_prerequisites.sh recommended
+git checkout v0.6
+mkdir build && cd build
+cmake ..
+cmake --build .
+sudo make install
+
+
+Note: Building the Python wheel is currently known to have issues and is left unaddressed for now.
+
+## 2. Install OpenCV
+
+Follow the instructions provided in this [blog post](https://forums.developer.nvidia.com/t/best-way-to-install-opencv-with-cuda-on-jetpack-5-xavier-nx-opencv-for-tegra/222777) for installing OpenCV with CUDA support.
+
+## 3. Download NVIDIA Jetson Inference Repo
+
+### 3.1 Setup Native CURL
+
+bash
+git clone https://github.com/surajiitd/NVIDIA_Jetson_Inference.git
+cd digital_heritage_project_demo_SLAM
+cd curl-7.77.0
+./configure --without-ssl
+make
+sudo make install
+
+
+### 3.2 Build ORB-SLAM2
+
+bash
+cd ORB_SLAM2
+chmod +x build.sh
+./build.sh
+
+
+Optional: If encountering issues related to libdepthai-opencv.so, make the following modifications to CMakeLists.txt:
+
+cmake
+# Comment out lines 118-121:
+# add_executable(test Examples/Monocular/test.cc)
+# target_link_libraries(test /home/vision/slam/depthai-core/build/libdepthai-opencv.so -lcurl ${PROJECT_NAME})
+
+# Modify lines 73-81:
+target_link_libraries(${PROJECT_NAME}
+   ${OpenCV_LIBS}
+   ${EIGEN3_LIBS}
+   ${Pangolin_LIBRARIES}
+   ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+   ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+   -lcurl
+)
+
+
+## 4. To Test the Build
+
+bash
+cd /home/vision-agx-05/Desktop/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2
+./Examples/Monocular/test_recorded Vocabulary/ORBvoc.txt Examples/Monocular/lab_data/visionLab.yaml /home/vision-agx-05/Sarvesh/SLAM_Demo/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/Examples/Monocular/lab_data/
+
+
+Note: Further steps regarding Python installation, Django setup, and running the server haven't been tested at the time of writing this readme.
+
+For additional details and troubleshooting, please refer to the original documentation or repositories for each component.
+
 ### Steps to run ORBSLAM2 with app.
 1. first connect jetson with same mobile's hotspot in which you want to run the app.
 2. Now find the ip asigned to jetson... go to "manage devices" in your mobile hotspot and see jetson's ip. let's say it's ip is "IP". (You can do this in IIT_WIFI also if you don't want to run the app in mobile and can run in the jetson's browser itself.in that case you can use ip everywhere as 127.0.0.1 also).
