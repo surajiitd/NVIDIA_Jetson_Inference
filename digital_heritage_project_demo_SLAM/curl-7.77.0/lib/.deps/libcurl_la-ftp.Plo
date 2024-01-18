@@ -113,8 +113,8 @@ libcurl_la-ftp.lo: ftp.c /usr/include/stdc-predef.h curl_setup.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h sendf.h if2ip.h progress.h \
  transfer.h escape.h fileinfo.h ftplistparser.h curl_range.h curl_krb5.h \
- strtoofft.h strcase.h vtls/vtls.h vtls/openssl.h ../lib/urldata.h \
- vtls/gtls.h vtls/nssg.h vtls/gskit.h vtls/wolfssl.h vtls/schannel.h \
+ strtoofft.h strcase.h vtls/vtls.h vtls/openssl.h vtls/gtls.h vtls/nssg.h \
+ vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h vtls/schannel.h \
  vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h vtls/bearssl.h \
  vtls/rustls.h connect.h nonblock.h sockaddr.h strerror.h inet_ntop.h \
  inet_pton.h select.h /usr/include/poll.h \
@@ -484,13 +484,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

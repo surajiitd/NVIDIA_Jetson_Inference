@@ -100,12 +100,7 @@ libcurl_la-md4.lo: md4.c /usr/include/stdc-predef.h curl_setup.h \
  /usr/include/aarch64-linux-gnu/bits/getopt_core.h \
  /usr/include/aarch64-linux-gnu/bits/unistd.h \
  /usr/include/aarch64-linux-gnu/bits/unistd_ext.h curl_ctype.h curl_md4.h \
- warnless.h /usr/include/aarch64-linux-gnu/openssl/opensslconf.h \
- /usr/include/openssl/opensslv.h /usr/include/openssl/md4.h \
- /usr/include/openssl/e_os2.h /usr/include/inttypes.h \
- /usr/lib/gcc/aarch64-linux-gnu/9/include/stdint.h /usr/include/stdint.h \
- /usr/include/aarch64-linux-gnu/bits/wchar.h \
- /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h
+ warnless.h
 
 /usr/include/stdc-predef.h:
 
@@ -358,21 +353,3 @@ curl_ctype.h:
 curl_md4.h:
 
 warnless.h:
-
-/usr/include/aarch64-linux-gnu/openssl/opensslconf.h:
-
-/usr/include/openssl/opensslv.h:
-
-/usr/include/openssl/md4.h:
-
-/usr/include/openssl/e_os2.h:
-
-/usr/include/inttypes.h:
-
-/usr/lib/gcc/aarch64-linux-gnu/9/include/stdint.h:
-
-/usr/include/stdint.h:
-
-/usr/include/aarch64-linux-gnu/bits/wchar.h:
-
-/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:

@@ -153,7 +153,7 @@ libcurl_la-http.lo: http.c /usr/include/stdc-predef.h curl_setup.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h transfer.h sendf.h progress.h \
  curl_base64.h vauth/vauth.h ../lib/bufref.h vtls/vtls.h vtls/openssl.h \
- ../lib/urldata.h vtls/gtls.h vtls/nssg.h vtls/gskit.h vtls/wolfssl.h \
+ vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h \
  vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h \
  vtls/bearssl.h vtls/rustls.h http_digest.h http_ntlm.h curl_ntlm_wb.h \
  http_negotiate.h http_aws_sigv4.h url.h share.h select.h \
@@ -608,13 +608,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

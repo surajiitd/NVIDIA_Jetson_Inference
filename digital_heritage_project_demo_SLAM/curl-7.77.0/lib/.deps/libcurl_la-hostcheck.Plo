@@ -100,11 +100,7 @@ libcurl_la-hostcheck.lo: hostcheck.c /usr/include/stdc-predef.h \
  /usr/include/aarch64-linux-gnu/bits/getopt_posix.h \
  /usr/include/aarch64-linux-gnu/bits/getopt_core.h \
  /usr/include/aarch64-linux-gnu/bits/unistd.h \
- /usr/include/aarch64-linux-gnu/bits/unistd_ext.h curl_ctype.h \
- /usr/include/netinet/in.h \
- /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
- /usr/include/aarch64-linux-gnu/bits/in.h hostcheck.h strcase.h \
- inet_pton.h /usr/include/arpa/inet.h curl_memory.h memdebug.h
+ /usr/include/aarch64-linux-gnu/bits/unistd_ext.h curl_ctype.h
 
 /usr/include/stdc-predef.h:
 
@@ -353,21 +349,3 @@ curl_setup_once.h:
 /usr/include/aarch64-linux-gnu/bits/unistd_ext.h:
 
 curl_ctype.h:
-
-/usr/include/netinet/in.h:
-
-/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/aarch64-linux-gnu/bits/in.h:
-
-hostcheck.h:
-
-strcase.h:
-
-inet_pton.h:
-
-/usr/include/arpa/inet.h:
-
-curl_memory.h:
-
-memdebug.h:

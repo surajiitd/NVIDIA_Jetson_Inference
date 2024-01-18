@@ -112,7 +112,7 @@ libcurl_la-formdata.lo: formdata.c /usr/include/stdc-predef.h \
  imap.h pingpong.h curl_sasl.h pop3.h smtp.h ftp.h file.h vssh/ssh.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h non-ascii.h vtls/vtls.h \
- vtls/openssl.h ../lib/urldata.h vtls/gtls.h vtls/nssg.h vtls/gskit.h \
+ vtls/openssl.h vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h \
  vtls/wolfssl.h vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h \
  vtls/mesalink.h vtls/bearssl.h vtls/rustls.h strcase.h sendf.h strdup.h \
  rand.h warnless.h curl_printf.h ../include/curl/mprintf.h curl_memory.h \
@@ -460,13 +460,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

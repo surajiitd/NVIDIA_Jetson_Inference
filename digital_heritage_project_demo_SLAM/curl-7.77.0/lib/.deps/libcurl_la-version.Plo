@@ -111,10 +111,12 @@ libcurl_la-version.lo: version.c /usr/include/stdc-predef.h curl_setup.h \
  imap.h pingpong.h curl_sasl.h pop3.h smtp.h ftp.h file.h vssh/ssh.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h vtls/vtls.h vtls/openssl.h \
- ../lib/urldata.h vtls/gtls.h vtls/nssg.h vtls/gskit.h vtls/wolfssl.h \
+ vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h \
  vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h \
  vtls/bearssl.h vtls/rustls.h http2.h curl_printf.h \
- ../include/curl/mprintf.h /usr/include/zlib.h /usr/include/zconf.h
+ ../include/curl/mprintf.h /usr/include/zlib.h /usr/include/zconf.h \
+ /usr/include/ldap.h /usr/include/lber.h /usr/include/lber_types.h \
+ /usr/include/ldap_cdefs.h /usr/include/ldap_features.h
 
 /usr/include/stdc-predef.h:
 
@@ -454,13 +456,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 
@@ -485,3 +487,13 @@ curl_printf.h:
 /usr/include/zlib.h:
 
 /usr/include/zconf.h:
+
+/usr/include/ldap.h:
+
+/usr/include/lber.h:
+
+/usr/include/lber_types.h:
+
+/usr/include/ldap_cdefs.h:
+
+/usr/include/ldap_features.h:

@@ -115,8 +115,8 @@ libcurl_la-pingpong.lo: pingpong.c /usr/include/stdc-predef.h \
  /usr/include/poll.h /usr/include/aarch64-linux-gnu/sys/poll.h \
  /usr/include/aarch64-linux-gnu/bits/poll.h \
  /usr/include/aarch64-linux-gnu/bits/poll2.h progress.h speedcheck.h \
- multiif.h non-ascii.h vtls/vtls.h vtls/openssl.h ../lib/urldata.h \
- vtls/gtls.h vtls/nssg.h vtls/gskit.h vtls/wolfssl.h vtls/schannel.h \
+ multiif.h non-ascii.h vtls/vtls.h vtls/openssl.h vtls/gtls.h vtls/nssg.h \
+ vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h vtls/schannel.h \
  vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h vtls/bearssl.h \
  vtls/rustls.h curl_printf.h ../include/curl/mprintf.h curl_memory.h \
  memdebug.h
@@ -479,13 +479,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

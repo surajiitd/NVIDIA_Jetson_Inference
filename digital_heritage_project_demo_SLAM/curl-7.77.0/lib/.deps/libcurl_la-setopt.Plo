@@ -119,7 +119,7 @@ libcurl_la-setopt.lo: setopt.c /usr/include/stdc-predef.h curl_setup.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h url.h progress.h \
  content_encoding.h strcase.h share.h vtls/vtls.h vtls/openssl.h \
- ../lib/urldata.h vtls/gtls.h vtls/nssg.h vtls/gskit.h vtls/wolfssl.h \
+ vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h \
  vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h \
  vtls/bearssl.h vtls/rustls.h warnless.h sendf.h http2.h setopt.h \
  multiif.h altsvc.h hsts.h curl_printf.h ../include/curl/mprintf.h \
@@ -495,13 +495,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

@@ -113,7 +113,7 @@ libcurl_la-pop3.lo: pop3.c /usr/include/stdc-predef.h curl_setup.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h sendf.h progress.h transfer.h \
  escape.h socks.h strtoofft.h strcase.h vtls/vtls.h vtls/openssl.h \
- ../lib/urldata.h vtls/gtls.h vtls/nssg.h vtls/gskit.h vtls/wolfssl.h \
+ vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h \
  vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h \
  vtls/bearssl.h vtls/rustls.h connect.h nonblock.h sockaddr.h strerror.h \
  select.h /usr/include/poll.h /usr/include/aarch64-linux-gnu/sys/poll.h \
@@ -474,13 +474,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

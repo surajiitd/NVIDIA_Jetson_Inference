@@ -118,11 +118,11 @@ libcurl_la-sendf.lo: sendf.c /usr/include/stdc-predef.h curl_setup.h \
  imap.h pingpong.h curl_sasl.h pop3.h smtp.h ftp.h file.h vssh/ssh.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h sendf.h connect.h nonblock.h \
- sockaddr.h vtls/vtls.h vtls/openssl.h ../lib/urldata.h vtls/gtls.h \
- vtls/nssg.h vtls/gskit.h vtls/wolfssl.h vtls/schannel.h vtls/sectransp.h \
- vtls/mbedtls.h vtls/mesalink.h vtls/bearssl.h vtls/rustls.h easyif.h \
- multiif.h non-ascii.h strerror.h select.h /usr/include/poll.h \
- /usr/include/aarch64-linux-gnu/sys/poll.h \
+ sockaddr.h vtls/vtls.h vtls/openssl.h vtls/gtls.h vtls/nssg.h \
+ vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h vtls/schannel.h \
+ vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h vtls/bearssl.h \
+ vtls/rustls.h easyif.h multiif.h non-ascii.h strerror.h select.h \
+ /usr/include/poll.h /usr/include/aarch64-linux-gnu/sys/poll.h \
  /usr/include/aarch64-linux-gnu/bits/poll.h \
  /usr/include/aarch64-linux-gnu/bits/poll2.h strdup.h http2.h \
  curl_printf.h ../include/curl/mprintf.h curl_memory.h memdebug.h
@@ -495,13 +495,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

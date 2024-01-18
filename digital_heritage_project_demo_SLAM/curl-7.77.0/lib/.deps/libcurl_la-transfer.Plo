@@ -154,7 +154,7 @@ libcurl_la-transfer.lo: transfer.c /usr/include/stdc-predef.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h netrc.h content_encoding.h \
  transfer.h sendf.h speedcheck.h progress.h url.h getinfo.h vtls/vtls.h \
- vtls/openssl.h ../lib/urldata.h vtls/gtls.h vtls/nssg.h vtls/gskit.h \
+ vtls/openssl.h vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h \
  vtls/wolfssl.h vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h \
  vtls/mesalink.h vtls/bearssl.h vtls/rustls.h select.h \
  /usr/include/poll.h /usr/include/aarch64-linux-gnu/sys/poll.h \
@@ -614,13 +614,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

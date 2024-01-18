@@ -100,13 +100,7 @@ libcurl_la-sha256.lo: sha256.c /usr/include/stdc-predef.h curl_setup.h \
  /usr/include/aarch64-linux-gnu/bits/getopt_core.h \
  /usr/include/aarch64-linux-gnu/bits/unistd.h \
  /usr/include/aarch64-linux-gnu/bits/unistd_ext.h curl_ctype.h warnless.h \
- curl_sha256.h curl_hmac.h /usr/include/openssl/opensslv.h \
- /usr/include/openssl/sha.h /usr/include/openssl/e_os2.h \
- /usr/include/aarch64-linux-gnu/openssl/opensslconf.h \
- /usr/include/inttypes.h \
- /usr/lib/gcc/aarch64-linux-gnu/9/include/stdint.h /usr/include/stdint.h \
- /usr/include/aarch64-linux-gnu/bits/wchar.h \
- /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h
+ curl_sha256.h curl_hmac.h
 
 /usr/include/stdc-predef.h:
 
@@ -361,21 +355,3 @@ warnless.h:
 curl_sha256.h:
 
 curl_hmac.h:
-
-/usr/include/openssl/opensslv.h:
-
-/usr/include/openssl/sha.h:
-
-/usr/include/openssl/e_os2.h:
-
-/usr/include/aarch64-linux-gnu/openssl/opensslconf.h:
-
-/usr/include/inttypes.h:
-
-/usr/lib/gcc/aarch64-linux-gnu/9/include/stdint.h:
-
-/usr/include/stdint.h:
-
-/usr/include/aarch64-linux-gnu/bits/wchar.h:
-
-/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:

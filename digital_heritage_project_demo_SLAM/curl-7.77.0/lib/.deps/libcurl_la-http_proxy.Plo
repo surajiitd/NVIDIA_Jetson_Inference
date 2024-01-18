@@ -118,8 +118,8 @@ libcurl_la-http_proxy.lo: http_proxy.c /usr/include/stdc-predef.h \
  /usr/include/aarch64-linux-gnu/bits/poll2.h progress.h non-ascii.h \
  connect.h nonblock.h sockaddr.h curlx.h ../include/curl/mprintf.h \
  strcase.h strtoofft.h warnless.h curl_multibyte.h version_win32.h \
- vtls/vtls.h vtls/openssl.h ../lib/urldata.h vtls/gtls.h vtls/nssg.h \
- vtls/gskit.h vtls/wolfssl.h vtls/schannel.h vtls/sectransp.h \
+ vtls/vtls.h vtls/openssl.h vtls/gtls.h vtls/nssg.h vtls/gskit.h \
+ ../lib/urldata.h vtls/wolfssl.h vtls/schannel.h vtls/sectransp.h \
  vtls/mbedtls.h vtls/mesalink.h vtls/bearssl.h vtls/rustls.h transfer.h \
  multiif.h curl_printf.h curl_memory.h memdebug.h
 
@@ -501,13 +501,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 

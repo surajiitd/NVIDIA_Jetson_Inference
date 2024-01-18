@@ -152,7 +152,7 @@ libcurl_la-easy.lo: easy.c /usr/include/stdc-predef.h curl_setup.h \
  imap.h pingpong.h curl_sasl.h pop3.h smtp.h ftp.h file.h vssh/ssh.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
  conncache.h socketpair.h quic.h c-hyper.h transfer.h vtls/vtls.h \
- vtls/openssl.h ../lib/urldata.h vtls/gtls.h vtls/nssg.h vtls/gskit.h \
+ vtls/openssl.h vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h \
  vtls/wolfssl.h vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h \
  vtls/mesalink.h vtls/bearssl.h vtls/rustls.h url.h getinfo.h share.h \
  strdup.h progress.h easyif.h multiif.h select.h /usr/include/poll.h \
@@ -597,13 +597,13 @@ vtls/vtls.h:
 
 vtls/openssl.h:
 
-../lib/urldata.h:
-
 vtls/gtls.h:
 
 vtls/nssg.h:
 
 vtls/gskit.h:
+
+../lib/urldata.h:
 
 vtls/wolfssl.h:
 
