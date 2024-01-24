@@ -60,7 +60,7 @@ Omitted Source Code to be Build
 # Examples/Monocular/test.cc)
 # target_link_libraries(test /home/vision/slam/depthai-core/build/libdepthai-opencv.so -lcurl ${PROJECT_NAME})
 ```
-test.cc is for RGB-D cameras
+test.cc is for RGB-D cameras (not required for now)
 
 ### 3.2 Build ORB-SLAM2
 
