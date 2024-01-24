@@ -45,10 +45,11 @@ chmod +x build.sh
 
 ## 4. To Test the Build
 
-bash
-cd /home/vision-agx-05/Desktop/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2
-./Examples/Monocular/test_recorded Vocabulary/ORBvoc.txt Examples/Monocular/lab_data/visionLab.yaml /home/vision-agx-05/Sarvesh/SLAM_Demo/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/Examples/Monocular/lab_data/
-
+./Examples/Monocular/test_recorded Vocabulary/ORBvo
+c.txt Examples/Monocular/lab_data/visionLab.yaml /home/vi
+sion-agx-05/Desktop/NVIDIA_Jetson_Inference/digital_herit
+age_project_demo_SLAM/ORBSLAM2/Examples/Monocular/lab_dat
+a/ 
 
 Note: Further steps regarding Python installation, Django setup, and running the server haven't been tested at the time of writing this readme.
 
