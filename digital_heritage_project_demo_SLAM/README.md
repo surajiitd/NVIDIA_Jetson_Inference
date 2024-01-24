@@ -98,6 +98,7 @@ target_link_libraries(test_recorded ${PROJECT_NAME})
 NOTE: You will need to change the name and directory in the above lines of code accordingly.
 
 ## 6. To Test the Build
+Now, to test our new build with the new test_recorded binary as a part of the executable, run the following command.
 ```
 ./Examples/Monocular/test_recorded Vocabulary/ORBvoc.txt Examples/Monocular/recorded_video_tools/visionLab.yaml /home/vision-agx-05/Desktop/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/Examples/Monocular/recorded_video_tools/lab_data/
 ```
