@@ -1,6 +1,7 @@
 ## Digital Heritage app.
 
-# ORB-SLAM2 Setup on NVIDIA Jetson AGX Xavier
+# ORB-SLAM2 Setup on NVIDIA Jetson AGX Xavier (For Monocular Cameras Only)
+**for now, later we will do it for RGB-D cameras as well
 
 This guide outlines the steps to set up ORB-SLAM2 on NVIDIA Jetson AGX Xavier, integrating it with NVIDIA Jetson Inference and using Pangolin for visualization.
 
@@ -37,6 +38,29 @@ make
 sudo make install
 ```
 
+#### IMPORTANT NOTE: Corrections made in CMakeLists.txt
+Some of the libraries and code is omitted from the build as it is meant for RGB-D cameras and not Monocular Camera so, these can be omitted for now.
+
+Omitted Target Libraries
+```
+target_link_libraries(${PROJECT_NAME}
+   ${OpenCV_LIBS}
+   ${EIGEN3_LIBS}
+   ${Pangolin_LIBRARIES}
+   ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+   ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+   # /usr/local/lib/libdepthai-opencv.so {for RGB-D OAK-D camera}
+   # /usr/local/lib/libdepthai-core.so {for RGB-D Oak-D camera}
+   -lcurl 
+)
+```
+Omitted Source Code to be Build
+```
+# add_executable(test
+# Examples/Monocular/test.cc)
+# target_link_libraries(test /home/vision/slam/depthai-core/build/libdepthai-opencv.so -lcurl ${PROJECT_NAME})
+```
+test.cc is for RGB-D cameras
 
 ### 3.2 Build ORB-SLAM2
 

@@ -76,8 +76,8 @@ target_link_libraries(${PROJECT_NAME}
    ${Pangolin_LIBRARIES}
    ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
    ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
-   /usr/local/lib/libdepthai-opencv.so
-   /usr/local/lib/libdepthai-core.so
+   # /usr/local/lib/libdepthai-opencv.so
+   # /usr/local/lib/libdepthai-core.so
    -lcurl
 )
 
@@ -114,6 +114,10 @@ add_executable(mono_euroc
 Examples/Monocular/mono_euroc.cc)
 target_link_libraries(mono_euroc ${PROJECT_NAME})
 
-add_executable(test
-Examples/Monocular/test.cc)
-target_link_libraries(test /home/vision/slam/depthai-core/build/libdepthai-opencv.so -lcurl ${PROJECT_NAME})
+# add_executable(test
+# Examples/Monocular/test.cc)
+# target_link_libraries(test /home/vision/slam/depthai-core/build/libdepthai-opencv.so -lcurl ${PROJECT_NAME})
+
+add_executable(test_recorded
+Examples/Monocular/test_recorded.cc)
+target_link_libraries(test_recorded ${PROJECT_NAME})
