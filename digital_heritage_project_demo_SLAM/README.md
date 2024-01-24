@@ -6,8 +6,7 @@
 This guide outlines the steps to set up ORB-SLAM2 on NVIDIA Jetson AGX Xavier, integrating it with NVIDIA Jetson Inference and using Pangolin for visualization.
 
 ## 1. Install Pangolin
-
-bash
+```
 git clone --recursive https://github.com/stevenlovegrove/Pangolin.git
 cd Pangolin
 ./scripts/install_prerequisites.sh recommended
@@ -16,8 +15,7 @@ mkdir build && cd build
 cmake ..
 cmake --build .
 sudo make install
-
-
+```
 Note: Building the Python wheel is currently known to have issues and is left unaddressed for now.
 
 ## 2. Install OpenCV
@@ -29,7 +27,6 @@ Follow the instructions provided in this [blog post](https://forums.developer.nv
 ### 3.1 Setup Native CURL
 
 ```
-bash
 git clone https://github.com/surajiitd/NVIDIA_Jetson_Inference.git
 cd digital_heritage_project_demo_SLAM
 cd curl-7.77.0
@@ -65,13 +62,30 @@ test.cc is for RGB-D cameras (not required for now)
 ### 3.2 Build ORB-SLAM2
 
 ```
-bash
 cd ORB_SLAM2
 chmod +x build.sh
 ./build.sh
 ```
 
-## 4. To Test the Build
+## 4. Performing camera calibration
+```
+cd Examples/Camera_calibration_code
+```
+change to the above directory for performing the following commands.
+```
+python getImages.py
+```
+This will be used to get images of the webcam and saved as `.png` file for further processing.
+```
+python cameraCalibration.py
+```
+This will be used to perform camera calibration to find the camera matrix and distortion matrix.
+
+NOTE: For more details on how to perform camera calibration read up on the internet for the same.
+
+Update the appropiate `.yaml` file to change the intrinsic properties of the camera as per your setup and usecase.
+
+## 5. To Test the Build
 ```
 ./Examples/Monocular/test_recorded Vocabulary/ORBvoc.txt Examples/Monocular/recorded_video_tools/visionLab.yaml /home/vision-agx-05/Desktop/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/Examples/Monocular/recorded_video_tools/lab_data/
 ```
