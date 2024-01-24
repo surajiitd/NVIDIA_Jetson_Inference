@@ -27,6 +27,7 @@ Follow the instructions provided in this [blog post](https://forums.developer.nv
 
 ### 3.1 Setup Native CURL
 
+```
 bash
 git clone https://github.com/surajiitd/NVIDIA_Jetson_Inference.git
 cd digital_heritage_project_demo_SLAM
@@ -34,23 +35,25 @@ cd curl-7.77.0
 ./configure --without-ssl
 make
 sudo make install
+```
 
 
 ### 3.2 Build ORB-SLAM2
 
+```
 bash
 cd ORB_SLAM2
 chmod +x build.sh
 ./build.sh
+```
 
 ## 4. To Test the Build
-
-./Examples/Monocular/test_recorded Vocabulary/ORBvo
-c.txt Examples/Monocular/lab_data/visionLab.yaml /home/vi
+```
+./Examples/Monocular/test_recorded Vocabulary/ORBvoc.txt Examples/Monocular/lab_data/visionLab.yaml /home/vi
 sion-agx-05/Desktop/NVIDIA_Jetson_Inference/digital_herit
 age_project_demo_SLAM/ORBSLAM2/Examples/Monocular/lab_dat
 a/ 
-
+```
 Note: Further steps regarding Python installation, Django setup, and running the server haven't been tested at the time of writing this readme.
 
 For additional details and troubleshooting, please refer to the original documentation or repositories for each component.
