@@ -85,7 +85,19 @@ NOTE: For more details on how to perform camera calibration read up on the inter
 
 Update the appropiate `.yaml` file to change the intrinsic properties of the camera as per your setup and usecase.
 
-## 5. To Test the Build
+## 5. To add custom test code
+for example, take `test_recorded.cc` which loads pre-recorded video in frame-by-frame format to the ORBSLAM2 and is present at `/Examples/Monocular/`
+
+So to compile this code using cmake build process, we need to edit `CMakeLists.txt`. Here we need to add the following lines:
+```
+add_executable(test_recorded
+Examples/Monocular/test_recorded.cc)
+target_link_libraries(test_recorded ${PROJECT_NAME})
+```
+
+NOTE: You will need to change the name and directory in the above lines of code accordingly.
+
+## 6. To Test the Build
 ```
 ./Examples/Monocular/test_recorded Vocabulary/ORBvoc.txt Examples/Monocular/recorded_video_tools/visionLab.yaml /home/vision-agx-05/Desktop/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/Examples/Monocular/recorded_video_tools/lab_data/
 ```
