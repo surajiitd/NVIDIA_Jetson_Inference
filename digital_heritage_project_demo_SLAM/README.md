@@ -148,7 +148,7 @@ Now, you could see that under `lab_data/` folder there are frames snapshots star
 
 This uses `test_recorded.cc` to load the frames one by one and pass it on to ORBSLAM2 threads for further processing.
 
-`test_recorded.cc` is authored by the contributors and not in the original ORBSLAM2 repo.
+`test_recorded.cc` is authored by the contributors of this repo and is not the part of original documentation.
 
 # Running ORBSLAM2 in Real Time using monocular webcam
 
@@ -169,6 +169,10 @@ cd Examples/Monocular/Webcam_ORBSLAM_setup
 ```
 ./Examples/Monocular/test_webcam Vocabulary/ORBvoc.txt Examples/Monocular/Webcam_ORBSLAM_setup/visionLab.yaml 
 ```
+
+`test_webcam.cc` is used for taking capturing frames from webcam and is passed to ORBSLAM for further processing.
+
+`test_webcam.cc` is authored by the contributors of this repo and is not the part of original documentation.
 
 **NOTE**: It is advised to build ORBSLAM2 before running the above command as the already existing binaries may or may not work.
 
