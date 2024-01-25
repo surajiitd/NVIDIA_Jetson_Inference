@@ -121,3 +121,7 @@ target_link_libraries(mono_euroc ${PROJECT_NAME})
 add_executable(test_recorded
 Examples/Monocular/test_recorded.cc)
 target_link_libraries(test_recorded ${PROJECT_NAME})
+
+add_executable(test_webcam
+Examples/Monocular/test_webcam.cc)
+target_link_libraries(test_webcam ${PROJECT_NAME})

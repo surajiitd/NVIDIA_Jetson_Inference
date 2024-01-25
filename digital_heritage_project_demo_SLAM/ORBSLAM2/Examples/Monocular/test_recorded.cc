@@ -126,11 +126,11 @@ int main(int argc, char **argv)
 }
 
 
-void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilenames, 				vector<double> &vTimeStamps)
+void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilenames, vector<double> &vTimeStamps)
 {
 	// removed argument const string &strPathTimes
     ifstream fTimes;
-	char strPathTimes[] = "/home/vision-agx-05/Sarvesh/SLAM_Demo/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/Examples/Monocular/lab_data/timestamps.txt";
+	char strPathTimes[] = "ORBSLAM2/Examples/Monocular/Recorded_Video_Setup/timestamps.txt";
     fTimes.open(strPathTimes);
     vTimeStamps.reserve(5000);
     vstrImageFilenames.reserve(5000);
