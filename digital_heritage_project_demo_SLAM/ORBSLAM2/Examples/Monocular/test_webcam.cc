@@ -75,7 +75,6 @@ int main(int argc, char **argv)
 
         if(frame.empty())
             break;
-
         #ifdef COMPILEDWITHC11
                 std::chrono::steady_clock::time_point nowT = std::chrono::steady_clock::now();
         #else
@@ -83,6 +82,13 @@ int main(int argc, char **argv)
         #endif
         // Pass the image to the SLAM system
         SLAM.TrackMonocular(frame, std::chrono::duration_cast<std::chrono::duration<double> >(nowT-initT).count());
+        
+        // Wait for a key event with a delay of 1 millisecond
+        int key = cv::waitKey(1);
+
+        // Check if the pressed key is the Escape key (ASCII value 27)
+        if (key == 27)
+            break;
     }
     // Stop all threads
     SLAM.Shutdown();

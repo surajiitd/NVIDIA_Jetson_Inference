@@ -180,6 +180,11 @@ cd Examples/Monocular/Webcam_ORBSLAM_setup
 
 For additional details and troubleshooting, please refer to the, code, original documentation or repositories for each component.
 
+In case of query regarding the repo please contact the following contributors:
+- [Aryan Singh](https://github.com/build-error)
+- [Sarvesh Thakur](https://github.com/ThakurSarveshGit)
+- [Suraj Patni](https://github.com/surajiitd)
+
 ### Steps to run ORBSLAM2 with app.
 
 1. first connect jetson with same mobile's hotspot in which you want to run the app.

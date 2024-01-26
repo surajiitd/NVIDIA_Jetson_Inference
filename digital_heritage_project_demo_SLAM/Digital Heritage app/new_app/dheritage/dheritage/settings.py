@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2p!ovhg=ozu=5wfz^g8e&b5aua$*0a!ac1t848@g*=j2i=qlcp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 #ALLOWED_HOSTS = ['192.168.141.209','127.0.0.1']
 ALLOWED_HOSTS = ['192.168.141.209','127.0.0.1']
-#var ip = "http://192.168.141.209:8080/locations/"
+ip = "http://127.0.0.1:8080/locations/"
 
 # Application definition
 
