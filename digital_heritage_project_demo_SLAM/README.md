@@ -24,7 +24,7 @@ Note: Building the Python wheel is currently known to have issues and is left un
 
 Follow the instructions provided in this [blog post](https://forums.developer.nvidia.com/t/best-way-to-install-opencv-with-cuda-on-jetpack-5-xavier-nx-opencv-for-tegra/222777) for installing OpenCV with CUDA support.
 
-**IMPORTANT NOTE**: There may be other dependencies required for building ORBSLAM2 as well. This may vary depending on the existing system one is using, so debugging may be required as per the dependencies error generated.
+**NOTE**: There may be other dependencies required for building ORBSLAM2 as well. This may vary depending on the existing system one is using, so debugging may be required as per the dependencies error generated.
 
 Look into the original [ORBSLAM2](https://github.com/raulmur/ORB_SLAM2) repo for the same.
 
@@ -32,7 +32,7 @@ Look into the original [ORBSLAM2](https://github.com/raulmur/ORB_SLAM2) repo for
 In this example we are in `~/Desktop/` directory , all commands given below are written accordingly.
 ### 3.1 Setup Native CURL
 
-```
+```bash
 git clone https://github.com/surajiitd/NVIDIA_Jetson_Inference.git
 cd NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM
 cd curl-7.77.0
@@ -41,11 +41,11 @@ make
 sudo make install
 ```
 
-#### IMPORTANT NOTE: Corrections made in CMakeLists.txt
+#### Corrections made in CMakeLists.txt
 Some of the libraries and code is omitted from the build as it is meant for RGB-D cameras and not Monocular Camera so, these can be omitted for now.
 
 Omitted Target Libraries
-```
+```cmake
 target_link_libraries(${PROJECT_NAME}
    ${OpenCV_LIBS}
    ${EIGEN3_LIBS}
@@ -58,7 +58,7 @@ target_link_libraries(${PROJECT_NAME}
 )
 ```
 Omitted Source Code to be Build
-```
+```cmake
 # add_executable(test
 # Examples/Monocular/test.cc)
 # target_link_libraries(test /home/vision/slam/depthai-core/build/libdepthai-opencv.so -lcurl ${PROJECT_NAME})
@@ -67,7 +67,7 @@ test.cc is for RGB-D cameras (not required for now)
 
 ### 3.2 Build ORB-SLAM2
 
-```
+```bash
 cd ORB_SLAM2
 chmod +x build.sh
 ./build.sh
@@ -79,19 +79,20 @@ for example, take `my_custom_code.cc` which is present at `<some_directory>`
 It is advised to work in `Examples/Monocular` directory.
 
 So to compile this code using cmake build process, we need to edit `CMakeLists.txt`. Here we need to add the following lines:
-```
+
+```cmake
 add_executable(my_custom_code
 <some_directory>/my_custom_code.cc)
 target_link_libraries(my_custom_code ${PROJECT_NAME})
 ```
 
-NOTE: You will need to change the name and directory in the above lines of code according to the locations where the file is saved.
+**NOTE**: You will need to change the name and directory in the above lines of code according to the locations where the file is saved.
 
 ## 5. Testing the new build
 
 Now, to test our new build with the new `my_custom_code` binary as a part of the executable, run the following command.
 
-```
+```bash
 .<some_directory>/my_custom_code Vocabulary/ORBvoc.txt <some_other_directory>/<my_camera_properties>.yaml ~/Desktop/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/<some_other_directory>/lab_data/
 ```
 
@@ -101,15 +102,18 @@ You will understand the exact commands to run by running the next features menti
 
 # Performing camera calibration
 #### Run the following commands:
-```
+```bash
 cd Examples/Camera_calibration_code
 ```
+
 change to the above directory for performing the following commands.
-```
+
+```bash
 python getImages.py
 ```
+
 This will be used to get images of the webcam and saved as `.png` file for further processing.
-```
+```bash
 python cameraCalibration.py
 ```
 This will be used to perform camera calibration to find the camera matrix and distortion matrix.
@@ -124,14 +128,14 @@ Update the appropiate `.yaml` file to change the intrinsic properties of the cam
 
 2. Then run the below commands.
 
-```
+```bash
 cd Examples/Monocular/Recorded_Video_Setup
 python frame_extract.py <video_file> lab_data
 ```
 
 In our repo we have provided a sample video `sample_video_lenovo.webm`, to use this run the following command.
 
-```
+```bash
 cd Examples/Monocular/Recorded_Video_Setup
 python frame_extract.py sample_video_lenovo.webm lab_data
 ```
@@ -142,7 +146,7 @@ Now, you could see that under `lab_data/` folder there are frames snapshots star
 
 4. Now to run ORBSLAM2 with our own generated sequence folder, run the following command:
 
-```
+```bash
 ./Examples/Monocular/test_recorded Vocabulary/ORBvoc.txt Examples/Monocular/Recorded_Video_Setup/visionLab.yaml ~/Desktop/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2/Examples/Monocular/Recorded_Video_Setup/lab_data/
 ```
 
@@ -158,7 +162,7 @@ This uses `test_recorded.cc` to load the frames one by one and pass it on to ORB
 
 3. Goto to the following directory.
 
-```
+```bash
 cd Examples/Monocular/Webcam_ORBSLAM_setup
 ```
 
@@ -166,7 +170,7 @@ cd Examples/Monocular/Webcam_ORBSLAM_setup
 
 5. Now run the following commands.
 
-```
+```bash
 ./Examples/Monocular/test_webcam Vocabulary/ORBvoc.txt Examples/Monocular/Webcam_ORBSLAM_setup/visionLab.yaml 
 ```
 
@@ -174,13 +178,87 @@ cd Examples/Monocular/Webcam_ORBSLAM_setup
 
 `test_webcam.cc` is authored by the contributors of this repo and is not the part of original documentation.
 
-**NOTE**: It is advised to build ORBSLAM2 before running the above command as the already existing binaries may or may not work.
+# Running ORBSLAM2 through Remote Access
+This feature will be useful when we will make a portable setup using a monocular webcam and jetson agx orin compute device.
 
-**NOTE**: Further steps regarding Python installation, Django setup, and running the server haven't been tested at the time of writing this readme.
+**NOTE**:
+- Both devices needs to be connect to a common network for ssh to work.
+- If you are using `IITD_WIFI`, then make sure both devices are connected using the same uid and password.
+
+#### Instruction for Windows Desktop Client:
+1. Install [Putty](https://putty.org) and [VcXsrv Windows X Server](https://sourceforge.net/projects/vcxsrv/).
+
+2. Go to your compute device and run the following commands
+
+```bash
+ifconfig && whoami
+```
+
+3. Note down the inet address of the device in `wlan0`.
+
+```bash
+wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.194.14.38  netmask 255.255.224.0  broadcast 10.194.31.255
+        inet6 2001:df4:e000:3fc1:ae76:c4b:d8d5:98b2  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::3f7b:e7c0:3bef:a04  prefixlen 64  scopeid 0x20<link>
+        inet6 2001:df4:e000:3fc1:d2e5:2507:10ab:fa66  prefixlen 64  scopeid 0x0<global>
+        ether cc:47:40:6f:c5:8b  txqueuelen 1000  (Ethernet)
+        RX packets 9807  bytes 175798861 (175.7 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 15857  bytes 3801126999 (3.8 GB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vision-agx-05
+```
+
+in our case its inet = `10.194.14.38` and hostname = `vision-agx-05`.
+
+4. Check whether `X11Forwarding` is enabled in ssh config file.
+
+```bash
+sudo cat /etc/ssh/sshd_config | grep X11Forwarding
+```
+
+If the output you get is the following,
+```bash
+X11Forwarding yes
+```
+then its is enabled and you can go ahead.
+
+If not then please edit the `sshd_config` file using the below command.
+```bash
+sudo nano /etc/ssh/sshd_config
+```
+
+5. Go to the Windows Client device and Open Putty.
+
+6. Check and fill the following fields.
+
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/5c43c36a-9446-47b1-97b7-67cd48f8755a)
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/b4f1bc3a-84b0-4ae3-9f30-42dbc3e7bf14)
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/9b6ac974-86be-45db-91b0-0b45f0d1bf30)
+
+7. Save this configuration for loading this later whenever we need it and click to open to start ssh.
+
+8. Open Windows X server using XLaunch and configure as below.
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/14aa1a58-a7b7-4c89-aa46-5dd08cae2fae)
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/aa4e8d15-000b-44ae-82b4-659e5bf4485e)
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/e4933be5-4ed8-4ff4-9a58-1f7f85543ba5)
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/76039b80-3ccc-4183-b9e4-2bf076eff0ca)
+
+Now X server has started in the background.
+
+9. In the Putty SSH terminal we can run the commands for running ORBSLAM2 with Monocular webcam as given above. New Windows will be formed when command is executed. There will be some latency in the update of frame which is expected as it's a SSH connection.
+
+**NOTE**: 
+
+- It is advised to build ORBSLAM2 before running the above command as the already existing binaries may or may not work.
+
+- Further steps regarding Python installation, Django setup, and running the server haven't been tested at the time of writing this readme.
 
 For additional details and troubleshooting, please refer to the, code, original documentation or repositories for each component.
 
-In case of query regarding the repo please contact the following contributors:
+In case of query regarding this repo please contact the following contributors:
 - [Aryan Singh](https://github.com/build-error)
 - [Sarvesh Thakur](https://github.com/ThakurSarveshGit)
 - [Suraj Patni](https://github.com/surajiitd)
