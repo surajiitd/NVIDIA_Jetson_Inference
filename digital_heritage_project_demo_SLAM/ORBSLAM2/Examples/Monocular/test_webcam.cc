@@ -28,13 +28,44 @@
 
 #include<System.h>
 
-#define _WEBCAM_BUILD_
-
+#ifdef _WIN32
+    // Windows-specific headers
+    #include <conio.h> // For _kbhit and _getch
+#elif defined(__unix__)
+    // Unix-based system specific headers
+    #include <unistd.h> // For read
+#endif  
 
 using namespace std;
 
-void LoadImages(const string &strFile, vector<string> &vstrImageFilenames,
-                vector<double> &vTimestamps);
+// Function to handle keyboard input
+void keyboardInputHandler(bool& stopFlag) {
+    while (!stopFlag) {
+        // Check if a key is pressed
+        #ifdef _WIN32
+            // Windows
+            if (_kbhit()) {
+                char key = _getch();
+                if (key == 'q') { // Press 'q' to set the stop flag
+                    stopFlag = true;
+                }
+            }
+        #elif defined(__unix__)
+            // Unix-based systems
+            char key;
+            if (read(STDIN_FILENO, &key, 1) != -1) {
+                if (key == 'q') { // Press 'q' to set the stop flag
+                    stopFlag = true;
+                }
+            }
+        #endif
+
+        // Add a small delay to reduce CPU usage
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
+}
+
+#define _WEBCAM_BUILD_
 
 int main(int argc, char **argv)
 {
@@ -43,6 +74,11 @@ int main(int argc, char **argv)
     {
         cerr << endl << "argc:" << argc << "!= 3"<< endl;
     }
+
+    bool stopFlag = false;
+
+    // Create a thread for keyboard input handling
+    std::thread inputThread(keyboardInputHandler, std::ref(stopFlag));
 
     cv::VideoCapture cap(0);
 
@@ -65,7 +101,7 @@ int main(int argc, char **argv)
     #endif
 
     // Main loop
-    while(true)
+    while(!stopFlag)
     {
         //Create a new Mat
         cv::Mat frame;
@@ -75,59 +111,25 @@ int main(int argc, char **argv)
 
         if(frame.empty())
             break;
+
         #ifdef COMPILEDWITHC11
                 std::chrono::steady_clock::time_point nowT = std::chrono::steady_clock::now();
         #else
                 std::chrono::monotonic_clock::time_point nowT = std::chrono::monotonic_clock::now();
         #endif
+
         // Pass the image to the SLAM system
         SLAM.TrackMonocular(frame, std::chrono::duration_cast<std::chrono::duration<double> >(nowT-initT).count());
-        
-        // Wait for a key event with a delay of 1 millisecond
-        int key = cv::waitKey(1);
-
-        // Check if the pressed key is the Escape key (ASCII value 27)
-        if (key == 27)
-            break;
     }
+
+    // Join the input thread
+    inputThread.join();
+
     // Stop all threads
     SLAM.Shutdown();
 
     //slam->SaveSeperateKeyFrameTrajectoryTUM("KeyFrameTrajectory-1.txt", "KeyFrameTrajectory-2.txt", "KeyFrameTrajectory-3.txt");
     SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");
-
-#else
-    cerr << endl << "This test code is only for webcam" << endl;
-    return 1;
 #endif
     return 0;
-}
-
-void LoadImages(const string &strFile, vector<string> &vstrImageFilenames, vector<double> &vTimestamps)
-{
-    ifstream f;
-    f.open(strFile.c_str());
-
-    // skip first three lines
-    string s0;
-    getline(f,s0);
-    getline(f,s0);
-    getline(f,s0);
-
-    while(!f.eof())
-    {
-        string s;
-        getline(f,s);
-        if(!s.empty())
-        {
-            stringstream ss;
-            ss << s;
-            double t;
-            string sRGB;
-            ss >> t;
-            vTimestamps.push_back(t);
-            ss >> sRGB;
-            vstrImageFilenames.push_back(sRGB);
-        }
-    }
 }
