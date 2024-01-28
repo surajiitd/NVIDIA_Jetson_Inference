@@ -234,17 +234,18 @@ sudo nano /etc/ssh/sshd_config
 
 6. Check and fill the following fields.
 
-![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/5c43c36a-9446-47b1-97b7-67cd48f8755a)
-![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/b4f1bc3a-84b0-4ae3-9f30-42dbc3e7bf14)
-![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/9b6ac974-86be-45db-91b0-0b45f0d1bf30)
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/5c43c36a-9446-47b1-97b7-67cd48f8755a) <br>
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/b4f1bc3a-84b0-4ae3-9f30-42dbc3e7bf14) <br>
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/9b6ac974-86be-45db-91b0-0b45f0d1bf30) <br>
 
 7. Save this configuration for loading this later whenever we need it and click to open to start ssh.
 
 8. Open Windows X server using XLaunch and configure as below.
-![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/14aa1a58-a7b7-4c89-aa46-5dd08cae2fae)
-![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/aa4e8d15-000b-44ae-82b4-659e5bf4485e)
-![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/e4933be5-4ed8-4ff4-9a58-1f7f85543ba5)
-![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/76039b80-3ccc-4183-b9e4-2bf076eff0ca)
+
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/14aa1a58-a7b7-4c89-aa46-5dd08cae2fae) <br>
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/aa4e8d15-000b-44ae-82b4-659e5bf4485e) <br>
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/e4933be5-4ed8-4ff4-9a58-1f7f85543ba5) <br>
+![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/76039b80-3ccc-4183-b9e4-2bf076eff0ca) <br>
 
 Now X server has started in the background.
 
