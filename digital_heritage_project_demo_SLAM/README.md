@@ -185,16 +185,13 @@ This feature will be useful when we will make a portable setup using a monocular
 - Both devices needs to be connect to a common network for ssh to work.
 - If you are using `IITD_WIFI`, then make sure both devices are connected using the same uid and password.
 
-#### Instruction for Windows Desktop Client:
-1. Install [Putty](https://putty.org) and [VcXsrv Windows X Server](https://sourceforge.net/projects/vcxsrv/).
+#### Setup for Jetson AGX Orin
 
-2. Go to your compute device and run the following commands
+1. Before starting with setup we need to know the **hostname** and **inet address** under `wlan0`, so run the following commands in your compute device:
 
 ```bash
 ifconfig && whoami
 ```
-
-3. Note down the inet address of the device in `wlan0`.
 
 ```bash
 wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
@@ -213,7 +210,7 @@ vision-agx-05
 
 in our case its inet = `10.194.14.38` and hostname = `vision-agx-05`.
 
-4. Check whether `X11Forwarding` is enabled in ssh config file.
+2. Check whether `X11Forwarding` is enabled in ssh config file.
 
 ```bash
 sudo cat /etc/ssh/sshd_config | grep X11Forwarding
@@ -230,17 +227,34 @@ If not then please edit the `sshd_config` file using the below command.
 sudo nano /etc/ssh/sshd_config
 ```
 
-5. Go to the Windows Client device and Open Putty.
+#### Instruction for Linux Desktop Client:
+1. We will ssh using OPENSSH, run the following commands:
 
-6. Check and fill the following fields.
+```bash
+ssh hostname@<inet address> -X 
+```
+
+in our case,
+```bash
+ssh vision-agx-05@10.194.14.38 -X
+```
+
+`-X` is for allowing X11 forwarding for GUI interface
+
+#### Instruction for Windows Desktop Client:
+1. Install [Putty](https://putty.org) and [VcXsrv Windows X Server](https://sourceforge.net/projects/vcxsrv/).
+
+2. Go to the Windows Client device and Open Putty.
+
+3. Check and fill the following fields.
 
 ![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/5c43c36a-9446-47b1-97b7-67cd48f8755a) <br>
 ![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/b4f1bc3a-84b0-4ae3-9f30-42dbc3e7bf14) <br>
 ![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/9b6ac974-86be-45db-91b0-0b45f0d1bf30) <br>
 
-7. Save this configuration for loading this later whenever we need it and click to open to start ssh.
+4. Save this configuration for loading this later whenever we need it and click to open to start ssh.
 
-8. Open Windows X server using XLaunch and configure as below.
+5. Open Windows X server using XLaunch and configure as below.
 
 ![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/14aa1a58-a7b7-4c89-aa46-5dd08cae2fae) <br>
 ![image](https://github.com/surajiitd/NVIDIA_Jetson_Inference/assets/63505435/aa4e8d15-000b-44ae-82b4-659e5bf4485e) <br>
@@ -249,7 +263,7 @@ sudo nano /etc/ssh/sshd_config
 
 Now X server has started in the background.
 
-9. In the Putty SSH terminal we can run the commands for running ORBSLAM2 with Monocular webcam as given above. New Windows will be formed when command is executed. There will be some latency in the update of frame which is expected as it's a SSH connection.
+6. In the Putty SSH terminal we can run the commands for running ORBSLAM2 with Monocular webcam as given above. New Windows will be formed when command is executed. There will be some latency in the update of frame which is expected as it's a SSH connection.
 
 **NOTE**: 
 
