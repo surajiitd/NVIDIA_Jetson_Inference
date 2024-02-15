@@ -176,7 +176,8 @@ void Viewer::Run()
         curl_easy_setopt(curl,CURLOPT_URL,"http://127.0.0.1:8080/updatecurrent/");
         curl_easy_setopt(curl,CURLOPT_POSTFIELDS,"x = "+std::to_string(mViewpointX)+" & y = "+std::to_string(mViewpointY)+" & yaw = "+std::to_string(mViewpointZ));
         curl_easy_perform(curl);
-        // cout << "x = " + std::to_string(mViewpointX)+" & y = " + std::to_string(mViewpointY) + "&yaw="+std::to_string(mViewpointZ) << endxl;
+        
+        // cout << "x = " + std::to_string(mViewpointX)+" & y = " + std::to_string(mViewpointY) + "&yaw="+std::to_string(mViewpointZ) << endl;
     }
 
     SetFinish();
