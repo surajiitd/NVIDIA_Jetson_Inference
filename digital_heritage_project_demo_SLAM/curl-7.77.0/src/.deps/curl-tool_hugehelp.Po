@@ -101,8 +101,10 @@ curl-tool_hugehelp.o: tool_hugehelp.c /usr/include/stdc-predef.h \
  /usr/include/aarch64-linux-gnu/bits/getopt_core.h \
  /usr/include/aarch64-linux-gnu/bits/unistd.h \
  /usr/include/aarch64-linux-gnu/bits/unistd_ext.h ../lib/curl_ctype.h \
- ../lib/curl_setup.h tool_hugehelp.h /usr/include/zlib.h \
- /usr/include/zconf.h ../lib/memdebug.h
+ ../lib/curl_setup.h tool_hugehelp.h \
+ /home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zlib.h \
+ /home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zconf.h \
+ ../lib/memdebug.h
 
 /usr/include/stdc-predef.h:
 
@@ -358,8 +360,8 @@ tool_setup.h:
 
 tool_hugehelp.h:
 
-/usr/include/zlib.h:
+/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zlib.h:
 
-/usr/include/zconf.h:
+/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zconf.h:
 
 ../lib/memdebug.h:

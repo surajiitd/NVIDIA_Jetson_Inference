@@ -111,7 +111,7 @@ elif [ -f /etc/os-release ]; then
 
     if [[ "$ID" == "ubuntu" || "$ID" == "debian" || "$ID_LIKE" == "ubuntu" || "$ID_LIKE" == "debian" || "$ID_LIKE" == "ubuntu debian" ]]; then
         if [[ ! $(uname -m) =~ ^arm* ]]; then
-            sudo apt-get update
+            # sudo apt-get update
             if [[ "$VERSION_ID" > "22.04" || "$VERSION_ID" == "22.04" ]]; then
                 sudo apt-get install -y "${ubuntu_pkgs_post22_04[@]}"
             else
@@ -119,7 +119,7 @@ elif [ -f /etc/os-release ]; then
             fi
             python3 -m pip install --upgrade pip
         elif [[ $(uname -m) =~ ^arm* ]]; then
-            sudo apt-get update
+            # sudo apt-get update
             sudo apt-get install -y "${ubuntu_arm_pkgs[@]}"
             python3 -m pip install --upgrade pip
         fi

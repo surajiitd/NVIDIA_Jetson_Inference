@@ -111,9 +111,10 @@ libcurl_la-content_encoding.lo: content_encoding.c \
  /usr/include/aarch64-linux-gnu/bits/setjmp2.h splay.h dynbuf.h mime.h \
  imap.h pingpong.h curl_sasl.h pop3.h smtp.h ftp.h file.h vssh/ssh.h \
  ../lib/curl_setup.h http.h rtsp.h smb.h mqtt.h wildcard.h multihandle.h \
- conncache.h socketpair.h quic.h c-hyper.h /usr/include/zlib.h \
- /usr/include/zconf.h sendf.h content_encoding.h strdup.h strcase.h \
- curl_memory.h memdebug.h
+ conncache.h socketpair.h quic.h c-hyper.h \
+ /home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zlib.h \
+ /home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zconf.h \
+ sendf.h content_encoding.h strdup.h strcase.h curl_memory.h memdebug.h
 
 /usr/include/stdc-predef.h:
 
@@ -449,9 +450,9 @@ quic.h:
 
 c-hyper.h:
 
-/usr/include/zlib.h:
+/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zlib.h:
 
-/usr/include/zconf.h:
+/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zconf.h:
 
 sendf.h:
 

@@ -284,10 +284,10 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/usr/lib/gcc/aarch64-linux-gnu/9 /usr/lib/aarch64-linux-gnu /usr/lib /lib/aarch64-linux-gnu /lib "
+sys_lib_search_path_spec="/usr/local/lib /usr/lib/gcc/aarch64-linux-gnu/9 /usr/lib/aarch64-linux-gnu /usr/lib /lib/aarch64-linux-gnu /lib "
 
 # Detected run-time system search path for libraries.
-sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/local/cuda/targets/aarch64-linux/lib /usr/local/cuda-11/targets/aarch64-linux/lib /usr/local/lib/aarch64-linux-gnu /lib/aarch64-linux-gnu /usr/lib/aarch64-linux-gnu /usr/lib/aarch64-linux-gnu/tegra-egl /usr/lib/aarch64-linux-gnu/tegra /usr/lib/aarch64-linux-gnu/fakechroot /usr/lib/aarch64-linux-gnu/libfakeroot /usr/local/lib /usr/lib/aarch64-linux-gnu/tegra /opt/nvidia/vpi2/lib/aarch64-linux-gnu "
+sys_lib_dlsearch_path_spec="/lib /usr/lib /usr/local/cuda/targets/aarch64-linux/lib /usr/local/cuda-11/targets/aarch64-linux/lib /usr/local/lib/aarch64-linux-gnu /lib/aarch64-linux-gnu /usr/lib/aarch64-linux-gnu /usr/lib/aarch64-linux-gnu/tegra-egl /usr/lib/aarch64-linux-gnu/tegra /opt/nvidia/cupva-2.0/lib/aarch64-linux-gnu/ /usr/lib/aarch64-linux-gnu/fakechroot /usr/lib/aarch64-linux-gnu/libfakeroot /usr/local/lib /usr/lib/aarch64-linux-gnu/tegra /opt/nvidia/vpi2/lib/aarch64-linux-gnu "
 
 # Explicit LT_SYS_LIBRARY_PATH set during ./configure time.
 configure_time_lt_sys_library_path=""

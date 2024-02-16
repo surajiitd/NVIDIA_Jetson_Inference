@@ -114,9 +114,9 @@ libcurl_la-version.lo: version.c /usr/include/stdc-predef.h curl_setup.h \
  vtls/gtls.h vtls/nssg.h vtls/gskit.h ../lib/urldata.h vtls/wolfssl.h \
  vtls/schannel.h vtls/sectransp.h vtls/mbedtls.h vtls/mesalink.h \
  vtls/bearssl.h vtls/rustls.h http2.h curl_printf.h \
- ../include/curl/mprintf.h /usr/include/zlib.h /usr/include/zconf.h \
- /usr/include/ldap.h /usr/include/lber.h /usr/include/lber_types.h \
- /usr/include/ldap_cdefs.h /usr/include/ldap_features.h
+ ../include/curl/mprintf.h \
+ /home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zlib.h \
+ /home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zconf.h
 
 /usr/include/stdc-predef.h:
 
@@ -484,16 +484,6 @@ curl_printf.h:
 
 ../include/curl/mprintf.h:
 
-/usr/include/zlib.h:
+/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zlib.h:
 
-/usr/include/zconf.h:
-
-/usr/include/ldap.h:
-
-/usr/include/lber.h:
-
-/usr/include/lber_types.h:
-
-/usr/include/ldap_cdefs.h:
-
-/usr/include/ldap_features.h:
+/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include/zconf.h:
