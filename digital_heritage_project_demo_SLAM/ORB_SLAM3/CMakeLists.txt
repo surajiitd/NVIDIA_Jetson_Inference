@@ -210,6 +210,10 @@ add_executable(test_webcam
         Examples/Monocular/test_webcam.cc)
 target_link_libraries(test_webcam ${PROJECT_NAME})
 
+add_executable(test_webcam_2
+        Examples/Monocular/test_webcam_2.cc)
+target_link_libraries(test_webcam_2 ${PROJECT_NAME})
+
 if(realsense2_FOUND)
     add_executable(mono_realsense_t265
             Examples/Monocular/mono_realsense_t265.cc)
