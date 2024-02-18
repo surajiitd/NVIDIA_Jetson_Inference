@@ -214,6 +214,10 @@ add_executable(test_webcam_2
         Examples/Monocular/test_webcam_2.cc)
 target_link_libraries(test_webcam_2 ${PROJECT_NAME})
 
+add_executable(test_recorded
+        Examples/Monocular/test_recorded.cc)
+target_link_libraries(test_recorded ${PROJECT_NAME})
+
 add_executable(frame_extract
         Examples/Monocular/frame_extract.cc)
 target_link_libraries(frame_extract ${PROJECT_NAME})
