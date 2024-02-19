@@ -72,5 +72,6 @@
     "any": "cpp",
     "strstream": "cpp",
     "cfenv": "cpp"
-  }
+  },
+  "cmake.sourceDirectory": "/home/vision/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORBSLAM2"
 }

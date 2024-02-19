@@ -1403,7 +1403,7 @@ void System::InsertTrackTime(double& time)
 void System::SaveAtlas(int type){
     if(!mStrSaveAtlasToFile.empty())
     {
-        //clock_t start = clock();
+        clock_t start = clock();
 
         // Save the current session
         mpAtlas->PreSave();
@@ -1412,7 +1412,7 @@ void System::SaveAtlas(int type){
         pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
         pathSaveFileName = pathSaveFileName.append(".osa");
 
-        string strVocabularyChecksum = "visionlab";//CalculateCheckSum(mStrVocabularyFilePath,TEXT_FILE);
+        string strVocabularyChecksum = "visionLab"; //CalculateCheckSum(mStrVocabularyFilePath,TEXT_FILE);
         std::size_t found = mStrVocabularyFilePath.find_last_of("/\\");
         string strVocabularyName = mStrVocabularyFilePath.substr(found+1);
 
@@ -1487,14 +1487,14 @@ bool System::LoadAtlas(int type)
     if(isRead)
     {
         //Check if the vocabulary is the same
-        string strInputVocabularyChecksum = "visionlab";//CalculateCheckSum(mStrVocabularyFilePath,TEXT_FILE);
+        string strInputVocabularyChecksum = "visionLab"; //CalculateCheckSum(mStrVocabularyFilePath,TEXT_FILE);
 
-        // if(strInputVocabularyChecksum.compare(strVocChecksum) != 0)
-        // {
-        //     cout << "The vocabulary load isn't the same which the load session was created " << endl;
-        //     cout << "-Vocabulary name: " << strFileVoc << endl;
-        //     return false; // Both are differents
-        // }
+        if(strInputVocabularyChecksum.compare(strVocChecksum) != 0)
+        {
+            cout << "The vocabulary load isn't the same which the load session was created " << endl;
+            cout << "-Vocabulary name: " << strFileVoc << endl;
+            return false; // Both are differents
+        }
 
         mpAtlas->SetKeyFrameDababase(mpKeyFrameDatabase);
         mpAtlas->SetORBVocabulary(mpVocabulary);
