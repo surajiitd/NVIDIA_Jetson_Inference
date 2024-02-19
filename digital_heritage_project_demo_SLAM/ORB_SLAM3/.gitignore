@@ -84,7 +84,7 @@ Time*
 Table_Euroc
 Table_TUMVI_rooms/
 *.pyc
-# *.osa
+*.osa
 .idea/
 my_settings.txt
 

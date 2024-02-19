@@ -1403,12 +1403,12 @@ void System::InsertTrackTime(double& time)
 void System::SaveAtlas(int type){
     if(!mStrSaveAtlasToFile.empty())
     {
-        clock_t start = clock();
+        // clock_t start = clock();
 
         // Save the current session
         mpAtlas->PreSave();
 
-        string pathSaveFileName = "./";
+        string pathSaveFileName = "../Maps/";
         pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
         pathSaveFileName = pathSaveFileName.append(".osa");
 
@@ -1447,7 +1447,7 @@ bool System::LoadAtlas(int type)
     string strFileVoc, strVocChecksum;
     bool isRead = false;
 
-    string pathLoadFileName = "./";
+    string pathLoadFileName = "../Maps/";
     pathLoadFileName = pathLoadFileName.append(mStrLoadAtlasFromFile);
     pathLoadFileName = pathLoadFileName.append(".osa");
 
