@@ -7,4 +7,4 @@
 # Monocular Examples
 echo "ORB_SLAM3" | figlet
 echo "Launching ORBSLAM3 with Monocular sensor"
-./Monocular/test_webcam_2 ../Vocabulary/ORBvoc.txt ./Monocular/test_webcam_2_example.yaml
+../test_webcam_2 ../../../Vocabulary/ORBvoc.txt ../Setup_Files/test_webcam_2_example.yaml 

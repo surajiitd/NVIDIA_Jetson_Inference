@@ -182,7 +182,14 @@ void Viewer::Run()
     pangolin::Var<bool> menuShowKeyFrames("menu.Show KeyFrames",true,true);
     pangolin::Var<bool> menuShowGraph("menu.Show Graph",false,true);
     pangolin::Var<bool> menuShowInertialGraph("menu.Show Inertial Graph",true,true);
+    
+    
+    /* Comment this line out if you want don't want to start with localization mode */
     pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode",false,true);
+
+    /* Comment out this line if your want to start with localization mode by default */
+    // pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode",true,true);
+
     pangolin::Var<bool> menuReset("menu.Reset",false,false);
     pangolin::Var<bool> menuStop("menu.Stop",false,false);
     pangolin::Var<bool> menuStepByStep("menu.Step By Step",false,true);  // false, true
@@ -378,6 +385,8 @@ void Viewer::Run()
 
         if(CheckFinish())
             break;
+            
+        cout << "x = " + std::to_string(mViewpointX)+" & y = " + std::to_string(mViewpointY) + "&yaw="+std::to_string(mViewpointZ) << endl;
     }
 
     SetFinish();
