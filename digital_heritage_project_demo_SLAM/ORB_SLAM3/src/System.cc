@@ -1107,6 +1107,8 @@ void System::SaveKeyFrameTrajectoryEuRoC(const string &filename)
             Eigen::Quaternionf q = Twc.unit_quaternion();
             Eigen::Vector3f t = Twc.translation();
             f << setprecision(6) << 1e9*pKF->mTimeStamp << " " <<  setprecision(9) << t(0) << " " << t(1) << " " << t(2) << " " << q.x() << " " << q.y() << " " << q.z() << " " << q.w() << endl;
+
+            // cout << t << ", " << q.coeffs().transpose() << endl;
         }
     }
     f.close();
@@ -1257,6 +1259,8 @@ void System::SaveTrajectoryKITTI(const string &filename)
         f << setprecision(9) << Rwc(0,0) << " " << Rwc(0,1)  << " " << Rwc(0,2) << " "  << twc(0) << " " <<
              Rwc(1,0) << " " << Rwc(1,1)  << " " << Rwc(1,2) << " "  << twc(1) << " " <<
              Rwc(2,0) << " " << Rwc(2,1)  << " " << Rwc(2,2) << " "  << twc(2) << endl;
+
+        
     }
     f.close();
 }

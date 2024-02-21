@@ -386,7 +386,7 @@ void Viewer::Run()
         if(CheckFinish())
             break;
             
-        cout << "x = " + std::to_string(mViewpointX)+" & y = " + std::to_string(mViewpointY) + "&yaw="+std::to_string(mViewpointZ) << endl;
+        // cout << "x = " + std::to_string(mViewpointX)+" & y = " + std::to_string(mViewpointY) + "&yaw="+std::to_string(mViewpointZ) << endl;
     }
 
     SetFinish();
