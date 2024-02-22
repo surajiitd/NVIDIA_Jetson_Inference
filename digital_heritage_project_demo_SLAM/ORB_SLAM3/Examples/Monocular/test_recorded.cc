@@ -86,10 +86,8 @@ int main(int argc, char **argv)
     double t_resize = 0.f;
     double t_track = 0.f;
 
-    // sleep(5);
     for (seq = 0; seq < num_seq; seq++)
     {
-
         // Main loop
         cv::Mat im;
         int proccIm = 0;
