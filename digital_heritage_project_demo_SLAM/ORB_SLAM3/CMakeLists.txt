@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 2.8)
 project(ORB_SLAM3)
 
-IF(NOT CMAKE_BUILD_TYPE)
-  SET(CMAKE_BUILD_TYPE Release)
-ENDIF()
+# Define a CMake option for specifying the build type
+# Default to Release if not specified
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Debug or Release)" FORCE)
+endif()
 
 MESSAGE("Build type: " ${CMAKE_BUILD_TYPE})
 
@@ -11,6 +13,9 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall   -O3")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall   -O3")
 set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -march=native")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -march=native")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
+
 
 # Check C++11 or C++0x support
 include(CheckCXXCompilerFlag)
@@ -41,6 +46,8 @@ MESSAGE(${OpenCV_VERSION})
 find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 find_package(realsense2)
+find_package(Boost REQUIRED COMPONENTS filesystem)
+
 
 include_directories(
 ${PROJECT_SOURCE_DIR}
@@ -115,16 +122,31 @@ include/Settings.h)
 
 add_subdirectory(Thirdparty/g2o)
 
+# target_link_libraries(${PROJECT_NAME}
+# ${OpenCV_LIBS}
+# ${EIGEN3_LIBS}
+# /usr/lib/aarch64-linux-gnu/libtiff.so.5
+# ${Pangolin_LIBRARIES}
+# ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+# ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+# -lboost_serialization
+# -lcrypto
+# )
+
 target_link_libraries(${PROJECT_NAME}
-${OpenCV_LIBS}
-${EIGEN3_LIBS}
-/usr/lib/aarch64-linux-gnu/libtiff.so.5
-${Pangolin_LIBRARIES}
-${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
-${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
--lboost_serialization
--lcrypto
+    ${OpenCV_LIBS}
+    ${EIGEN3_LIBS}
+    ${Pangolin_LIBRARIES}
+    ${PROJECT_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+    ${PROJECT_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+    -lboost_serialization
+    -lboost_filesystem
+    -lcrypto
 )
+
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
+    target_link_libraries(${PROJECT_NAME} /usr/lib/aarch64-linux-gnu/libtiff.so.5)
+endif()
 
 # If RealSense SDK is found the library is added and its examples compiled
 if(realsense2_FOUND)
@@ -221,6 +243,7 @@ target_link_libraries(test_recorded ${PROJECT_NAME})
 add_executable(frame_extract
         Examples/Monocular/frame_extract.cc)
 target_link_libraries(frame_extract ${PROJECT_NAME})
+target_link_libraries(frame_extract Boost::filesystem)
 
 if(realsense2_FOUND)
     add_executable(mono_realsense_t265

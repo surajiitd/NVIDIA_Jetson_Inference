@@ -22,6 +22,7 @@
 #include "GeometricCamera.h"
 #include "Pinhole.h"
 #include "KannalaBrandt8.h"
+#include <stdexcept>
 
 namespace ORB_SLAM3
 {
@@ -301,36 +302,59 @@ bool Atlas::isImuInitialized()
 
 void Atlas::PreSave()
 {
-    if(mpCurrentMap){
-        if(!mspMaps.empty() && mnLastInitKFidMap < mpCurrentMap->GetMaxKFid())
-            mnLastInitKFidMap = mpCurrentMap->GetMaxKFid()+1; //The init KF is the next of current maximum
+    std::cout << "PreSave 1\n";
+    if (mpCurrentMap) {
+        if (!mspMaps.empty() && mnLastInitKFidMap < mpCurrentMap->GetMaxKFid())
+            mnLastInitKFidMap = mpCurrentMap->GetMaxKFid() + 1; // The init KF is the next of current maximum
     }
 
-    struct compFunctor
-    {
-        inline bool operator()(Map* elem1 ,Map* elem2)
+    struct compFunctor {
+        inline bool operator()(Map* elem1, Map* elem2)
         {
             return elem1->GetId() < elem2->GetId();
         }
     };
+    std::cout << "PreSave 2\n";
     std::copy(mspMaps.begin(), mspMaps.end(), std::back_inserter(mvpBackupMaps));
-    sort(mvpBackupMaps.begin(), mvpBackupMaps.end(), compFunctor());
+    std::sort(mvpBackupMaps.begin(), mvpBackupMaps.end(), compFunctor());
 
+    std::cout << "PreSave 3\n";
     std::set<GeometricCamera*> spCams(mvpCameras.begin(), mvpCameras.end());
-    for(Map* pMi : mvpBackupMaps)
-    {
-        if(!pMi || pMi->IsBad())
-            continue;
 
-        if(pMi->GetAllKeyFrames().size() == 0) {
-            // Empty map, erase before of save it.
-            SetMapBad(pMi);
-            continue;
+    try {
+        for (Map* pMi : mvpBackupMaps) {
+            if (!pMi || pMi->IsBad())
+                continue;
+
+            if (pMi->GetAllKeyFrames().empty()) {
+                // Empty map, erase before or save it.
+                try {
+                    SetMapBad(pMi);
+                } catch (const std::exception& e) { // Catch standard exceptions
+                    std::cerr << "Presave 4: Exception caught: " << e.what() << std::endl;
+                } catch (...) { // Catch any other exceptions not derived from std::exception
+                    std::cerr << "Presave 4: Unknown exception caught" << std::endl;
+                }
+                continue;
+            }
+            try {
+                pMi->PreSave(spCams);
+            } catch (const std::exception& e) {
+                std::cerr << "Presave 5: Exception caught: " << e.what() << std::endl;
+            } catch (...) {
+                std::cerr << "Presave 5: Unknown exception caught" << std::endl;
+            }
         }
-        pMi->PreSave(spCams);
+    } catch (const std::exception& e) { // Catch standard exceptions
+        std::cerr << "Presave 6: Exception caught: " << e.what() << std::endl;
+    } catch (...) { // Catch any other exceptions not derived from std::exception
+        std::cerr << "Presave 6: Unknown exception caught" << std::endl;
     }
+
+    std::cout << "PreSave 7\n";
     RemoveBadMaps();
 }
+
 
 void Atlas::PostLoad()
 {

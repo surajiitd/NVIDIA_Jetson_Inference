@@ -24,6 +24,7 @@
 #include <pangolin/pangolin.h>
 #include <iomanip>
 #include <openssl/md5.h>
+#include <boost/filesystem.hpp>
 #include <boost/serialization/base_object.hpp>
 #include <boost/serialization/string.hpp>
 #include <boost/archive/text_iarchive.hpp>
@@ -519,7 +520,7 @@ void System::Shutdown()
         mbShutDown = true;
     }
 
-    cout << "Shutdown" << endl;
+    cout << "Shutdown 1" << endl;
 
     mpLocalMapper->RequestFinish();
     mpLoopCloser->RequestFinish();
@@ -531,25 +532,28 @@ void System::Shutdown()
     }*/
 
     // Wait until all thread have effectively stopped
-    /*while(!mpLocalMapper->isFinished() || !mpLoopCloser->isFinished() || mpLoopCloser->isRunningGBA())
-    {
-        if(!mpLocalMapper->isFinished())
-            cout << "mpLocalMapper is not finished" << endl;*/
-        /*if(!mpLoopCloser->isFinished())
-            cout << "mpLoopCloser is not finished" << endl;
-        if(mpLoopCloser->isRunningGBA()){
-            cout << "mpLoopCloser is running GBA" << endl;
-            cout << "break anyway..." << endl;
-            break;
-        }*/
-        /*usleep(5000);
-    }*/
-
+    // while(!mpLocalMapper->isFinished() || !mpLoopCloser->isFinished() || mpLoopCloser->isRunningGBA())
+    // {
+    //     if(!mpLocalMapper->isFinished())
+    //         cout << "mpLocalMapper is not finished" << endl;
+    //     if(!mpLoopCloser->isFinished())
+    //         cout << "mpLoopCloser is not finished" << endl;
+    //     // if(mpLoopCloser->isRunningGBA()){
+    //     //     cout << "mpLoopCloser is running GBA" << endl;
+    //     //     cout << "break anyway..." << endl;
+    //     //     break;
+    //     // }
+    //     usleep(5000);
+    // }
+    cout << "Shutdown 1, 2: \n";
     if(!mStrSaveAtlasToFile.empty())
     {
+        cout << "Shutdown 1, 2, 3 . .. \n";
         Verbose::PrintMess("Atlas saving to file " + mStrSaveAtlasToFile, Verbose::VERBOSITY_NORMAL);
+        cout << "Shutdown 1, 2, 3, 4 ... \n";
         SaveAtlas(FileType::BINARY_FILE);
     }
+    cout << "Shutdown done. . .\n";
 
     /*if(mpViewer)
         pangolin::BindToContext("ORB-SLAM2: Map Viewer");*/
@@ -1410,15 +1414,19 @@ void System::SaveAtlas(int type){
         // clock_t start = clock();
 
         // Save the current session
+        cout << "Save Atlas 1 \n";
         mpAtlas->PreSave();
-
+        cout << "Save Atlas 2 \n";
         string pathSaveFileName = "../Maps/";
         pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
         pathSaveFileName = pathSaveFileName.append(".osa");
+        cout << "Save Atlas 3 \n";
 
         string strVocabularyChecksum = "visionLab"; //CalculateCheckSum(mStrVocabularyFilePath,TEXT_FILE);
         std::size_t found = mStrVocabularyFilePath.find_last_of("/\\");
         string strVocabularyName = mStrVocabularyFilePath.substr(found+1);
+        cout << "Save Atlas 4 \n";
+        // cout << "TYPE: " << type << endl;
 
         if(type == TEXT_FILE) // File text
         {
@@ -1434,6 +1442,7 @@ void System::SaveAtlas(int type){
         }
         else if(type == BINARY_FILE) // File binary
         {
+            cout << "Save Atlas 5 \n";
             cout << "Starting to write the save binary file" << endl;
             std::remove(pathSaveFileName.c_str());
             std::ofstream ofs(pathSaveFileName, std::ios::binary);
@@ -1457,7 +1466,8 @@ bool System::LoadAtlas(int type)
 
     if(type == TEXT_FILE) // File text
     {
-        cout << "Starting to read the save text file " << endl;
+        cout << "Starting to read the save text file from " << pathLoadFileName << "\nPWD: " << boost::filesystem::current_path().string() << endl;
+        
         std::ifstream ifs(pathLoadFileName, std::ios::binary);
         if(!ifs.good())
         {
@@ -1473,7 +1483,8 @@ bool System::LoadAtlas(int type)
     }
     else if(type == BINARY_FILE) // File binary
     {
-        cout << "Starting to read the save binary file"  << endl;
+        cout << "Starting to read the save text file from " << pathLoadFileName << "\nPWD: " << boost::filesystem::current_path().string() << endl;
+
         std::ifstream ifs(pathLoadFileName, std::ios::binary);
         if(!ifs.good())
         {
