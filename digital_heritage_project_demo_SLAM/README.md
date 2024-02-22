@@ -1,6 +1,6 @@
 ## Digital Heritage app.
 
-# ORB-SLAM2 Setup on NVIDIA Jetson AGX Xavier (**For Monocular Cameras Only)
+# ORB-SLAM2 Setup on NVIDIA Jetson AGX Xavier (For Monocular Cameras Only)
 **for now, later we will update it for RGB-D cameras as well
 
 This guide outlines the steps to set up ORB-SLAM2 on NVIDIA Jetson AGX Xavier, integrating it with NVIDIA Jetson Inference and using Pangolin for visualization.
