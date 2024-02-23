@@ -18,6 +18,6 @@ use vars qw(
     $Cpreprocessor
     );
 
-$Cpreprocessor = 'gcc -E -isystem /home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/include';
+$Cpreprocessor = 'gcc -E';
 
 1;

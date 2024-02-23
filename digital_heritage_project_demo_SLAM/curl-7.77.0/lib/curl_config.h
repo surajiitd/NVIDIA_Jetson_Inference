@@ -866,7 +866,7 @@
 /* #undef NTLM_WB_FILE */
 
 /* cpu-machine-OS */
-#define OS "aarch64-unknown-linux-gnu"
+#define OS "x86_64-pc-linux-gnu"
 
 /* Name of package */
 #define PACKAGE "curl"

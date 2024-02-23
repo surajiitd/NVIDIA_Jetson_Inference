@@ -17,7 +17,7 @@ old_library='libcurl.a'
 inherited_linker_flags=' -pthread'
 
 # Libraries that this one depends upon.
-dependency_libs=' -L/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/lib -lz'
+dependency_libs=' -lz'
 
 # Names of additional weak libraries provided by this library
 weak_library_names=''

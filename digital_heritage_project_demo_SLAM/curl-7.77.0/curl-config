@@ -172,7 +172,7 @@ while test $# -gt 0; do
 
     --static-libs)
         if test "Xyes" != "Xno" ; then
-          echo ${exec_prefix}/lib/libcurl.a -L/home/vision/.hunter/_Base/cb0ea1f/da76b5a/079a0bf/Install/lib -lz -pthread
+          echo ${exec_prefix}/lib/libcurl.a  -lz -pthread
         else
           echo "curl was built with static libraries disabled" >&2
           exit 1
