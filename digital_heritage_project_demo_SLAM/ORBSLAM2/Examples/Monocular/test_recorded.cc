@@ -134,7 +134,7 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
 {
     // removed argument const string &strPathTimes
     ifstream fTimes;
-    char strPathTimes[] = "ORBSLAM2/Examples/Monocular/Recorded_Video_Setup/timestamps.txt";
+    char strPathTimes[] = "ORBSLAM2/Examples/Monocular/Recorded_Video_Setup/Datasets_TimeStamps.txt";
     fTimes.open(strPathTimes);
     vTimeStamps.reserve(5000);
     vstrImageFilenames.reserve(5000);

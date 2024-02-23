@@ -35,6 +35,8 @@
 
 #include "unistd.h"
 
+#include<curl/curl.h>
+
 namespace ORB_SLAM3
 {
 
@@ -504,18 +506,18 @@ namespace ORB_SLAM3
         
         // cout << "x = " + std::to_string(mOw(0))+" & y = " + std::to_string(mOw(1)) + " & yaw = "+std::to_string(yaw * 180.0 / M_PI) << endl;
 
-        CURL *curl;
-        curl_global_init(CURL_GLOBAL_ALL);
-        curl=curl_easy_init();
+        // CURL *curl;
+        // curl_global_init(CURL_GLOBAL_ALL);
+        // curl=curl_easy_init();
 
-        string IP = "127.0.0.1:8080";
+        // string IP = "127.0.0.1:8080";
 
-        curl_easy_setopt(curl,CURLOPT_URL,"http://" + IP + "/updatecurrent/");
+        // curl_easy_setopt(curl,CURLOPT_URL,"http://" + IP + "/updatecurrent/");
         
-        curl_easy_setopt(curl,CURLOPT_POSTFIELDS,"x = " + std::to_string(mOw(0))+" & y = " + std::to_string(mOw(1)) + " & yaw = "+std::to_string(yaw * 180.0 / M_PI));
+        // curl_easy_setopt(curl,CURLOPT_POSTFIELDS,"x = " + std::to_string(mOw(0))+" & y = " + std::to_string(mOw(1)) + " & yaw = "+std::to_string(yaw * 180.0 / M_PI));
         
-        curl_easy_perform(curl);
-                        
+        // curl_easy_perform(curl);
+
 
        //Changes made by Sarvesh
       
