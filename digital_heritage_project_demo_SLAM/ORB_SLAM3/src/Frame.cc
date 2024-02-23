@@ -471,40 +471,6 @@ namespace ORB_SLAM3
         mbHasPose = true;
     }
 
-    // void Frame::UpdatePoseMatrices()
-    // {
-    //     Sophus::SE3<float> Twc = mTcw.inverse();
-    //     mRwc = Twc.rotationMatrix();
-    //     mOw = Twc.translation();
-    //     mRcw = mTcw.rotationMatrix();
-    //     mtcw = mTcw.translation();
-
-    //     // Assuming mRwc is a 3x3 rotation matrix
-    //     Eigen::Matrix3f rotationMatrix = mRwc.cast<float>(); // Cast to the desired floating-point precision if necessary
-
-    //     // Convert rotation matrix to Euler angles (in radians)
-    //     Eigen::Vector3f euler_angles = rotationMatrix.eulerAngles(0, 1, 2); // Euler angles in ZYX order
-
-    //     // Access individual Euler angles
-    //     float roll = euler_angles(0);  // Roll angle (rotation around X axis)
-    //     float pitch = euler_angles(1); // Pitch angle (rotation around Y axis)
-    //     float yaw = euler_angles(2);   // Yaw angle (rotation around Z axis)
-
-    //     // Changes made by us
-    //     // cout << Twc.matrix() << endl;
-    //     // cout << mOw << endl;
-    //     // cout << mRwc << endl;
-
-    //     // Print Euler angles in degrees
-    //     // std::cout << "Roll: " << roll * 180.0 / M_PI << " degrees" << std::endl;
-    //     // std::cout << "Pitch: " << pitch * 180.0 / M_PI << " degrees" << std::endl;
-    //     // std::cout << "Yaw: " << yaw * 180.0 / M_PI << " degrees" << std::endl;
-
-    //     cout << "x = " + std::to_string(mOw(0))+" & y = " + std::to_string(mOw(1)) + " & yaw = "+std::to_string(yaw * 180.0 / M_PI) << endl;
-    // }
-
-
-
     void Frame::UpdatePoseMatrices()
     {
         Sophus::SE3<float> Twc = mTcw.inverse();
@@ -513,14 +479,55 @@ namespace ORB_SLAM3
         mRcw = mTcw.rotationMatrix();
         mtcw = mTcw.translation();
 
+        // Changes made by Aryan
+        
         // Assuming mRwc is a 3x3 rotation matrix
         Eigen::Matrix3f rotationMatrix = mRwc.cast<float>(); // Cast to the desired floating-point precision if necessary
 
         // Convert rotation matrix to Euler angles (in radians)
         Eigen::Vector3f euler_angles = rotationMatrix.eulerAngles(0, 1, 2); // Euler angles in ZYX order
 
+        // Access individual Euler angles
+        float roll = euler_angles(0);  // Roll angle (rotation around X axis)
+        float pitch = euler_angles(1); // Pitch angle (rotation around Y axis)
+        float yaw = euler_angles(2);   // Yaw angle (rotation around Z axis)
+
+        
+        // cout << Twc.matrix() << endl;
+        // cout << mOw << endl;
+        // cout << mRwc << endl;
+
+        // Print Euler angles in degrees
+        // std::cout << "Roll: " << roll * 180.0 / M_PI << " degrees" << std::endl;
+        // std::cout << "Pitch: " << pitch * 180.0 / M_PI << " degrees" << std::endl;
+        // std::cout << "Yaw: " << yaw * 180.0 / M_PI << " degrees" << std::endl;
+        
+        // cout << "x = " + std::to_string(mOw(0))+" & y = " + std::to_string(mOw(1)) + " & yaw = "+std::to_string(yaw * 180.0 / M_PI) << endl;
+
+        CURL *curl;
+        curl_global_init(CURL_GLOBAL_ALL);
+        curl=curl_easy_init();
+
+        string IP = "127.0.0.1:8080";
+
+        curl_easy_setopt(curl,CURLOPT_URL,"http://" + IP + "/updatecurrent/");
+        
+        curl_easy_setopt(curl,CURLOPT_POSTFIELDS,"x = " + std::to_string(mOw(0))+" & y = " + std::to_string(mOw(1)) + " & yaw = "+std::to_string(yaw * 180.0 / M_PI));
+        
+        curl_easy_perform(curl);
+                        
+
+       //Changes made by Sarvesh
+      
+       // Assuming mRwc is a 3x3 rotation matrix
+       /*
+        Eigen::Matrix3f rotationMatrix = mRwc.cast<float>(); // Cast to the desired floating-point precision if necessary
+
+        // Convert rotation matrix to Euler angles (in radians)
+        Eigen::Vector3f euler_angles = rotationMatrix.eulerAngles(0, 1, 2); // Euler angles in ZYX order
+
         // Open the file for appending data
-        std::ofstream outputFile("pose_data.txt", std::ios::app);
+        std::ofstream outputFile("../KeyFramesTrajectory/pose_data_process_thread_generated.txt", std::ios::app);
 
         if (outputFile.is_open()) {
             // Write the values to the file
@@ -533,8 +540,8 @@ namespace ORB_SLAM3
             // Handle error if unable to open the file
             std::cerr << "Unable to open file for writing." << std::endl;
         }
+        */
     }
-
 
     Eigen::Matrix<float, 3, 1> Frame::GetImuPosition() const
     {
