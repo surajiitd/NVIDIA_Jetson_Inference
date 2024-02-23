@@ -79,7 +79,7 @@ def plot_pose_data(file_path, num_samples=1800, TUMFormat=False, start_color='gr
     plt.show()
 
 if __name__ == "__main__":
-    file_path = "pose_data.txt"
+    file_path = "/home/vision/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORB_SLAM3/Examples/Monocular/CameraTrajectory/EuRoC_f_dataset-Recorded_mono.txt"
     num_samples = 500
     if len(sys.argv) > 1:
         file_path = sys.argv[1]
