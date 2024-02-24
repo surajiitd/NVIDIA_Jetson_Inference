@@ -142,6 +142,7 @@ target_link_libraries(${PROJECT_NAME}
     -lboost_serialization
     -lboost_filesystem
     -lcrypto
+    -lcurl
 )
 
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")

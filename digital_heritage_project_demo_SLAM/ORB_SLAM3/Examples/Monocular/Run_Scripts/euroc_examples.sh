@@ -4,7 +4,7 @@ pathDatasetEuroc='../../Datasets/EuRoC' #Example, it is necesary to change it by
 #------------------------------------
 # Monocular Examples
 echo "Launching MH01 with Monocular sensor"
-../../Monocular/mono_euroc ../../Vocabulary/ORBvoc.txt ../../Monocular/EuRoC.yaml "$pathDatasetEuroc"/MH01 ../../Monocular/EuRoC_TimeStamps/MH01.txt dataset-MH01_mono 
+../../Monocular/mono_euroc ../../../Vocabulary/ORBvoc.txt ../../Monocular/Setup_Files/EuRoC.yaml "$pathDatasetEuroc"/MH01 ../../Monocular/Datasets_TimeStamps/EuRoC_TimeStamps/MH01.txt dataset-MH01_mono 
 
 #echo "Launching MH02 with Monocular sensor"
 #./Monocular/mono_euroc ../Vocabulary/ORBvoc.txt ./Monocular/EuRoC.yaml "$pathDatasetEuroc"/MH02 ./Monocular/EuRoC_TimeStamps/MH02.txt dataset-MH02_mono

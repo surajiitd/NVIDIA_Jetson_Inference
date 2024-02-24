@@ -11,3 +11,5 @@ echo "Launching ORB_SLAM3 with Pre-recorded custom dataset"
 
 # chmod +x plot_pose_data.py
 # python plot_pose_data.py
+
+# evo_traj tum ../CameraTrajectory/EuRoC_f_dataset-Recorded_mono.txt --plot
