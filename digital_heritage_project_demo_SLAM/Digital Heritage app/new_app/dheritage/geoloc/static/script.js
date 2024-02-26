@@ -71,8 +71,8 @@ function mark()
 
 function update()
 {
-    if (appState == "OFF")
-        return;
+    // if (appState == "OFF")
+    //     return;
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", ip, false); // false for synchronous request
     xmlHttp.send(null);
