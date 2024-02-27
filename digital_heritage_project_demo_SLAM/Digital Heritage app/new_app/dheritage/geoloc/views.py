@@ -54,7 +54,7 @@ def update_current_location(request):
     elif request.method == 'POST':
         data = JSONParser().parse(request)
         serializer = CurrentLocationSerializer(data=data)
-        current = CurrentLocation.objects.all()[0]
+        current = CurrentLocation.objects.all()[0]  
 
         if serializer.is_valid():
             serializer.update(current, serializer.validated_data)

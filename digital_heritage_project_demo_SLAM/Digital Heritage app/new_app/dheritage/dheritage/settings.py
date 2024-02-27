@@ -31,7 +31,7 @@ ip = "http://127.0.0.1:8080"
 # Application definition
 
 INSTALLED_APPS = [
-    "geoloc.apps.GeolocConfig",
+    # "geoloc.apps.GeolocConfig",
     "rest_framework",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "geoloc",
 ]
 
 MIDDLEWARE = [

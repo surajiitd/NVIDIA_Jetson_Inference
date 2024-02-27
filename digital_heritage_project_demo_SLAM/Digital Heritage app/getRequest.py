@@ -17,5 +17,5 @@ def send_get_request(url):
 
 # Example usage:
 if __name__ == "__main__":
-    url = "http://127.0.0.1:8080/updatecurrent"  # Replace this URL with the one you want to request
+    url = "http://127.0.0.1:8080/locations"  # Replace this URL with the one you want to request
     send_get_request(url)

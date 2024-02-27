@@ -515,6 +515,7 @@ namespace ORB_SLAM3
 
             // Set the POST data
             curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "x=" + std::to_string(mOw(0)) + "&y=" + std::to_string(mOw(1)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI));
+
             cout << "x=" + std::to_string(mOw(0)) + "&y=" + std::to_string(mOw(1)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI) << endl;
             // Perform the request
             CURLcode res = curl_easy_perform(curl);
@@ -523,12 +524,12 @@ namespace ORB_SLAM3
                 std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
             }
 
-            // Cleanup
-            curl_easy_cleanup(curl);
+        //     // Cleanup
+        //     curl_easy_cleanup(curl);
         }
 
-        // Cleanup libcurl
-        curl_global_cleanup();
+        // // Cleanup libcurl
+        // curl_global_cleanup();
 
         // CURL *curl;
         // curl_global_init(CURL_GLOBAL_ALL);
