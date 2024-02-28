@@ -1,17 +1,32 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display Values</title>
+    <title>Location Tracker</title>
 </head>
 <body>
-    <div id="values-container">
-        <h2>X Value: <span id="x-value">-</span></h2>
-        <h2>Y Value: <span id="y-value">-</span></h2>
-        <h2>Yaw Value: <span id="yaw-value">-</span></h2>
+    <button id="play-button" onclick="buttonPress()">OFF</button>
+    <button id="geo-button" onclick="mark()">Mark Location</button>
+    <div class="coordinates">
+        <p><strong>Current Coordinates:</strong></p>
+        <p id="x-coordinate">X: </p>
+        <p id="y-coordinate">Y: </p>
+        <p id="yaw-coordinate">Yaw: </p>
     </div>
-    <!-- <script src="script.js"></script> -->
+    <div class="cards"></div>
+    <div class="nearby invisible">
+        Nearby:
+        <div class="nearby-list"></div>
+    </div>
+    <form class="mark invisible">
+        <label for="location_name">Location Name:</label><br>
+        <input type="text" id="location_name" name="location_name"><br>
+        <input type="submit" value="Submit">
+    </form>
+
     <script src="{% static 'script.js' %}"></script>
 </body>
 </html>
