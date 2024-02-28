@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
+from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -9,6 +10,7 @@ from .models import Location, CurrentLocation
 from .serializers import LocationSerializer, CurrentLocationSerializer
 
 from collections import OrderedDict
+
 import json
 
 from django.views.decorators.csrf import csrf_exempt
@@ -46,17 +48,23 @@ def locations_list(request):
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
-@csrf_exempt 
+@csrf_exempt
+@api_view(['GET', 'POST'])
 def update_current_location(request):
     if request.method == 'GET':
         return HttpResponse(status=400)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = CurrentLocationSerializer(data=data)
-        current = CurrentLocation.objects.all()[0]  
+        print(request.data)
+        serializer = CurrentLocationSerializer(data=request.data)
+        
+        current = CurrentLocation.objects.get(id=1) 
 
         if serializer.is_valid():
+            print(json.dumps(serializer.validated_data, indent=4))
             serializer.update(current, serializer.validated_data)
             return JsonResponse(serializer.data, status=201)
+        
+        print(serializer.errors)
+        
         return JsonResponse(serializer.errors, status=400)

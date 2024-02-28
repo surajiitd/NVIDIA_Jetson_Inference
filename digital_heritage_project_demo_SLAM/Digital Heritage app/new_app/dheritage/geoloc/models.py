@@ -18,4 +18,4 @@ class CurrentLocation(models.Model):
     yaw = models.FloatField(default=0.0, validators=[MinValueValidator(-180.0), MaxValueValidator(180.0)])
 
     def __str__(self) -> str:
-        return '[] ' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.yaw) + ' ]'
+        return '[ ' + str(self.x) + ', ' + str(self.y) + ', ' + str(self.yaw) + ' ]'
