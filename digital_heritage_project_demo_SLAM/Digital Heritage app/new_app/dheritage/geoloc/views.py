@@ -12,6 +12,7 @@ from .serializers import LocationSerializer, CurrentLocationSerializer
 from collections import OrderedDict
 
 import json
+import os
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -68,3 +69,12 @@ def update_current_location(request):
         print(serializer.errors)
         
         return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def execute_script(request):
+    shellscript_file = 'test_recorded_example.sh'
+    # Path to your shell script
+    script_path = '../../../ORB_SLAM3/Examples/Monocular/Run_Scripts/' + shellscript_file
+
+    # Execute the shell script
+    os.system(script_path)

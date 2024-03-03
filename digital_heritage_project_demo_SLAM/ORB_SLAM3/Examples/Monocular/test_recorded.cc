@@ -80,7 +80,7 @@ int main(int argc, char **argv)
     int fps = 20;
     float dT = 1.f / fps;
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    bool showGUI = false;
+    bool showGUI = true;
 
     ORB_SLAM3::System SLAM(argv[1], argv[2], ORB_SLAM3::System::MONOCULAR, showGUI);
     float imageScale = SLAM.GetImageScale();
