@@ -106,42 +106,24 @@ function initMap() {
     drawUserMarker();
 }
 
-function clearMarker(mx, my) {
-    ctx.clearRect(mx - Math.SQRT2 * markerRadius, my - Math.SQRT2 * markerRadius, mx + Math.SQRT2 * markerRadius, my + Math.SQRT2 * markerRadius);
-    console.log("cleared marker");
-}
+// function clearMarker(mx, my) {
+//     ctx.clearRect(mx - Math.SQRT2 * markerRadius, my - Math.SQRT2 * markerRadius, mx + Math.SQRT2 * markerRadius, my + Math.SQRT2 * markerRadius);
+//     console.log("cleared marker");
+// }
 
-function updateMap(locationX, curLocationX, locationY, curLocationY) {
-    const scalingFactorX = 200;
+function updateMap(locationX, curLocationX, locationY, curLocationY, curLocationYaw) {
+    const scalingFactorX = 150;
     const scalingFactorY = 200;
-    markerX = centerX + scalingFactorX * (curLocationX - locationX);
-    markerY = centerY + scalingFactorY * (curLocationY - locationY);
+    // markerX = centerX + scalingFactorX * (locationX - curLocationX);
+    // markerY = centerY + scalingFactorY * (locationY - curLocationY);
+
+    markerX = ((scalingFactorX * (locationX - curLocationX)) * Math.cos(curLocationYaw)) - ((scalingFactorY * (locationY - curLocationY)) * Math.sin(curLocationYaw)) + centerX;
+
+    markerY = ((scalingFactorX * (locationX - curLocationX)) * Math.sin(curLocationYaw)) + ((scalingFactorY * (locationY - curLocationY)) * Math.cos(curLocationYaw)) + centerY;
 
     console.log(markerX, markerY, locationX, locationY)
 
-    if (markerX == centerX && markerY == centerY) {
-        console.log("ignore !!!");
-        return;
-    }
-
-    // if ((markerX >= 400 - markerRadius || markerY >= 400 - markerRadius || markerX <= markerRadius || markerY <= markerRadius)) {
-    //     drawUserMarker();
-    //     console.log("invalid marker !!!");
-    //     return
-    // }
-
     drawLocationMarker(markerX, markerY);
-}
-
-function updateMarkerCood(locationX, curLocationX, locationY, curLocationY) {
-    const scalingFactorX = 200;
-    const scalingFactorY = 300;
-    markerX = centerX + scalingFactorX * (locationX - curLocationX);
-    markerY = centerY + scalingFactorY * (locationY - curLocationY);
-
-    console.log(markerX, markerY, locationX, locationY);
-
-    return [markerX, markerY];
 }
 
 function initMarker() {
@@ -185,9 +167,7 @@ function update() {
             //     clearMarker(prevMarkerX, prevMarkerY);
             // }
 
-
-
-            prevMarkerX, prevMarkerY = updateMap(location.x, curLocation.x, location.y, curLocation.y);
+            updateMap(location.x, curLocation.x, location.y, curLocation.y, curLocation.yaw);
 
             // if(i == 1) {
             //     continue;
