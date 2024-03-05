@@ -111,17 +111,89 @@ function initMap() {
 //     console.log("cleared marker");
 // }
 
+function rotationMatrix(theta) {
+    var cosTheta = Math.cos(theta);
+    var sinTheta = Math.sin(theta);
+
+    var matrix = [
+        [cosTheta, -sinTheta],
+        [sinTheta, cosTheta]
+    ];
+
+    return matrix;
+}
+
+function multiplyMatrices(matrix1, matrix2) {
+    // Check if the matrices can be multiplied
+    if (matrix1[0].length !== matrix2.length) {
+        console.error("Matrices cannot be multiplied: Invalid dimensions");
+        return null;
+    }
+
+    // Initialize the result matrix with appropriate dimensions
+    var result = new Array(matrix1.length);
+    for (var i = 0; i < result.length; i++) {
+        result[i] = new Array(matrix2[0].length).fill(0);
+    }
+
+    // Perform matrix multiplication
+    for (var i = 0; i < matrix1.length; i++) {
+        for (var j = 0; j < matrix2[0].length; j++) {
+            for (var k = 0; k < matrix1[0].length; k++) {
+                result[i][j] += matrix1[i][k] * matrix2[k][j];
+            }
+        }
+    }
+
+    return result;
+}
+
 function updateMap(locationX, curLocationX, locationY, curLocationY, curLocationYaw) {
     const scalingFactorX = 150;
     const scalingFactorY = 200;
     // markerX = centerX + scalingFactorX * (locationX - curLocationX);
     // markerY = centerY + scalingFactorY * (locationY - curLocationY);
 
-    markerX = ((scalingFactorX * (locationX - curLocationX)) * Math.cos(curLocationYaw)) - ((scalingFactorY * (locationY - curLocationY)) * Math.sin(curLocationYaw)) + centerX;
+    // markerX = ((scalingFactorX * (locationX - curLocationX)) * Math.cos(curLocationYaw)) - ((scalingFactorY * (locationY - curLocationY)) * Math.sin(curLocationYaw)) + centerX;
 
-    markerY = ((scalingFactorX * (locationX - curLocationX)) * Math.sin(curLocationYaw)) + ((scalingFactorY * (locationY - curLocationY)) * Math.cos(curLocationYaw)) + centerY;
+    // markerY = ((scalingFactorX * (locationX - curLocationX)) * Math.sin(curLocationYaw)) + ((scalingFactorY * (locationY - curLocationY)) * Math.cos(curLocationYaw)) + centerY;
 
-    console.log(markerX, markerY, locationX, locationY)
+    /*
+        Transformation Pipeline:
+        1. yaw(from the slam) -> yaw(0, 360)
+        2. mx, my -> mx - ux, my - uy // origin translated at user
+        3. mx, my = rotation(-theta)
+        4. mx + ux, my + uy // origin translated back to (0,0)
+    */
+
+    if (curLocationYaw < 0) {
+        curLocationYaw = 360 - Math.abs(curLocationYaw);
+    }
+
+    markerX = scalingFactorX * (locationX - curLocationX);
+    markerY = scalingFactorY * (locationY - curLocationY);
+
+    curLocationYaw = curLocationYaw * (Math.PI) / 180;
+
+    // var rotation = rotationMatrix(-1 * curLocationYaw);
+
+    // var result = multiplyMatrices([markerX, markerY], rotation);
+
+    curLocationYaw *= -1;
+
+    markerX = Math.cos(curLocationYaw) * markerX - Math.sin(curLocationYaw) * markerY;
+
+    markerY = Math.sin(curLocationYaw) * markerX + Math.cos(curLocationYaw) * markerY;
+
+    markerX += centerX;
+    markerY += centerY;
+
+    console.log(markerX, markerY);
+
+
+    // console.log(markerX, markerY, locationX, locationY)
+
+    console.log(curLocationYaw * -180 / Math.PI);
 
     drawLocationMarker(markerX, markerY);
 }
@@ -194,4 +266,4 @@ initMap();
 
 const interval = setInterval(() => {
     update();
-}, 100); // Start the update initially
+}, 1000); // Start the update initially

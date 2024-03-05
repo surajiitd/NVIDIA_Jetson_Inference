@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # change these variable(s) accordingly
-videoFileName='WIN_20240305_13_06_20_Pro.mp4'
+videoFileName='IITD_campus_edited.mp4'
 timeStampFileName='timestamps.txt'
 DatasetFolderName='lab_data'
 #------------------------------------
