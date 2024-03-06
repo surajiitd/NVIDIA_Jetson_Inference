@@ -475,6 +475,8 @@ namespace ORB_SLAM3
 
     void Frame::UpdatePoseMatrices()
     {
+        bool performPost = true;
+
         Sophus::SE3<float> Twc = mTcw.inverse();
         mRwc = Twc.rotationMatrix();
         mOw = Twc.translation();
@@ -503,59 +505,42 @@ namespace ORB_SLAM3
         // std::cout << "Pitch: " << pitch * 180.0 / M_PI << " degrees" << std::endl;
         // std::cout << "Yaw: " << yaw * 180.0 / M_PI << " degrees" << std::endl;
 
-        // Initialize libcurl
+        if(performPost) {
+            // Initialize libcurl
+            curl_global_init(CURL_GLOBAL_ALL);
 
-        // Initialize libcurl
-        curl_global_init(CURL_GLOBAL_ALL);
+            // Create a CURL handle
+            CURL *curl = curl_easy_init();
+            if (curl) {
+                // Set the URL for the request
+                curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:8080/updatecurrent/");
 
-        // Create a CURL handle
-        CURL *curl = curl_easy_init();
-        if (curl)
-        {
-            // Set the URL for the request
-            curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:8080/updatecurrent/");
+                // Set the request type to POST
+                curl_easy_setopt(curl, CURLOPT_POST, 1L);
 
-            // Set the request type to POST
-            curl_easy_setopt(curl, CURLOPT_POST, 1L);
+                // // Create POST data
+                // std::string post_data = "x=0.0&y=0.23423&yaw=0.34534";
+                std::string post_data = "x=" + std::to_string(mOw(0))+ "&y=" + std::to_string(mOw(1)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI);
 
-            // // Create POST data
-            // std::string post_data = "x=0.0&y=0.23423&yaw=0.34534";
-            std::string post_data = "x=" + std::to_string(mOw(0))+ "&y=" + std::to_string(mOw(1)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI);
+                // // Set the POST data
+                curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data.c_str());
 
-            // // Set the POST data
-            curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data.c_str());
+                // Perform the request
+                CURLcode res = curl_easy_perform(curl);
 
-            // Perform the request
-            CURLcode res = curl_easy_perform(curl);
+                // Check for errors
+                if (res != CURLE_OK)
+                {
+                    std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+                }
 
-            // Check for errors
-            if (res != CURLE_OK)
-            {
-                std::cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << std::endl;
+                // Cleanup
+                curl_easy_cleanup(curl);
             }
 
-            // Cleanup
-            curl_easy_cleanup(curl);
+            // Cleanup libcurl
+            curl_global_cleanup();
         }
-
-        // Cleanup libcurl
-        curl_global_cleanup();
-
-        // CURL *curl;
-        // curl_global_init(CURL_GLOBAL_ALL);
-        // curl=curl_easy_init();
-
-        // string IP = "127.0.0.1:8080";
-
-        // curl_easy_setopt(curl,CURLOPT_URL,"http://" + IP + "/updatecurrent");
-
-        // // cout << "http://" + IP + "/updatecurrent/" << endl;
-
-        // curl_easy_setopt(curl,CURLOPT_POSTFIELDS,"x=" + std::to_string(mOw(0))+ "&y=" + std::to_string(mOw(1)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI));
-
-        // // cout << "x = " + std::to_string(mOw(0))+" & y = " + std::to_string(mOw(1)) + " & yaw = "+std::to_string(yaw * 180.0 / M_PI) << endl;
-
-        // curl_easy_perform(curl);
 
         // Changes made by Sarvesh
 

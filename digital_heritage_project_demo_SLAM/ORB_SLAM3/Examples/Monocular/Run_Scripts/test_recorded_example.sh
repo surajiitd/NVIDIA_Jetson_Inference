@@ -2,7 +2,7 @@
 
 # change these variable(s) accordingly
 timeStampFileName='timestamps.txt'
-DatasetFolderName='lab_data'
+DatasetFolderName='custom_data'
 #------------------------------------
 # Monocular Examples
 echo "ORB_SLAM3" | figlet

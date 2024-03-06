@@ -38,6 +38,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    bool showGUI = false; 
+
     const int num_seq = (argc - 3) / 2;
     cout << "num_seq = " << num_seq << endl;
     bool bFileName = (((argc - 3) % 2) == 1);
@@ -80,8 +82,7 @@ int main(int argc, char **argv)
     int fps = 20;
     float dT = 1.f / fps;
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    bool showGUI = true;
-
+    
     ORB_SLAM3::System SLAM(argv[1], argv[2], ORB_SLAM3::System::MONOCULAR, showGUI);
     float imageScale = SLAM.GetImageScale();
 
