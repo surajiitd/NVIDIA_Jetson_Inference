@@ -475,7 +475,7 @@ namespace ORB_SLAM3
 
     void Frame::UpdatePoseMatrices()
     {
-        bool performPost = false;
+        bool performPost = true;
 
         Sophus::SE3<float> Twc = mTcw.inverse();
         mRwc = Twc.rotationMatrix();
@@ -515,7 +515,9 @@ namespace ORB_SLAM3
             if (curl)
             {
                 // Set the URL for the request
-                curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:8080/updatecurrent/");
+                // curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:8080/updatecurrent/");
+
+                curl_easy_setopt(curl, CURLOPT_URL, "http://10.194.24.30:8080/updatecurrent/");
 
                 // Set the request type to POST
                 curl_easy_setopt(curl, CURLOPT_POST, 1L);

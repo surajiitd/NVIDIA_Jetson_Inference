@@ -7,7 +7,7 @@ var speech = new SpeechSynthesisUtterance();
 var loc = [];
 var reached = false;
 var appState = "OFF";
-var ip = "http://127.0.0.1:8080";
+var ip = "http://10.194.24.30:8080";
 
 var canvas = document.getElementById('myMap');
 var ctx = canvas.getContext('2d');

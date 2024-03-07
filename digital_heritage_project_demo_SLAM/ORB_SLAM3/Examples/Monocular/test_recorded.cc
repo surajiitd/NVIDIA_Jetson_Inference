@@ -38,7 +38,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    bool showGUI = true;
+    bool showGUI = false;
 
     const int num_seq = (argc - 3) / 2;
     cout << "num_seq = " << num_seq << endl;
