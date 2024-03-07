@@ -96,6 +96,7 @@ function drawUserMarker() {
 function drawLocationMarker(mx, my) {
     ctx.fillStyle = 'red';
     ctx.arc(mx, my, markerRadius, 0, 2 * Math.PI);
+    console.log(mx, my);
     ctx.fill();
 }
 
@@ -111,46 +112,46 @@ function initMap() {
 //     console.log("cleared marker");
 // }
 
-function rotationMatrix(theta) {
-    var cosTheta = Math.cos(theta);
-    var sinTheta = Math.sin(theta);
+// function rotationMatrix(theta) {
+//     var cosTheta = Math.cos(theta);
+//     var sinTheta = Math.sin(theta);
 
-    var matrix = [
-        [cosTheta, -sinTheta],
-        [sinTheta, cosTheta]
-    ];
+//     var matrix = [
+//         [cosTheta, -sinTheta],
+//         [sinTheta, cosTheta]
+//     ];
 
-    return matrix;
-}
+//     return matrix;
+// }
 
-function multiplyMatrices(matrix1, matrix2) {
-    // Check if the matrices can be multiplied
-    if (matrix1[0].length !== matrix2.length) {
-        console.error("Matrices cannot be multiplied: Invalid dimensions");
-        return null;
-    }
+// function multiplyMatrices(matrix1, matrix2) {
+//     // Check if the matrices can be multiplied
+//     if (matrix1[0].length !== matrix2.length) {
+//         console.error("Matrices cannot be multiplied: Invalid dimensions");
+//         return null;
+//     }
 
-    // Initialize the result matrix with appropriate dimensions
-    var result = new Array(matrix1.length);
-    for (var i = 0; i < result.length; i++) {
-        result[i] = new Array(matrix2[0].length).fill(0);
-    }
+//     // Initialize the result matrix with appropriate dimensions
+//     var result = new Array(matrix1.length);
+//     for (var i = 0; i < result.length; i++) {
+//         result[i] = new Array(matrix2[0].length).fill(0);
+//     }
 
-    // Perform matrix multiplication
-    for (var i = 0; i < matrix1.length; i++) {
-        for (var j = 0; j < matrix2[0].length; j++) {
-            for (var k = 0; k < matrix1[0].length; k++) {
-                result[i][j] += matrix1[i][k] * matrix2[k][j];
-            }
-        }
-    }
+//     // Perform matrix multiplication
+//     for (var i = 0; i < matrix1.length; i++) {
+//         for (var j = 0; j < matrix2[0].length; j++) {
+//             for (var k = 0; k < matrix1[0].length; k++) {
+//                 result[i][j] += matrix1[i][k] * matrix2[k][j];
+//             }
+//         }
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
 function updateMap(locationX, curLocationX, locationY, curLocationY, curLocationYaw) {
     const scalingFactorX = 150;
-    const scalingFactorY = 200;
+    const scalingFactorY = 150;
     // markerX = centerX + scalingFactorX * (locationX - curLocationX);
     // markerY = centerY + scalingFactorY * (locationY - curLocationY);
 
@@ -163,7 +164,7 @@ function updateMap(locationX, curLocationX, locationY, curLocationY, curLocation
         1. yaw(from the slam) -> yaw(0, 360)
         2. mx, my -> mx - ux, my - uy // origin translated at user
         3. mx, my = rotation(-theta)
-        4. mx + ux, my + uy // origin translated back to (0,0)
+        4. mx + ux, my + uy -> mx, my // origin translated back to (0,0)
     */
 
     if (curLocationYaw < 0) {
@@ -188,31 +189,30 @@ function updateMap(locationX, curLocationX, locationY, curLocationY, curLocation
     markerX += centerX;
     markerY += centerY;
 
-    console.log(markerX, markerY);
-
+    // console.log(markerX, markerY);
 
     // console.log(markerX, markerY, locationX, locationY)
 
-    console.log(curLocationYaw * -180 / Math.PI);
+    // console.log(curLocationYaw * -180 / Math.PI);
 
     drawLocationMarker(markerX, markerY);
 }
 
-function initMarker() {
-    ctx.fillStyle = 'red';
-    ctx.arc(0, 0, markerRadius, 0, 2 * Math.PI);
+function initMarker(markerCol) {
+    ctx.fillStyle = markerCol;
+    // ctx.arc(0, 0, markerRadius, 0, 2 * Math.PI);
     ctx.fill();
 }
 
-var prevMarkerX = 0;
-var prevMarkerY = 0;
+// var prevMarkerX = 0;
+// var prevMarkerY = 0;
 function update() {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", ip + "/locations/", false); // false for synchronous request
     xmlHttp.send(null);
     const obj = JSON.parse(xmlHttp.responseText);
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, mapWidth, mapHeight);
     initMap();
 
     // Ensure that the response contains at least one object
@@ -266,4 +266,4 @@ initMap();
 
 const interval = setInterval(() => {
     update();
-}, 1000); // Start the update initially
+}, 100); // Start the update initially

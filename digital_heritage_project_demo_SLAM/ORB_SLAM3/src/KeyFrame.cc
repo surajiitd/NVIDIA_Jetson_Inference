@@ -846,7 +846,7 @@ void KeyFrame::UpdateMap(Map* pMap)
 
 void KeyFrame::PreSave(set<KeyFrame*>& spKF,set<MapPoint*>& spMP, set<GeometricCamera*>& spCam)
 {
-    // cout << "KF PreSave 1\n";
+    cout << "KF PreSave 1\n";
     // Save the id of each MapPoint in this KF, there can be null pointer in the vector
     mvBackupMapPointsId.clear();
     mvBackupMapPointsId.reserve(N);
@@ -859,7 +859,7 @@ void KeyFrame::PreSave(set<KeyFrame*>& spKF,set<MapPoint*>& spMP, set<GeometricC
             mvBackupMapPointsId.push_back(-1);
     }
 
-    // cout << "KF PreSave 2\n";
+    cout << "KF PreSave 2\n";
     // Save the id of each connected KF with it weight
     mBackupConnectedKeyFrameIdWeights.clear();
     for(std::map<KeyFrame*,int>::const_iterator it = mConnectedKeyFrameWeights.begin(), end = mConnectedKeyFrameWeights.end(); it != end; ++it)
@@ -868,7 +868,7 @@ void KeyFrame::PreSave(set<KeyFrame*>& spKF,set<MapPoint*>& spMP, set<GeometricC
             mBackupConnectedKeyFrameIdWeights[it->first->mnId] = it->second;
     }
 
-    // cout << "KF PreSave 3\n";
+    cout << "KF PreSave 3\n";
     // Save the parent id
     mBackupParentId = -1;
     if(mpParent && spKF.find(mpParent) != spKF.end())

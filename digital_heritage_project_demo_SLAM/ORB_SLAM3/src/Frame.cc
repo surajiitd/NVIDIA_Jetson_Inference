@@ -475,7 +475,7 @@ namespace ORB_SLAM3
 
     void Frame::UpdatePoseMatrices()
     {
-        bool performPost = true;
+        bool performPost = false;
 
         Sophus::SE3<float> Twc = mTcw.inverse();
         mRwc = Twc.rotationMatrix();
@@ -505,13 +505,15 @@ namespace ORB_SLAM3
         // std::cout << "Pitch: " << pitch * 180.0 / M_PI << " degrees" << std::endl;
         // std::cout << "Yaw: " << yaw * 180.0 / M_PI << " degrees" << std::endl;
 
-        if(performPost) {
+        if (performPost)
+        {
             // Initialize libcurl
             curl_global_init(CURL_GLOBAL_ALL);
 
             // Create a CURL handle
             CURL *curl = curl_easy_init();
-            if (curl) {
+            if (curl)
+            {
                 // Set the URL for the request
                 curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:8080/updatecurrent/");
 
@@ -520,7 +522,7 @@ namespace ORB_SLAM3
 
                 // // Create POST data
                 // std::string post_data = "x=0.0&y=0.23423&yaw=0.34534";
-                std::string post_data = "x=" + std::to_string(mOw(0))+ "&y=" + std::to_string(mOw(1)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI);
+                std::string post_data = "x=" + std::to_string(mOw(0)) + "&y=" + std::to_string(mOw(2)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI);
 
                 // // Set the POST data
                 curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data.c_str());
