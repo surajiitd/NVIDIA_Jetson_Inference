@@ -150,7 +150,7 @@ function initMap() {
 //     return result;
 // }
 
-function updateMap(locationX, curLocationX, locationY, curLocationY, curLocationYaw) {
+function updateMap(landmarkX, userLocX, landmarkY, userLocY, userYaw) {
     const scalingFactorX = 150;
     const scalingFactorY = 150;
     // markerX = centerX + scalingFactorX * (locationX - curLocationX);
@@ -168,27 +168,34 @@ function updateMap(locationX, curLocationX, locationY, curLocationY, curLocation
         4. mx + ux, my + uy -> mx, my // origin translated back to (0,0)
     */
 
-    if (curLocationYaw < 0) {
-        curLocationYaw = 360 - Math.abs(curLocationYaw);
+    if (userYaw < 0) {
+        userYaw = 360 - Math.abs(userYaw);
     }
 
-    markerX = scalingFactorX * (locationX - curLocationX);
-    markerY = scalingFactorY * (locationY - curLocationY);
+    markerX = landmarkX - userLocX;//scalingFactorX * (landmarkX - userLocX);
+    markerY = landmarkY - userLocY;//scalingFactorY * (landmarkY - userLocY);
 
-    curLocationYaw = curLocationYaw * (Math.PI) / 180;
+    userYaw = userYaw * (Math.PI) / 180;
 
     // var rotation = rotationMatrix(-1 * curLocationYaw);
 
     // var result = multiplyMatrices([markerX, markerY], rotation);
 
-    curLocationYaw *= -1;
+    userYaw *= -1;
+    markerX = Math.cos(userYaw) * markerX - Math.sin(userYaw) * markerY;
+    markerY = Math.sin(userYaw) * markerX + Math.cos(userYaw) * markerY;
 
-    markerX = Math.cos(curLocationYaw) * markerX - Math.sin(curLocationYaw) * markerY;
+    // markerX += centerX;
+    // markerY += centerY;
 
-    markerY = Math.sin(curLocationYaw) * markerX + Math.cos(curLocationYaw) * markerY;
+    markerX += userLocX;
+    markerY += userLocY;
 
-    markerX += centerX;
-    markerY += centerY;
+    markerX = ((markerX - userLocX)/markerX) * 300;
+    markerY = ((markerY - userLocY)/markerY) * 300;
+
+
+    // markerX
 
     // console.log(markerX, markerY);
 

@@ -475,7 +475,7 @@ namespace ORB_SLAM3
 
     void Frame::UpdatePoseMatrices()
     {
-        bool performPost = true;
+        bool performPost = false;
 
         Sophus::SE3<float> Twc = mTcw.inverse();
         mRwc = Twc.rotationMatrix();

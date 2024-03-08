@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # change these variable(s) accordingly
-timeStampFileName='timestamps.txt'
+timeStampFileName='timestamps'
 DatasetFolderName='custom_data'
 
 #------------------------------------

@@ -92,5 +92,6 @@ borrar/*
 
 */ExecMean.txt
 
-Examples/Datasets/EuRoC/
-Examples/Datasets/lab_data/
+Examples/Datasets/*
+#Examples/Datasets/EuRoC/
+#Examples/Datasets/lab_data/

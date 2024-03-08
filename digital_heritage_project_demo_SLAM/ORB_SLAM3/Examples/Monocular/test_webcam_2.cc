@@ -15,6 +15,9 @@
 
 #include <System.h>
 
+#include <limits>
+#include <iomanip>
+
 using namespace std;
 
 bool b_continue_session;
@@ -63,7 +66,8 @@ int main(int argc, char **argv)
     b_continue_session = true;
 
     // cv::VideoCapture cap(0); // Open the first webcam available
-    cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
+    // cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
+    cv::VideoCapture cap("http://10.194.4.226:8000/camera/mjpeg");
 
     if (!cap.isOpened())
     {
@@ -74,8 +78,25 @@ int main(int argc, char **argv)
     cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
 
-    std::string outputFolder = argv[2];
-    std::string timestampsFile = argv[3];
+    // Get the current system time point
+    auto now = std::chrono::system_clock::now();
+
+    // Convert the time point to a time_t object
+    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+
+    // Convert the time_t object to a string representation
+    // std::string time_string = std::ctime(&now_time);
+    std::string time_string = std::to_string(now_time);
+
+    // Print the current date and time
+    std::cout << "############# Checkpoint test_webcam_2.cc ###############" << std::endl;
+    std::cout << "Now date and time: " << now_time << std::endl;
+    std::cout << "Current date and time: " << time_string << std::endl;
+
+    std::string outputFolder = argv[3];
+    outputFolder += "_" + time_string;
+    std::string timestampsFile = argv[4];
+    timestampsFile += "_" + time_string + ".txt";
 
     // Creating outFolder directory
     createDirectory(outputFolder);
@@ -99,7 +120,7 @@ int main(int argc, char **argv)
             break;
         }
 
-        double timestamp_ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+        unsigned long timestamp_ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 
         if (imageScale != 1.f)
         {
@@ -108,18 +129,23 @@ int main(int argc, char **argv)
             cv::resize(imCV, imCV, cv::Size(width, height));
         }
 
+        // Save the frame as an image
         std::string frameName = outputFolder + "/" + std::to_string(timestamp_ms) + ".png";
         cv::imwrite(frameName, imCV);
+
+        // Write timestamp to the timestamps file
+        // timestampsStream << timestamp_ms << std::endl;
+        timestampsStream << std::fixed << std::setprecision(6) << timestamp_ms << std::endl;
 
         SLAM.TrackMonocular(imCV, timestamp_ms);
     }
 
+    // Stop all threads
     cap.release();
 
     std::cout << "Frames extracted and saved to " << outputFolder << std::endl;
     std::cout << "Timestamps saved to " << timestampsFile << std::endl;
 
-    // Stop all threads
     SLAM.Shutdown();
 
     return 0;

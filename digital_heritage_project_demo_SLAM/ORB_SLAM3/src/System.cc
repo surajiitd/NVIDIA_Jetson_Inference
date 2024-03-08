@@ -32,6 +32,9 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>
 
+#include <chrono>
+#include <ctime>
+
 namespace ORB_SLAM3
 {
 
@@ -528,21 +531,22 @@ namespace ORB_SLAM3
 
         mpLocalMapper->RequestFinish();
         mpLoopCloser->RequestFinish();
-        if(mpViewer)
+        if (mpViewer)
         {
             mpViewer->RequestFinish();
-            while(!mpViewer->isFinished())
+            while (!mpViewer->isFinished())
                 usleep(5000);
         }
 
         // Wait until all thread have effectively stopped
-        while(!mpLocalMapper->isFinished() || !mpLoopCloser->isFinished() || mpLoopCloser->isRunningGBA())
+        while (!mpLocalMapper->isFinished() || !mpLoopCloser->isFinished() || mpLoopCloser->isRunningGBA())
         {
-            if(!mpLocalMapper->isFinished())
+            if (!mpLocalMapper->isFinished())
                 cout << "mpLocalMapper is not finished" << endl;
-            if(!mpLoopCloser->isFinished())
+            if (!mpLoopCloser->isFinished())
                 cout << "mpLoopCloser is not finished" << endl;
-            if(mpLoopCloser->isRunningGBA()){
+            if (mpLoopCloser->isRunningGBA())
+            {
                 cout << "mpLoopCloser is running GBA" << endl;
                 cout << "break anyway..." << endl;
                 break;
@@ -1420,7 +1424,24 @@ namespace ORB_SLAM3
             mpAtlas->PreSave();
             cout << "Save Atlas 2 \n";
             string pathSaveFileName = "../Maps/";
+
+            // Get the current system time point
+            auto now = std::chrono::system_clock::now();
+
+            // Convert the time point to a time_t object
+            std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+
+            // Convert the time_t object to a string representation
+            // std::string time_string = std::ctime(&now_time);
+            std::string time_string = std::to_string(now_time);
+
+            // Print the current date and time
+            std::cout << "############# Checkpoint System.cc ###############" << std::endl;
+            std::cout << "Now date and time: " << now_time << std::endl;
+            std::cout << "Current date and time: " << time_string << std::endl;
+
             pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
+            pathSaveFileName = pathSaveFileName.append("_" + time_string);
             pathSaveFileName = pathSaveFileName.append(".osa");
             cout << "Save Atlas 3 \n";
 
@@ -1428,7 +1449,7 @@ namespace ORB_SLAM3
             std::size_t found = mStrVocabularyFilePath.find_last_of("/\\");
             string strVocabularyName = mStrVocabularyFilePath.substr(found + 1);
             cout << "Save Atlas 4 \n";
-            // cout << "TYPE: " << type << endl;
+            cout << "TYPE: " << type << endl;
 
             if (type == TEXT_FILE) // File text
             {
