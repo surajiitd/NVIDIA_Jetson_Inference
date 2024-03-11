@@ -35,6 +35,8 @@
 #include <chrono>
 #include <ctime>
 
+#include "../Examples/Monocular/test_webcam_2.cc"
+
 namespace ORB_SLAM3
 {
 
@@ -1425,23 +1427,30 @@ namespace ORB_SLAM3
             cout << "Save Atlas 2 \n";
             string pathSaveFileName = "../Maps/";
 
-            // Get the current system time point
-            auto now = std::chrono::system_clock::now();
+            // // Get the current system time point
+            // auto now = std::chrono::system_clock::now();
 
-            // Convert the time point to a time_t object
-            std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+            // // Convert the time point to a time_t object
+            // std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+            
 
             // Convert the time_t object to a string representation
             // std::string time_string = std::ctime(&now_time);
-            std::string time_string = std::to_string(now_time);
+            // std::string time_string = std::to_string(now_time);
 
+            // // Print the current date and time
+            // std::cout << "############# Checkpoint System.cc ###############" << std::endl;
+            // std::cout << "Now date and time: " << std::ctime(&now_time) << std::endl;
+            // std::cout << "Current date and time: " << std::to_string(now_time) << std::endl;
+
+            extern std::time_t checkpoint;
             // Print the current date and time
-            std::cout << "############# Checkpoint System.cc ###############" << std::endl;
-            std::cout << "Now date and time: " << now_time << std::endl;
-            std::cout << "Current date and time: " << time_string << std::endl;
+            std::cout << "############# Checkpoint System.cc (inside test_webcam_2.cc) ###############" << std::endl;
+            std::cout << "Now date and time: " << std::ctime(&checkpoint) << std::endl;
+            std::cout << "Current date and time: " << std::to_string(checkpoint) << std::endl;
 
             pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
-            pathSaveFileName = pathSaveFileName.append("_" + time_string);
+            pathSaveFileName = pathSaveFileName.append("_" + checkpoint);
             pathSaveFileName = pathSaveFileName.append(".osa");
             cout << "Save Atlas 3 \n";
 

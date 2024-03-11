@@ -40,6 +40,16 @@ int main(int argc, char **argv)
 
     bool showGUI = true;
 
+    // extern int checkpoint;
+    // cout << checkpoint << endl;
+
+    // string sequenceFile = argv[3];
+    // sequenceFile = sequenceFile.append(std::to_string(checkpoint));
+    // argv[3] = sequenceFile.c_str();
+    // string timestampFile = argv[4];
+    // timestampFile = timestampFile.append(std::to_string(checkpoint) + ".txt");
+    // argv[4] = timestampFile.c_str();
+
     const int num_seq = (argc - 3) / 2;
     cout << "num_seq = " << num_seq << endl;
     bool bFileName = (((argc - 3) % 2) == 1);

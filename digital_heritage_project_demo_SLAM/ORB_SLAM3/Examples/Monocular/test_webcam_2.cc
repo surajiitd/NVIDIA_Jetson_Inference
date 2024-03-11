@@ -18,9 +18,13 @@
 #include <limits>
 #include <iomanip>
 
+#include <../../src/System.cc>
+
 using namespace std;
 
 bool b_continue_session;
+
+std::time_t checkpoint = 0;
 
 void createDirectory(const std::string &path)
 {
@@ -39,10 +43,10 @@ void exit_loop_handler(int s)
 
 int main(int argc, char **argv)
 {
-    if (argc < 6)
+    if (argc < 7)
     {
         cerr << endl
-             << "Usage: path_to_example_code/test_webcam path_to_vocabulary path_to_settings path_to_saving_sequence_folder_1 path_to_times_file_1 (trajectory_file_name)" << endl;
+             << "Usage: path_to_examples/test_webcam path_to_vocabulary path_to_settings path_to_saving_sequence_folder_1 path_to_times_file_1 path_to_checkpoint_log_file (trajectory_file_name)" << endl;
         return 1;
     }
 
@@ -66,8 +70,8 @@ int main(int argc, char **argv)
     b_continue_session = true;
 
     // cv::VideoCapture cap(0); // Open the first webcam available
-    // cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
-    cv::VideoCapture cap("http://10.194.4.226:8000/camera/mjpeg");
+    cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
+    // cv::VideoCapture cap("http://10.194.4.226:8000/camera/mjpeg");
 
     if (!cap.isOpened())
     {
@@ -83,26 +87,33 @@ int main(int argc, char **argv)
 
     // Convert the time point to a time_t object
     std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-
-    // Convert the time_t object to a string representation
-    // std::string time_string = std::ctime(&now_time);
-    std::string time_string = std::to_string(now_time);
+    checkpoint = now_time;
 
     // Print the current date and time
     std::cout << "############# Checkpoint test_webcam_2.cc ###############" << std::endl;
-    std::cout << "Now date and time: " << now_time << std::endl;
-    std::cout << "Current date and time: " << time_string << std::endl;
+    std::cout << "Now date and time: " << std::to_string(now_time) << std::endl;  // long to string
+    std::cout << "Current date and time: " << std::ctime(&now_time) << std::endl; // long to time format
+
+    // extern std::time_t checkpoint;
+    // // Print the current date and time
+    // std::cout << "############# Checkpoint System.cc (inside test_webcam_2.cc) ###############" << std::endl;
+    // std::cout << "Now date and time: " << std::ctime(&checkpoint) << std::endl;
+    // std::cout << "Current date and time: " << std::to_string(checkpoint) << std::endl;
 
     std::string outputFolder = argv[3];
-    outputFolder += "_" + time_string;
+    outputFolder += "_" + std::to_string(checkpoint);
     std::string timestampsFile = argv[4];
-    timestampsFile += "_" + time_string + ".txt";
+    timestampsFile += "_" + std::to_string(checkpoint) + ".txt";
+    std::string checkpointLogFile = argv[5];
 
     // Creating outFolder directory
     createDirectory(outputFolder);
 
     // Initialize timestamps file
     std::ofstream timestampsStream(timestampsFile);
+
+    // Initialize checkpoint log file
+    std::ofstream checkpointLogStream(checkpointLogFile);
 
     // Load SLAM system
     ORB_SLAM3::System SLAM(argv[1], argv[2], ORB_SLAM3::System::MONOCULAR, showGUI);

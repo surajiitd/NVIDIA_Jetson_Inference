@@ -1,9 +1,8 @@
-#!/bin/bash
+# !/bin/bash
 
 # change these variable(s) accordingly
-checkpoint='1709895566'
-timeStampFileName='timestamps_'$checkpoint'.txt'
-DatasetFolderName='custom_data_'$checkpoint
+timeStampFileName='timestamps_'
+DatasetFolderName='custom_data_'
 #------------------------------------
 # Monocular Examples
 echo "ORB_SLAM3" | figlet
