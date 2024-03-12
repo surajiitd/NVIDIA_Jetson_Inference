@@ -18,8 +18,6 @@
 #include <limits>
 #include <iomanip>
 
-#include <../../src/System.cc>
-
 using namespace std;
 
 bool b_continue_session;
@@ -70,8 +68,8 @@ int main(int argc, char **argv)
     b_continue_session = true;
 
     // cv::VideoCapture cap(0); // Open the first webcam available
-    cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
-    // cv::VideoCapture cap("http://10.194.4.226:8000/camera/mjpeg");
+    // cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
+    cv::VideoCapture cap("http://10.194.18.91:8000/camera/mjpeg");
 
     if (!cap.isOpened())
     {
@@ -91,8 +89,8 @@ int main(int argc, char **argv)
 
     // Print the current date and time
     std::cout << "############# Checkpoint test_webcam_2.cc ###############" << std::endl;
-    std::cout << "Now date and time: " << std::to_string(now_time) << std::endl;  // long to string
-    std::cout << "Current date and time: " << std::ctime(&now_time) << std::endl; // long to time format
+    std::cout << "Now date and time: " << std::to_string(checkpoint) << std::endl;  // long to string
+    std::cout << "Current date and time: " << std::ctime(&checkpoint) << std::endl; // long to time format
 
     // extern std::time_t checkpoint;
     // // Print the current date and time
@@ -151,11 +149,13 @@ int main(int argc, char **argv)
         SLAM.TrackMonocular(imCV, timestamp_ms);
     }
 
-    // Stop all threads
-    cap.release();
+    checkpointLogStream << std::to_string(checkpoint) << ", " << std::ctime(&checkpoint) << std::endl;
 
     std::cout << "Frames extracted and saved to " << outputFolder << std::endl;
     std::cout << "Timestamps saved to " << timestampsFile << std::endl;
+
+    // Stop all threads
+    cap.release();
 
     SLAM.Shutdown();
 

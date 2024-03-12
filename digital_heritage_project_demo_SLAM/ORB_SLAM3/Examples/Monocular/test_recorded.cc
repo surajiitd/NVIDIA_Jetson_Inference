@@ -27,6 +27,8 @@
 
 using namespace std;
 
+std::time_t checkpoint = 0;
+
 void LoadImages(const string &strImagePath, const string &strPathTimes, vector<string> &vstrImages, vector<double> &vTimeStamps);
 
 int main(int argc, char **argv)
@@ -40,20 +42,29 @@ int main(int argc, char **argv)
 
     bool showGUI = true;
 
-    // extern int checkpoint;
-    // cout << checkpoint << endl;
+    std::ifstream inputFile("../../../checkpointLog.txt");
 
-    // string sequenceFile = argv[3];
-    // sequenceFile = sequenceFile.append(std::to_string(checkpoint));
-    // argv[3] = sequenceFile.c_str();
-    // string timestampFile = argv[4];
-    // timestampFile = timestampFile.append(std::to_string(checkpoint) + ".txt");
-    // argv[4] = timestampFile.c_str();
+    if (!inputFile.is_open())
+    { // Check if the file was opened successfully
+        std::cerr << "Error opening file!" << std::endl;
+        return 1;
+    }
+
+    std::string line;
+    std::getline(inputFile, line, ',');
+
+    checkpoint = std::stol(line);
+
+    std::cout << "checkout from checkpointLog file = " << checkpoint << std::endl;
+
+    std::cout << "sequence folder: " << argv[3] << std::endl;
+    std::cout << "timestamp file: " << argv[4] << std::endl;
 
     const int num_seq = (argc - 3) / 2;
     cout << "num_seq = " << num_seq << endl;
     bool bFileName = (((argc - 3) % 2) == 1);
     string file_name;
+
     if (bFileName)
     {
         file_name = string(argv[argc - 1]);

@@ -35,16 +35,17 @@
 #include <chrono>
 #include <ctime>
 
-#include "../Examples/Monocular/test_webcam_2.cc"
+// #include "../Examples/Monocular/test_webcam_2.cc"
+#include "../Examples/Monocular/test_recorded.cc"
 
+extern std::time_t checkpoint;
 namespace ORB_SLAM3
 {
 
     Verbose::eLevel Verbose::th = Verbose::VERBOSITY_NORMAL;
 
     System::System(const string &strVocFile, const string &strSettingsFile, const eSensor sensor,
-                   const bool bUseViewer, const int initFr, const string &strSequence) : mSensor(sensor), mpViewer(static_cast<Viewer *>(NULL)), mbReset(false), mbResetActiveMap(false),
-                                                                                         mbActivateLocalizationMode(false), mbDeactivateLocalizationMode(false), mbShutDown(false)
+                   const bool bUseViewer, const int initFr, const string &strSequence) : mSensor(sensor), mpViewer(static_cast<Viewer *>(NULL)), mbReset(false), mbResetActiveMap(false), mbActivateLocalizationMode(false), mbDeactivateLocalizationMode(false), mbShutDown(false)
     {
         // Output welcome message
         cout << endl
@@ -1432,7 +1433,6 @@ namespace ORB_SLAM3
 
             // // Convert the time point to a time_t object
             // std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-            
 
             // Convert the time_t object to a string representation
             // std::string time_string = std::ctime(&now_time);
@@ -1443,9 +1443,8 @@ namespace ORB_SLAM3
             // std::cout << "Now date and time: " << std::ctime(&now_time) << std::endl;
             // std::cout << "Current date and time: " << std::to_string(now_time) << std::endl;
 
-            extern std::time_t checkpoint;
             // Print the current date and time
-            std::cout << "############# Checkpoint System.cc (inside test_webcam_2.cc) ###############" << std::endl;
+            std::cout << "############# Checkpoint inside System.cc ###############" << std::endl;
             std::cout << "Now date and time: " << std::ctime(&checkpoint) << std::endl;
             std::cout << "Current date and time: " << std::to_string(checkpoint) << std::endl;
 

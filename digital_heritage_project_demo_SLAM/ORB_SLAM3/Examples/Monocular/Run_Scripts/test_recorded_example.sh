@@ -1,13 +1,28 @@
-# !/bin/bash
+#!/bin/bash
+
+echo "ORB_SLAM3" | figlet
+
+filename="../../../checkpointLog.txt"  # Specify your filename here
+
+# Check if the file exists
+if [ -f "$filename" ]; then
+    checkpoint=$(head -n 1 "$filename")
+    echo "First line of $filename: $checkpoint"
+else
+    echo "File $filename does not exist."
+fi
+
+checkpoint="${checkpoint%%,*}"
+
+echo "checkpoint = $checkpoint"
 
 # change these variable(s) accordingly
-timeStampFileName='timestamps_'
-DatasetFolderName='custom_data_'
+timeStampFileName='timestamps_'$checkpoint'.txt'
+DatasetFolderName='custom_data_'$checkpoint
 #------------------------------------
 # Monocular Examples
-echo "ORB_SLAM3" | figlet
 echo "Launching ORB_SLAM3 with Pre-recorded custom dataset"
-../test_recorded ../../../Vocabulary/ORBvoc.txt ../Setup_Files/test_recorded_example.yaml ../../Datasets/"$DatasetFolderName" ../Datasets_TimeStamps/Lab_TimeStamps/"$timeStampFileName"  dataset-Recorded_mono
+../test_recorded ../../../Vocabulary/ORBvoc.txt ../Setup_Files/test_recorded_example.yaml ../../Datasets/"$DatasetFolderName" ../Datasets_TimeStamps/Lab_TimeStamps/"$timeStampFileName"  dataset-Recorded_mono 
 
 # chmod +x plot_pose_data.py
 # python plot_pose_data.py
