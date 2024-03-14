@@ -7,7 +7,7 @@ var speech = new SpeechSynthesisUtterance();
 var loc = [];
 var reached = false;
 var appState = "OFF";
-// var ip = "http://10.194.24.30:8080"; IITD wifi 
+// var ip = "http://10.194.24.30:8080"; // IITD wifi (for jetson agx orin)
 var ip = "http://127.0.0.1:8080";
 
 var canvas = document.getElementById('myMap');
@@ -97,7 +97,7 @@ function drawUserMarker() {
 function drawLocationMarker(mx, my) {
     ctx.fillStyle = 'red';
     ctx.arc(mx, my, markerRadius, 0, 2 * Math.PI);
-    console.log(mx, my);
+    // console.log(mx, my);
     ctx.fill();
 }
 
@@ -108,57 +108,9 @@ function initMap() {
     drawUserMarker();
 }
 
-// function clearMarker(mx, my) {
-//     ctx.clearRect(mx - Math.SQRT2 * markerRadius, my - Math.SQRT2 * markerRadius, mx + Math.SQRT2 * markerRadius, my + Math.SQRT2 * markerRadius);
-//     console.log("cleared marker");
-// }
-
-// function rotationMatrix(theta) {
-//     var cosTheta = Math.cos(theta);
-//     var sinTheta = Math.sin(theta);
-
-//     var matrix = [
-//         [cosTheta, -sinTheta],
-//         [sinTheta, cosTheta]
-//     ];
-
-//     return matrix;
-// }
-
-// function multiplyMatrices(matrix1, matrix2) {
-//     // Check if the matrices can be multiplied
-//     if (matrix1[0].length !== matrix2.length) {
-//         console.error("Matrices cannot be multiplied: Invalid dimensions");
-//         return null;
-//     }
-
-//     // Initialize the result matrix with appropriate dimensions
-//     var result = new Array(matrix1.length);
-//     for (var i = 0; i < result.length; i++) {
-//         result[i] = new Array(matrix2[0].length).fill(0);
-//     }
-
-//     // Perform matrix multiplication
-//     for (var i = 0; i < matrix1.length; i++) {
-//         for (var j = 0; j < matrix2[0].length; j++) {
-//             for (var k = 0; k < matrix1[0].length; k++) {
-//                 result[i][j] += matrix1[i][k] * matrix2[k][j];
-//             }
-//         }
-//     }
-
-//     return result;
-// }
-
 function updateMap(landmarkX, userLocX, landmarkY, userLocY, userYaw) {
-    const scalingFactorX = 150;
-    const scalingFactorY = 150;
-    // markerX = centerX + scalingFactorX * (locationX - curLocationX);
-    // markerY = centerY + scalingFactorY * (locationY - curLocationY);
-
-    // markerX = ((scalingFactorX * (locationX - curLocationX)) * Math.cos(curLocationYaw)) - ((scalingFactorY * (locationY - curLocationY)) * Math.sin(curLocationYaw)) + centerX;
-
-    // markerY = ((scalingFactorX * (locationX - curLocationX)) * Math.sin(curLocationYaw)) + ((scalingFactorY * (locationY - curLocationY)) * Math.cos(curLocationYaw)) + centerY;
+    const scalingFactorX = 100;
+    const scalingFactorY = 100;
 
     /*
         Transformation Pipeline:
@@ -177,10 +129,6 @@ function updateMap(landmarkX, userLocX, landmarkY, userLocY, userYaw) {
 
     userYaw = userYaw * (Math.PI) / 180;
 
-    // var rotation = rotationMatrix(-1 * curLocationYaw);
-
-    // var result = multiplyMatrices([markerX, markerY], rotation);
-
     userYaw *= -1;
     markerX = Math.cos(userYaw) * markerX - Math.sin(userYaw) * markerY;
     markerY = Math.sin(userYaw) * markerX + Math.cos(userYaw) * markerY;
@@ -191,13 +139,15 @@ function updateMap(landmarkX, userLocX, landmarkY, userLocY, userYaw) {
     markerX += userLocX;
     markerY += userLocY;
 
-    markerX = ((markerX - userLocX)/markerX) * 300;
-    markerY = ((markerY - userLocY)/markerY) * 300;
+    // markerX = ((markerX - userLocX) / markerX) * 300;
+    // markerY = ((markerY - userLocY) / markerY) * 300;
 
+    markerX *= scalingFactorX;
+    markerY *= scalingFactorY;
 
     // markerX
 
-    // console.log(markerX, markerY);
+    console.log(markerX, markerY);
 
     // console.log(markerX, markerY, locationX, locationY)
 
@@ -212,8 +162,6 @@ function initMarker(markerCol) {
     ctx.fill();
 }
 
-// var prevMarkerX = 0;
-// var prevMarkerY = 0;
 function update() {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", ip + "/locations/", false); // false for synchronous request
@@ -243,23 +191,13 @@ function update() {
             }
             nearbyHTML += '<div>' + location.location_name + '</div>';
 
-            // if(i != 1) {
-            //     clearMarker(prevMarkerX, prevMarkerY);
-            // }
-
             updateMap(location.x, curLocation.x, location.y, curLocation.y, curLocation.yaw);
-
-            // if(i == 1) {
-            //     continue;
-            // }
 
         }
         cards.innerHTML = cardsHTML;
         nearby_list.innerHTML = nearbyHTML;
         reached = true; // assuming always reached if data is available
 
-        // sleepSync(1000);
-        // ctx.clearRect(2, 2, 400 - 2, 400 - 2);
         // Update coordinates
         updateCoordinates(curLocation.x, curLocation.y, curLocation.yaw);
     } else {

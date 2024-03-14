@@ -1449,7 +1449,8 @@ namespace ORB_SLAM3
             std::cout << "Current date and time: " << std::to_string(checkpoint) << std::endl;
 
             pathSaveFileName = pathSaveFileName.append(mStrSaveAtlasToFile);
-            pathSaveFileName = pathSaveFileName.append("_" + checkpoint);
+            pathSaveFileName = pathSaveFileName.append("_");
+            pathSaveFileName = pathSaveFileName.append(std::to_string(checkpoint));
             pathSaveFileName = pathSaveFileName.append(".osa");
             cout << "Save Atlas 3 \n";
 

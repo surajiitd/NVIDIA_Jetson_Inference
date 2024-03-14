@@ -6,10 +6,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Location Tracker</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <button id="play-button" onclick="buttonPress()">OFF</button>
-    <button id="geo-button" onclick="mark()">Mark Location</button>
+    <div class="header">
+        <h1>Digital Heritage App</h1>
+    </div>    
+    <!-- <button id="play-button" onclick="buttonPress()">OFF</button>
+    <button id="geo-button" onclick="mark()">Mark Location</button> -->
     <div class="coordinates">
         <p><strong>Current Coordinates:</strong></p>
         <p id="x-coordinate">X: </p>
@@ -17,7 +21,7 @@
         <p id="yaw-coordinate">Yaw: </p>
     </div>
     <div class="map">
-        <canvas id="myMap" width="700" height="700"></canvas>
+        <canvas id="myMap" width="400" height="400"></canvas>
     </div>
 
     <div class="cards"></div>
@@ -25,11 +29,11 @@
         Nearby:
         <div class="nearby-list"></div>
     </div>
-    <form class="mark invisible">
+    <!-- <form class="mark invisible">
         <label for="location_name">Location Name:</label><br>
         <input type="text" id="location_name" name="location_name"><br>
         <input type="submit" value="Submit">
-    </form>
+    </form> -->
 
     <script src="{% static 'script.js' %}"></script>
 </body>
