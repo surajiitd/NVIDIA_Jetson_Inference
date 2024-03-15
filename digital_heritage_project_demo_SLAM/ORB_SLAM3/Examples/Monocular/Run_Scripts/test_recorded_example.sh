@@ -17,10 +17,10 @@ checkpoint="${checkpoint%%,*}"
 echo "checkpoint = $checkpoint"
 
 # change these variable(s) accordingly
-# timeStampFileName='timestamps.txt'
-# DatasetFolderName='custom_data'
-timeStampFileName='timestamps_'$checkpoint'.txt'
-DatasetFolderName='custom_data_'$checkpoint
+timeStampFileName='timestamps.txt'
+DatasetFolderName='custom_data'
+# timeStampFileName='timestamps_'$checkpoint'.txt'
+# DatasetFolderName='custom_data_'$checkpoint
 
 #------------------------------------
 # Monocular Examples

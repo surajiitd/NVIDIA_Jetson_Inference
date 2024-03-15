@@ -6,7 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Location Tracker</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="header">
@@ -24,17 +25,16 @@
         <canvas id="myMap" width="400" height="400"></canvas>
     </div>
 
-    <div class="cards"></div>
-    <div class="nearby invisible">
+    <!-- <div class="cards"></div> -->
+    <!-- <div class="nearby invisible">
         Nearby:
         <div class="nearby-list"></div>
-    </div>
+    </div> -->
     <!-- <form class="mark invisible">
         <label for="location_name">Location Name:</label><br>
         <input type="text" id="location_name" name="location_name"><br>
         <input type="submit" value="Submit">
     </form> -->
-
     <script src="{% static 'script.js' %}"></script>
 </body>
 </html>

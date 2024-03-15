@@ -1,83 +1,78 @@
-const play_button = document.querySelector('#play-button');
-const cards = document.getElementsByClassName('cards')[0];
-const nearby_list = document.getElementsByClassName('nearby-list')[0];
-const form = document.getElementsByClassName('mark')[0];
-
-var speech = new SpeechSynthesisUtterance();
-var loc = [];
-var reached = false;
-var appState = "OFF";
-// var ip = "http://10.194.24.30:8080"; // IITD wifi (for jetson agx orin)
 var ip = "http://127.0.0.1:8080";
-
 var canvas = document.getElementById('myMap');
 var ctx = canvas.getContext('2d');
-var mapWidth = canvas.width;
-var mapHeight = canvas.height;
-var markerRadius = 10;
-var centerX = mapWidth / 2;
-var centerY = mapHeight / 2;
+const chartWidth = canvas.width;
+const chartHeight = canvas.height;
 
-// function buttonPress() {
-//     if (appState == "ON") {
-//         appState = "OFF";
-//         play_button.style.backgroundColor = "green";
-//         speech.text = "Powering Off.";
-//         window.speechSynthesis.speak(speech);
-//         clearInterval(interval); // Stop the update
-//         cards.innerHTML = "";
-//         nearby_list.innerHTML = "";
-//         reached = false;
-//         form.classList.add('invisible');
-//     } else {
-//         appState = "ON";
-//         play_button.style.backgroundColor = "red";
-//         speech.text = "Powering On.";
-//         window.speechSynthesis.speak(speech);
-//         form.classList.remove('invisible');
-//         // Execute shell script here
-//         // executeShellScript();
-//         interval = setInterval(update, 10); // Start the update again
-
-//     }
-//     play_button.innerHTML = appState;
-// }
-
-// function executeShellScript() {
-//     // You can use AJAX to send a request to your Django backend
-//     // which in turn executes the shell script.
-//     var xhr = new XMLHttpRequest();
-//     xhr.open("GET", ip + "/execute_script/", true);
-//     xhr.send();
-// }
-
-function mark() {
+function getObj() {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", ip + "/locations/", false); // false for synchronous request
+    xmlHttp.send(null);
     const obj = JSON.parse(xmlHttp.responseText);
+    return obj
+}
 
-    var curLocation = obj[0];
+obj = getObj();
+const locations = [];
+for (let i = 1; i < obj.length; i++) {
+    locations.push({ x: obj[i]['x'], y: obj[i]['y'], color: 'red' })
+}
+console.log(obj[0])
+console.log(locations)
 
-    var data = {
-        "location_name": String(form.elements[0].value),
-        "description": "",
-        "voice_message": "You have reached " + String(form.elements[0].value),
-        "x": String(curLocation.x),
-        "y": String(curLocation.y),
-        "yaw": String(curLocation.yaw)
-    };
+// Initialize the scatter plot with initial data
+const initialData = {
+    datasets: [{
+        label: 'User',
+        data: [{ x: obj[0]['x'], y: obj[0]['y'], color: 'green' }],
+        backgroundColor: 'green' // This will be overwritten by individual point colors
+    },
+    {
+        label: 'Locations',
+        data: locations,
+        backgroundColor: 'red'
+    }]
+};
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", ip + "/locations/");
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            console.log(xhr.status);
-            console.log(xhr.responseText);
+const scatterPlot = new Chart(ctx, {
+    type: 'scatter',
+    data: initialData,
+    options: {
+        responsive: false, // Disable responsiveness
+        maintainAspectRatio: false, // Disable aspect ratio
+        width: chartWidth, // Set chart width to match canvas width
+        height: chartHeight, // Set chart height to match canvas height
+        scales: {
+            x: {
+                min: -0.2,
+                max: 1.2
+            },
+            y: {
+                min: -0.2,
+                max: 1.8
+            }
         }
-    };
-    xhr.send(JSON.stringify(data));
+    }
+});
+
+// Function to update scatter plot with new data
+function updateScatterPlot(dataPoints) {
+    const newData = dataPoints.map(point => ({
+        x: point.x,
+        y: point.y,
+        color: point.color
+    }));
+
+    scatterPlot.data.datasets[0].data = newData;
+    scatterPlot.data.datasets[0].backgroundColor = newData.map(point => point.color);
+    scatterPlot.update();
+}
+
+function updateMap() {
+    obj = getObj();
+    console.log([{ x: obj[0]['x'], y: obj[0]['y'], color: 'green' }])
+    updateScatterPlot([{ x: obj[0]['x'], y: obj[0]['y'], color: 'green' }]);
+    updateCoordinates(obj[0]['x'], obj[0]['y'], obj[0]['yaw'])
 }
 
 function updateCoordinates(x, y, yaw) {
@@ -86,130 +81,7 @@ function updateCoordinates(x, y, yaw) {
     document.getElementById('yaw-coordinate').textContent = 'Yaw: ' + yaw;
 }
 
-function drawUserMarker() {
-    ctx.strokeStyle = 'green';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, markerRadius, 0, 2 * Math.PI);
-    ctx.stroke();
-}
-
-function drawLocationMarker(mx, my) {
-    ctx.fillStyle = 'red';
-    ctx.arc(mx, my, markerRadius, 0, 2 * Math.PI);
-    // console.log(mx, my);
-    ctx.fill();
-}
-
-function initMap() {
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(0, 0, mapWidth, mapHeight);
-    drawUserMarker();
-}
-
-function updateMap(landmarkX, userLocX, landmarkY, userLocY, userYaw) {
-    const scalingFactorX = 100;
-    const scalingFactorY = 100;
-
-    /*
-        Transformation Pipeline:
-        1. yaw(from the slam) -> yaw(0, 360)
-        2. mx, my -> mx - ux, my - uy // origin translated at user
-        3. mx, my = rotation(-theta)
-        4. mx + ux, my + uy -> mx, my // origin translated back to (0,0)
-    */
-
-    if (userYaw < 0) {
-        userYaw = 360 - Math.abs(userYaw);
-    }
-
-    markerX = landmarkX - userLocX;//scalingFactorX * (landmarkX - userLocX);
-    markerY = landmarkY - userLocY;//scalingFactorY * (landmarkY - userLocY);
-
-    userYaw = userYaw * (Math.PI) / 180;
-
-    userYaw *= -1;
-    markerX = Math.cos(userYaw) * markerX - Math.sin(userYaw) * markerY;
-    markerY = Math.sin(userYaw) * markerX + Math.cos(userYaw) * markerY;
-
-    // markerX += centerX;
-    // markerY += centerY;
-
-    markerX += userLocX;
-    markerY += userLocY;
-
-    // markerX = ((markerX - userLocX) / markerX) * 300;
-    // markerY = ((markerY - userLocY) / markerY) * 300;
-
-    markerX *= scalingFactorX;
-    markerY *= scalingFactorY;
-
-    // markerX
-
-    console.log(markerX, markerY);
-
-    // console.log(markerX, markerY, locationX, locationY)
-
-    // console.log(curLocationYaw * -180 / Math.PI);
-
-    drawLocationMarker(markerX, markerY);
-}
-
-function initMarker(markerCol) {
-    ctx.fillStyle = markerCol;
-    // ctx.arc(0, 0, markerRadius, 0, 2 * Math.PI);
-    ctx.fill();
-}
-
-function update() {
-    const xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", ip + "/locations/", false); // false for synchronous request
-    xmlHttp.send(null);
-    const obj = JSON.parse(xmlHttp.responseText);
-
-    ctx.clearRect(0, 0, mapWidth, mapHeight);
-    initMap();
-
-    // Ensure that the response contains at least one object
-    if (obj.length > 0) {
-        var curLocation = obj[0];
-        var cardsHTML = "";
-        var nearbyHTML = "";
-        for (let i = 1; i < obj.length; i++) {
-            const location = obj[i];
-            if (Math.abs(location.x - curLocation.x) < 10 && Math.abs(location.y - curLocation.y) < 10 && Math.abs(location.yaw - curLocation.yaw) < 15) {
-                if (!reached) {
-                    reached = true;
-                    speech.text = location.voice_message;
-                    window.speechSynthesis.speak(speech);
-                }
-                cardsHTML += '<div class="card" id="' + location.location_name + '"> \
-                    <h3>' + location.location_name + '</h3> \
-                    ' + location.description + ' \
-                </div>';
-            }
-            nearbyHTML += '<div>' + location.location_name + '</div>';
-
-            updateMap(location.x, curLocation.x, location.y, curLocation.y, curLocation.yaw);
-
-        }
-        cards.innerHTML = cardsHTML;
-        nearby_list.innerHTML = nearbyHTML;
-        reached = true; // assuming always reached if data is available
-
-        // Update coordinates
-        updateCoordinates(curLocation.x, curLocation.y, curLocation.yaw);
-    } else {
-        console.log("No locations found in the response.");
-    }
-}
-
-// play_button.addEventListener('click', buttonPress);
-
-update();
-initMap();
-
+updateMap()
 const interval = setInterval(() => {
-    update();
+    updateMap()
 }, 100); // Start the update initially
