@@ -112,6 +112,11 @@ int main(int argc, char **argv)
 
     for (seq = 0; seq < num_seq; seq++)
     {
+        // Slow down thread
+        int FPS = 30;
+        auto start = std::chrono::steady_clock::now(); // Capture the start time of the loop
+
+
         // Main loop
         cv::Mat im;
         int proccIm = 0;
@@ -163,6 +168,16 @@ int main(int argc, char **argv)
             // cout << "tframe = " << tframe << endl;
 
             SLAM.TrackMonocular(im, tframe); // TODO change to monocular_inertial
+
+            auto end = std::chrono::steady_clock::now(); // Capture the end time of the loop
+            auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); // Calculate the elapsed time
+
+            // Calculate the time to sleep per iteration based on desired FPS
+            long sleep_ms = (1000 / FPS); //- elapsed_ms;
+
+            if (sleep_ms > 0) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(sleep_ms)); // Sleep if necessary to achieve desired FPS
+            }
 
 #ifdef COMPILEDWITHC11
             std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();

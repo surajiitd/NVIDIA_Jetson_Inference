@@ -1,8 +1,4 @@
 var ip = "http://127.0.0.1:8080";
-var canvas = document.getElementById('myMap');
-var ctx = canvas.getContext('2d');
-const chartWidth = canvas.width;
-const chartHeight = canvas.height;
 
 function getObj() {
     const xmlHttp = new XMLHttpRequest();
@@ -13,26 +9,37 @@ function getObj() {
 }
 
 obj = getObj();
-const locations = [];
-for (let i = 1; i < obj.length; i++) {
-    locations.push({ x: obj[i]['x'], y: obj[i]['y'], color: 'red' })
-}
-console.log(obj[0])
-console.log(locations)
+
+// console.log(obj[0])
 
 // Initialize the scatter plot with initial data
+const markerSize = 10;
 const initialData = {
     datasets: [{
         label: 'User',
-        data: [{ x: obj[0]['x'], y: obj[0]['y'], color: 'green' }],
-        backgroundColor: 'green' // This will be overwritten by individual point colors
+        data: [{ x: obj[0]['x'], y: obj[0]['y'], yaw: obj[0]['yaw'], color: 'green' }],
+        backgroundColor: 'green', // This will be overwritten by individual point colors
+        pointRadius: markerSize,
+    },
+    //Manually enter the locations and their color
+    {
+        label: 'location1',
+        data: [{ x: obj[1]['x'], y: obj[1]['y'], yaw: obj[1]['yaw'], color: 'red' }],
+        backgroundColor: 'red',
+        pointRadius: markerSize
     },
     {
-        label: 'Locations',
-        data: locations,
-        backgroundColor: 'red'
+        label: 'location2',
+        data: [{ x: obj[2]['x'], y: obj[2]['y'], yaw: obj[2]['yaw'], color: 'purple' }],
+        backgroundColor: 'purple',
+        pointRadius: markerSize
     }]
 };
+
+var canvas = document.getElementById('myMap');
+var ctx = canvas.getContext('2d');
+const chartWidth = canvas.width;
+const chartHeight = canvas.height;
 
 const scatterPlot = new Chart(ctx, {
     type: 'scatter',
@@ -51,7 +58,18 @@ const scatterPlot = new Chart(ctx, {
                 min: -0.2,
                 max: 1.8
             }
+        },
+        plugins: {
+            legend: {
+                labels: {
+                    usePointStyle: true,
+                },
+            },
+            tooltip: {
+                usePointStyle: true,
+            }
         }
+
     }
 });
 
@@ -60,18 +78,37 @@ function updateScatterPlot(dataPoints) {
     const newData = dataPoints.map(point => ({
         x: point.x,
         y: point.y,
+        yaw: point.yaw,
         color: point.color
     }));
 
     scatterPlot.data.datasets[0].data = newData;
     scatterPlot.data.datasets[0].backgroundColor = newData.map(point => point.color);
+
+    var userHeading = newData.map(point => point.yaw);
+    if (userHeading < 0) {
+        userHeading = 360 - Math.abs(userHeading);
+    }
+
+    console.log(userHeading);
+    scatterPlot.data.datasets[0].rotation = userHeading * (Math.PI / 180);
+    // scatterPlot.data.datasets[0].rotation = 23.45;
+
+    scatterPlot.data.datasets.forEach((dataset, index) => {
+        if (index === 0) {
+            dataset.pointStyle = 'triangle'; // Example: Change pointStyle to 'rect' for the first dataset
+        } else {
+            dataset.pointStyle = 'rect'; // Example: Change pointStyle to 'circle' for other datasets
+        }
+    });
+
     scatterPlot.update();
 }
 
 function updateMap() {
     obj = getObj();
-    console.log([{ x: obj[0]['x'], y: obj[0]['y'], color: 'green' }])
-    updateScatterPlot([{ x: obj[0]['x'], y: obj[0]['y'], color: 'green' }]);
+    // console.log([{ x: obj[0]['x'], y: obj[0]['y'], yaw: obj[0]['yaw'] }])
+    updateScatterPlot([{ x: obj[0]['x'], y: obj[0]['y'], yaw: obj[0]['yaw'], color: 'green' }]);
     updateCoordinates(obj[0]['x'], obj[0]['y'], obj[0]['yaw'])
 }
 
