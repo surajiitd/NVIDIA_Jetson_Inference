@@ -475,7 +475,7 @@ namespace ORB_SLAM3
 
     void Frame::UpdatePoseMatrices()
     {
-        bool performPost = true;
+        bool performPost = false;
 
         Sophus::SE3<float> Twc = mTcw.inverse();
         mRwc = Twc.rotationMatrix();
@@ -524,7 +524,7 @@ namespace ORB_SLAM3
 
                 // // Create POST data
                 // std::string post_data = "x=0.0&y=0.23423&yaw=0.34534";
-                std::string post_data = "x=" + std::to_string(mOw(0)) + "&y=" + std::to_string(mOw(2)) + "&yaw=" + std::to_string(yaw * 180.0 / M_PI);
+                std::string post_data = "x=" + std::to_string(mOw(0)) + "&y=" + std::to_string(mOw(2)) + "&yaw=" + std::to_string(pitch * 180.0 / M_PI);
 
                 // // Set the POST data
                 curl_easy_setopt(curl, CURLOPT_POSTFIELDS, post_data.c_str());

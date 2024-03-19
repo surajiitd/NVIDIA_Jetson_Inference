@@ -17,9 +17,12 @@ const markerSize = 10;
 const initialData = {
     datasets: [{
         label: 'User',
-        data: [{ x: obj[0]['x'], y: obj[0]['y'], yaw: obj[0]['yaw'], color: 'green' }],
+        data: [{ x: 0, y: 0, yaw: 0, color: 'green' }],
         backgroundColor: 'green', // This will be overwritten by individual point colors
         pointRadius: markerSize,
+        borderColor: 'blue',
+        borderWidth: 5,
+        rotation: 90
     },
     //Manually enter the locations and their color
     {
@@ -36,19 +39,19 @@ const initialData = {
     }]
 };
 
-var canvas = document.getElementById('myMap');
-var ctx = canvas.getContext('2d');
-const chartWidth = canvas.width;
-const chartHeight = canvas.height;
+var canvas1 = document.getElementById('myMap');
+var ctx1 = canvas1.getContext('2d');
+const chartWidth1 = canvas1.width;
+const chartHeight1 = canvas1.height;
 
-const scatterPlot = new Chart(ctx, {
+const scatterPlot = new Chart(ctx1, {
     type: 'scatter',
     data: initialData,
     options: {
         responsive: false, // Disable responsiveness
         maintainAspectRatio: false, // Disable aspect ratio
-        width: chartWidth, // Set chart width to match canvas width
-        height: chartHeight, // Set chart height to match canvas height
+        width: chartWidth1, // Set chart width to match canvas width
+        height: chartHeight1, // Set chart height to match canvas height
         scales: {
             x: {
                 min: -0.2,
@@ -62,6 +65,9 @@ const scatterPlot = new Chart(ctx, {
         plugins: {
             legend: {
                 labels: {
+                    filter: function (legendItem, chartData) {
+                        return legendItem.datasetIndex !== 0; // Disable legend for dataset with index 0 ('User')
+                    },
                     usePointStyle: true,
                 },
             },
@@ -84,19 +90,19 @@ function updateScatterPlot(dataPoints) {
 
     scatterPlot.data.datasets[0].data = newData;
     scatterPlot.data.datasets[0].backgroundColor = newData.map(point => point.color);
-
-    var userHeading = newData.map(point => point.yaw);
+    var userHeading = dataPoints[0]['yaw'];
     if (userHeading < 0) {
         userHeading = 360 - Math.abs(userHeading);
     }
 
+    userHeading = 90 - userHeading;
+
     console.log(userHeading);
-    scatterPlot.data.datasets[0].rotation = userHeading * (Math.PI / 180);
-    // scatterPlot.data.datasets[0].rotation = 23.45;
 
     scatterPlot.data.datasets.forEach((dataset, index) => {
         if (index === 0) {
-            dataset.pointStyle = 'triangle'; // Example: Change pointStyle to 'rect' for the first dataset
+            dataset.pointStyle = 'line'; // Example: Change pointStyle to 'rect' for the first dataset
+            dataset.rotation = userHeading;
         } else {
             dataset.pointStyle = 'rect'; // Example: Change pointStyle to 'circle' for other datasets
         }

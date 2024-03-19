@@ -17,15 +17,15 @@ checkpoint="${checkpoint%%,*}"
 echo "checkpoint = $checkpoint"
 
 # change these variable(s) accordingly
-timeStampFileName='timestamps.txt'
-DatasetFolderName='custom_data'
-# timeStampFileName='timestamps_'$checkpoint'.txt'
-# DatasetFolderName='custom_data_'$checkpoint
+# timeStampFileName='timestamps.txt'
+# DatasetFolderName='custom_data'
+timeStampFileName='timestamps_'$checkpoint'.txt'
+DatasetFolderName='custom_data_'$checkpoint
 
 #------------------------------------
 # Monocular Examples
 echo "Launching ORB_SLAM3 with Pre-recorded custom dataset"
-../test_recorded ../../../Vocabulary/ORBvoc.txt ../Setup_Files/test_recorded_example.yaml ../../Datasets/"$DatasetFolderName" ../Datasets_TimeStamps/Lab_TimeStamps/"$timeStampFileName"  dataset-Recorded_mono 
+../test_recorded ../../../Vocabulary/ORBvoc.txt ../Setup_Files/test_recorded_example.yaml ../../Datasets/"$DatasetFolderName" ../Datasets_TimeStamps/Lab_TimeStamps/"$timeStampFileName"  dataset-Hostel_Map 
 
 # chmod +x plot_pose_data.py
 # python plot_pose_data.py
