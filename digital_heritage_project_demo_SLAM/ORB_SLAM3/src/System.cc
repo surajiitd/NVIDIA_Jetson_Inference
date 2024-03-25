@@ -35,13 +35,15 @@
 #include <chrono>
 #include <ctime>
 
+// #ifdef USE_WEBCAM_2
 // #include "../Examples/Monocular/test_webcam_2.cc"
+// #ifdef USE_RECORDED
 #include "../Examples/Monocular/test_recorded.cc"
+// #endif
 
 extern std::time_t checkpoint;
 namespace ORB_SLAM3
 {
-
     Verbose::eLevel Verbose::th = Verbose::VERBOSITY_NORMAL;
 
     System::System(const string &strVocFile, const string &strSettingsFile, const eSensor sensor,
@@ -1427,21 +1429,6 @@ namespace ORB_SLAM3
             mpAtlas->PreSave();
             cout << "Save Atlas 2 \n";
             string pathSaveFileName = "../Maps/";
-
-            // // Get the current system time point
-            // auto now = std::chrono::system_clock::now();
-
-            // // Convert the time point to a time_t object
-            // std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-
-            // Convert the time_t object to a string representation
-            // std::string time_string = std::ctime(&now_time);
-            // std::string time_string = std::to_string(now_time);
-
-            // // Print the current date and time
-            // std::cout << "############# Checkpoint System.cc ###############" << std::endl;
-            // std::cout << "Now date and time: " << std::ctime(&now_time) << std::endl;
-            // std::cout << "Current date and time: " << std::to_string(now_time) << std::endl;
 
             // Print the current date and time
             std::cout << "############# Checkpoint inside System.cc ###############" << std::endl;

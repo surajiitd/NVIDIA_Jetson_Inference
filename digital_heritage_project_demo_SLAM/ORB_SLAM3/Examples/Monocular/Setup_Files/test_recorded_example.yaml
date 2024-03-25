@@ -6,17 +6,25 @@
 
 # When the variables are commented, the system doesn't load a previous session or not store the current one
 
-# checkpoint: &checkpoint "1709894353"
-
 # If the LoadFile doesn't exist, the system give a message and create a new Atlas from scratch
 # System.LoadAtlasFromFile: "Session_Recorded_Mono_v1"
 # System.LoadAtlasFromFile: "Session_Recorded_Mono"
 # System.LoadAtlasFromFile: "Session_Webcam_Mono_1709894974"
 # System.LoadAtlasFromFile: "Hostel_Map_1710573133_v1"
+System.LoadAtlasFromFile: "Hostel_Map_1710573133_v2"
 
 # The store file is created from the current session, if a file with the same name exists it is deleted
 # System.SaveAtlasToFile: "Session_Recorded_Mono"
-System.SaveAtlasToFile: "Hostel_Map"
+# System.SaveAtlasToFile: "Hostel_Map"
+# System.SaveAtlasToFile: "Ground_Map"
+# System.SaveAtlasToFile: "IITD_campus_Map"
+
+#--------------------------------------------------------------------------------------------
+# My Custom Parameters
+#--------------------------------------------------------------------------------------------
+checkpoint: 1710573133
+showGUI: 1
+performPost: 0
 
 #--------------------------------------------------------------------------------------------
 # Camera Parameters. Adjust them!

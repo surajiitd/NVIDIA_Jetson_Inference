@@ -184,9 +184,6 @@ namespace ORB_SLAM3
 
         float GetImageScale();
 
-        // // This is a common checkpoint variable for all the files to share
-        // extern int checkpoint;
-
 #ifdef REGISTER_TIMES
             void
             InsertRectTime(double &time);

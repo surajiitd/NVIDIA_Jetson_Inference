@@ -25,7 +25,13 @@ SECRET_KEY = "django-insecure-2p!ovhg=ozu=5wfz^g8e&b5aua$*0a!ac1t848@g*=j2i=qlcp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "10.194.24.30"]
+filename = "../../../ipAddr.txt"
+try:
+    with open(filename) as file:
+        ipAddr = file.readline().strip()
+except:
+    print(f"Error: File '{filename}' not found.")
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 # Application definition
 

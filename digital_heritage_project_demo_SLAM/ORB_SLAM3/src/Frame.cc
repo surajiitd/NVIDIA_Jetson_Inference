@@ -37,9 +37,13 @@
 
 #include <curl/curl.h>
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/core/utility.hpp>
+
+extern bool performPost;
+
 namespace ORB_SLAM3
 {
-
     long unsigned int Frame::nNextId = 0;
     bool Frame::mbInitialComputations = true;
     float Frame::cx, Frame::cy, Frame::fx, Frame::fy, Frame::invfx, Frame::invfy;
@@ -475,8 +479,6 @@ namespace ORB_SLAM3
 
     void Frame::UpdatePoseMatrices()
     {
-        bool performPost = false;
-
         Sophus::SE3<float> Twc = mTcw.inverse();
         mRwc = Twc.rotationMatrix();
         mOw = Twc.translation();

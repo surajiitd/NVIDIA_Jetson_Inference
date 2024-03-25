@@ -22,52 +22,66 @@
 #include <chrono>
 
 #include <opencv2/core/core.hpp>
+#include <opencv2/core/utility.hpp>
 
 #include <System.h>
+#include <sstream>
 
 using namespace std;
 
-std::time_t checkpoint = 0;
+std::time_t checkpoint;
+bool performPost;
 
 void LoadImages(const string &strImagePath, const string &strPathTimes, vector<string> &vstrImages, vector<double> &vTimeStamps);
 
 int main(int argc, char **argv)
 {
-    if (argc < 5)
+    if (argc < 6)
     {
         cerr << endl
-             << "Usage: ./test_recorded path_to_vocabulary path_to_settings path_to_sequence_folder_1 path_to_times_file_1 (path_to_image_folder_2 path_to_times_file_2 ... path_to_image_folder_N path_to_times_file_N) (trajectory_file_name)" << endl;
+             << "Usage: ./test_recorded path_to_vocabulary path_to_settings path_to_sequence_folder_1 path_to_times_file_1 (path_to_image_folder_2 path_to_times_file_2 ... path_to_image_folder_N path_to_times_file_N) trajectory_file_name checkpoint " << endl;
         return 1;
     }
 
-    bool showGUI = true;
-
-    std::ifstream inputFile("../../../checkpointLog.txt");
-
-    if (!inputFile.is_open())
-    { // Check if the file was opened successfully
-        std::cerr << "Error opening file!" << std::endl;
+    cv::FileStorage fs(argv[2], cv::FileStorage::READ);
+    if (!fs.isOpened())
+    {
+        std::cerr << "Failed to open YAML file." << std::endl;
         return 1;
     }
 
-    std::string line;
-    std::getline(inputFile, line, ',');
+    bool showGUI;
+    fs["showGUI"] >> showGUI;
+    std::cout << "showGUI = " << showGUI << std::endl;
 
-    checkpoint = std::stol(line);
+    // fs["checkpoint"] >> static_cast<time_t>(checkpoint);
+    // fs["checkpoint"] >> checkpoint
+    std::stringstream ss(argv[6]);
+    ss >> checkpoint;
+    // checkpoint = static_cast<time_t>(argv[3]);
+    std::cout << "checkpoint = " << checkpoint << std::endl;
 
-    std::cout << "checkout from checkpointLog file = " << checkpoint << std::endl;
+    fs["performPost"] >> performPost;
+    std::cout << "performPost = " << performPost << std::endl;
+
+    int fps;
+    fs["Camera.fps"] >> fps;
+    std::cout << "Camera.fps = " << fps << std::endl;
+    float dT = 1.f / fps;
 
     std::cout << "sequence folder: " << argv[3] << std::endl;
     std::cout << "timestamp file: " << argv[4] << std::endl;
 
-    const int num_seq = (argc - 3) / 2;
+    // const int num_seq = (argc - 3) / 2;
+    const int num_seq = 1;
     cout << "num_seq = " << num_seq << endl;
-    bool bFileName = (((argc - 3) % 2) == 1);
+    // bool bFileName = (((argc - 3) % 2) == 1);
+    bool bFileName = true;
     string file_name;
 
     if (bFileName)
     {
-        file_name = string(argv[argc - 1]);
+        file_name = string(argv[5]);
         cout << "file name: " << file_name << endl;
     }
 
@@ -100,8 +114,6 @@ int main(int argc, char **argv)
          << "-------" << endl;
     cout.precision(17);
 
-    int fps = 20;
-    float dT = 1.f / fps;
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
 
     ORB_SLAM3::System SLAM(argv[1], argv[2], ORB_SLAM3::System::MONOCULAR, showGUI);
@@ -113,9 +125,7 @@ int main(int argc, char **argv)
     for (seq = 0; seq < num_seq; seq++)
     {
         // Slow down thread
-        int FPS = 30;
         auto start = std::chrono::steady_clock::now(); // Capture the start time of the loop
-
 
         // Main loop
         cv::Mat im;
@@ -168,15 +178,18 @@ int main(int argc, char **argv)
             // cout << "tframe = " << tframe << endl;
 
             SLAM.TrackMonocular(im, tframe); // TODO change to monocular_inertial
+            if (!performPost)
+            {
+                auto end = std::chrono::steady_clock::now();                                                  // Capture the end time of the loop
+                auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); // Calculate the elapsed time
 
-            auto end = std::chrono::steady_clock::now(); // Capture the end time of the loop
-            auto elapsed_ms = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count(); // Calculate the elapsed time
+                // Calculate the time to sleep per iteration based on desired FPS
+                long sleep_ms = (1000 / fps); //- elapsed_ms;
 
-            // Calculate the time to sleep per iteration based on desired FPS
-            long sleep_ms = (1000 / FPS); //- elapsed_ms;
-
-            if (sleep_ms > 0) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(sleep_ms)); // Sleep if necessary to achieve desired FPS
+                if (sleep_ms > 0)
+                {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(sleep_ms)); // Sleep if necessary to achieve desired FPS
+                }
             }
 
 #ifdef COMPILEDWITHC11

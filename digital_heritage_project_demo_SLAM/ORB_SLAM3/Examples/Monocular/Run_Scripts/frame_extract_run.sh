@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # change these variable(s) accordingly
-videoFileName='visionLab_v2.mp4'
-timeStampFileName='timestamps.txt'
-DatasetFolderName='custom_data'
+videoFileName='IITD_campus_failed.mp4'
+timeStampFileName='timestamps_IITD_campus_failed.txt'
+DatasetFolderName='custom_data_IITD_campus_failed'
 #------------------------------------
 # Monocular Examples
 echo "frame_extract" | figlet
