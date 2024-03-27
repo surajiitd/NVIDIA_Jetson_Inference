@@ -31,6 +31,7 @@ using namespace std;
 
 std::time_t checkpoint;
 bool performPost;
+std::string url;
 
 void LoadImages(const string &strImagePath, const string &strPathTimes, vector<string> &vstrImages, vector<double> &vTimeStamps);
 
@@ -38,8 +39,8 @@ int main(int argc, char **argv)
 {
     if (argc < 6)
     {
-        cerr << endl
-             << "Usage: ./test_recorded path_to_vocabulary path_to_settings path_to_sequence_folder_1 path_to_times_file_1 (path_to_image_folder_2 path_to_times_file_2 ... path_to_image_folder_N path_to_times_file_N) trajectory_file_name checkpoint " << endl;
+        std::cerr << endl
+                  << "Usage: ./test_recorded path_to_vocabulary path_to_settings path_to_sequence_folder_1 path_to_times_file_1 (path_to_image_folder_2 path_to_times_file_2 ... path_to_image_folder_N path_to_times_file_N) checkpoint trajectory_file_name" << std::endl;
         return 1;
     }
 
@@ -50,27 +51,40 @@ int main(int argc, char **argv)
         return 1;
     }
 
+    std::string executableFileName(argv[0]);
+
     bool showGUI;
     fs["showGUI"] >> showGUI;
-    std::cout << "showGUI = " << showGUI << std::endl;
+    std::cout << "**(" << executableFileName << ") " << "showGUI = " << showGUI << std::endl;
 
-    // fs["checkpoint"] >> static_cast<time_t>(checkpoint);
-    // fs["checkpoint"] >> checkpoint
-    std::stringstream ss(argv[6]);
+    std::stringstream ss(argv[5]);
     ss >> checkpoint;
-    // checkpoint = static_cast<time_t>(argv[3]);
-    std::cout << "checkpoint = " << checkpoint << std::endl;
+    std::cout << "**(" << executableFileName << ") " << "checkpoint = " << checkpoint << std::endl;
 
     fs["performPost"] >> performPost;
-    std::cout << "performPost = " << performPost << std::endl;
+    std::cout << "**(" << executableFileName << ") " << "performPost = " << performPost << std::endl;
+
+    if (performPost)
+    {
+        std::string hostip;
+        std::string portNum;
+        fs["hostip"] >> hostip;
+        fs["portNum"] >> portNum;
+
+        std::cout << "**(" << executableFileName << ") " << "Host Address = " << hostip << ":" << portNum << endl;
+
+        url = "http://" + hostip + ":" + portNum + "/updatecurrent/";
+
+        std::cout << "**(" << executableFileName << ") " << "Post API Endpoint = " << url << std::endl;
+    }
 
     int fps;
     fs["Camera.fps"] >> fps;
     std::cout << "Camera.fps = " << fps << std::endl;
     float dT = 1.f / fps;
 
-    std::cout << "sequence folder: " << argv[3] << std::endl;
-    std::cout << "timestamp file: " << argv[4] << std::endl;
+    std::cout << "**(" << executableFileName << ") " << "sequence folder: " << argv[3] << std::endl;
+    std::cout << "**(" << executableFileName << ") " << "timestamp file: " << argv[4] << std::endl;
 
     // const int num_seq = (argc - 3) / 2;
     const int num_seq = 1;
@@ -81,7 +95,7 @@ int main(int argc, char **argv)
 
     if (bFileName)
     {
-        file_name = string(argv[5]);
+        file_name = string(argv[argc - 1]);
         cout << "file name: " << file_name << endl;
     }
 

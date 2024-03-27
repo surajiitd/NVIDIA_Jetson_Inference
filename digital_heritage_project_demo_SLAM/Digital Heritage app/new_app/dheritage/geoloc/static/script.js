@@ -1,5 +1,6 @@
-var ip = "127.0.0.1";
-var hostName = "http://" + ip + ":8080";
+const currentHost = window.location.host;
+const hostName = "http://" + currentHost;
+console.log(hostName);
 
 function getObj() {
     const xmlHttp = new XMLHttpRequest();

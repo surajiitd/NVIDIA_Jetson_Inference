@@ -40,7 +40,10 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/core/utility.hpp>
 
+#include <string>
+
 extern bool performPost;
+extern std::string url;
 
 namespace ORB_SLAM3
 {
@@ -506,7 +509,7 @@ namespace ORB_SLAM3
         // std::cout << "Roll: " << roll * 180.0 / M_PI << " degrees" << std::endl;
         // std::cout << "Pitch: " << pitch * 180.0 / M_PI << " degrees" << std::endl;
         // std::cout << "Yaw: " << yaw * 180.0 / M_PI << " degrees" << std::endl;
-
+        
         if (performPost)
         {
             // Initialize libcurl
@@ -516,16 +519,16 @@ namespace ORB_SLAM3
             CURL *curl = curl_easy_init();
             if (curl)
             {
+                // std::cout << "\n\n**(" << "Frame.cc" << ") " << "Post API Endpoint = " << url << std::endl;
                 // Set the URL for the request
-                curl_easy_setopt(curl, CURLOPT_URL, "http://127.0.0.1:8080/updatecurrent/");
-
-                // curl_easy_setopt(curl, CURLOPT_URL, "http://10.194.24.30:8080/updatecurrent/");
+                curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 
                 // Set the request type to POST
                 curl_easy_setopt(curl, CURLOPT_POST, 1L);
 
                 // // Create POST data
                 // std::string post_data = "x=0.0&y=0.23423&yaw=0.34534";
+                std::cout << "\n";
                 std::string post_data = "x=" + std::to_string(mOw(0)) + "&y=" + std::to_string(mOw(2)) + "&yaw=" + std::to_string(pitch * 180.0 / M_PI);
 
                 // // Set the POST data
