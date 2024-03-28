@@ -67,12 +67,12 @@ const scatterPlot = new Chart(ctx1, {
         height: chartHeight1, // Set chart height to match canvas height
         scales: {
             x: {
-                min: -0.2,
-                max: 1.2
+                min: -2,
+                max: 10
             },
             y: {
-                min: -0.2,
-                max: 1.8
+                min: -2,
+                max: 8
             }
         },
         plugins: {

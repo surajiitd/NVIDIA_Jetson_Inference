@@ -53,7 +53,7 @@ int main(int argc, char **argv)
     bool localizationMode;
     fs["localizationMode"] >> localizationMode;
 
-    if (!localizationMode && argc == 5)
+    if (!localizationMode && argc == 7)
     {
         cerr << endl
              << "Usage: path_to_examples/test_webcam path_to_vocabulary path_to_settings path_to_saving_sequence_folder_1 path_to_times_file_1 path_to_checkpoint_log_file (trajectory_file_name)" << endl;

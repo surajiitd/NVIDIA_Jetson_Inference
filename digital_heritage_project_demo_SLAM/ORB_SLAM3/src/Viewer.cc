@@ -178,17 +178,17 @@ namespace ORB_SLAM3
         pangolin::Var<bool> menuCamView("menu.Camera View", false, false);
         pangolin::Var<bool> menuTopView("menu.Top View", false, false);
         // pangolin::Var<bool> menuSideView("menu.Side View",false,false);
-        pangolin::Var<bool> menuShowPoints("menu.Show Points", false, true);
-        pangolin::Var<bool> menuShowKeyFrames("menu.Show KeyFrames", false, true);
-        pangolin::Var<bool> menuShowGraph("menu.Show Graph", false, true);
+        pangolin::Var<bool> menuShowPoints("menu.Show Points", true, true);
+        pangolin::Var<bool> menuShowKeyFrames("menu.Show KeyFrames", true, true);
+        pangolin::Var<bool> menuShowGraph("menu.Show Graph", true, true);
         pangolin::Var<bool> menuShowInertialGraph("menu.Show Inertial Graph", false, true);
-        pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode", false,true);
+        pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode", true, true);
         pangolin::Var<bool> menuReset("menu.Reset", false, false);
         pangolin::Var<bool> menuStop("menu.Stop", false, false);
         pangolin::Var<bool> menuStepByStep("menu.Step By Step", false, true);
         pangolin::Var<bool> menuStep("menu.Step", false, false);
         pangolin::Var<bool> menuShowOptLba("menu.Show LBA opt", false, true);
-        
+
         // Define Camera Render Object (for view / scene browsing)
         pangolin::OpenGlRenderState s_cam(
             pangolin::ProjectionMatrix(1024, 768, mViewpointF, mViewpointF, 512, 389, 0.1, 1000),
