@@ -11,21 +11,23 @@
 # System.LoadAtlasFromFile: "Session_Recorded_Mono_v1"
 # System.LoadAtlasFromFile: "Session_Recorded_Mono"
 # System.LoadAtlasFromFile: "Session_Webcam_Mono_1709894974"
-System.LoadAtlasFromFile: "Session_Webcam_Mono_1711517278"
+# System.LoadAtlasFromFile: "Session_Webcam_Mono_1711517278"
 # System.LoadAtlasFromFile: "Hostel_Map_1710573133_v1"
 # System.LoadAtlasFromFile: "Hostel_Map_1710573133_v2"
+System.LoadAtlasFromFile: "VisionLab_Map_1711617032"
 
 # The store file is created from the current session, if a file with the same name exists it is deleted
 # System.SaveAtlasToFile: "Session_Webcam_Mono"
+# System.SaveAtlasToFile: "VisionLab_Map"
 
 #--------------------------------------------------------------------------------------------
 # My Custom Parameters
 #--------------------------------------------------------------------------------------------
-showGUI: 1
-performPost: 0
-hostip: "127.0.0.1"
+showGUI: 0
+performPost: 1
+hostip: "172.20.10.2"
 portNum: "8080"
-localizationMode: 0
+localizationMode: 1
 
 #--------------------------------------------------------------------------------------------
 # Camera Parameters. Adjust them!

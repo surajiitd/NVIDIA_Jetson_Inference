@@ -11,7 +11,7 @@
 # System.LoadAtlasFromFile: "Session_Recorded_Mono"
 # System.LoadAtlasFromFile: "Session_Webcam_Mono_1709894974"
 # System.LoadAtlasFromFile: "Hostel_Map_1710573133_v1"
-System.LoadAtlasFromFile: "Hostel_Map_1710573133_v2"
+# System.LoadAtlasFromFile: "Hostel_Map_1710573133_v2"
 # System.LoadAtlasFromFile: "Vision_Lab_Map_1709632574_v1"
 
 # The store file is created from the current session, if a file with the same name exists it is deleted
@@ -19,13 +19,14 @@ System.LoadAtlasFromFile: "Hostel_Map_1710573133_v2"
 # System.SaveAtlasToFile: "Hostel_Map"
 # System.SaveAtlasToFile: "Ground_Map"
 # System.SaveAtlasToFile: "IITD_campus_Map"
+System.SaveAtlasToFile: "VisionLab_Map"
 
 #--------------------------------------------------------------------------------------------
 # My Custom Parameters
 #--------------------------------------------------------------------------------------------
-checkpoint: 1710573133
-showGUI: 0
-performPost: 1
+checkpoint: 1711617032
+showGUI: 1
+performPost: 0
 hostip: "127.0.0.1"
 portNum: "8080"
 

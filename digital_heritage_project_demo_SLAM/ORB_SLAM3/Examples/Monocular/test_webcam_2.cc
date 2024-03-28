@@ -103,13 +103,13 @@ int main(int argc, char **argv)
     sigaction(SIGINT, &sigIntHandler, NULL);
     b_continue_session = true;
 
-    cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
+    // cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
     // cv::VideoCapture cap("http://10.194.18.91:8000/camera/mjpeg");
 
-    // int cameraCap;
-    // fs["Camera.cap"] >> cameraCap;
-    // std::cout << "Camera.cap = " << cameraCap << std::endl;
-    // cv::VideoCapture cap(cameraCap);
+    int cameraCap;
+    fs["Camera.cap"] >> cameraCap;
+    std::cout << "Camera.cap = " << cameraCap << std::endl;
+    cv::VideoCapture cap(cameraCap);
 
     if (!cap.isOpened())
     {

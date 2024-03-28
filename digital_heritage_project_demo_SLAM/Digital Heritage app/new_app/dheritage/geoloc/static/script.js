@@ -2,6 +2,13 @@ const currentHost = window.location.host;
 const hostName = "http://" + currentHost;
 console.log(hostName);
 
+var reached = false;
+
+var speech = new SpeechSynthesisUtterance();
+// speech.text = "Hello World";
+// window.speechSynthesis.speak(speech);
+// console.log("Speak")
+
 function getObj() {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", hostName + "/locations/", false); // false for synchronous request
@@ -39,14 +46,12 @@ const initialData = {
         {
             label: 'location1',
             data: [{ x: obj[1]['x'], y: obj[1]['y'], yaw: obj[1]['yaw'] }],
-            backgroundColor: 'orange',
             pointStyle: 'rect',
             pointRadius: 10
         },
         {
             label: 'location2',
             data: [{ x: obj[2]['x'], y: obj[2]['y'], yaw: obj[2]['yaw'] }],
-            backgroundColor: 'purple',
             pointStyle: 'rect',
             pointRadius: 10
         }]
@@ -67,12 +72,12 @@ const scatterPlot = new Chart(ctx1, {
         height: chartHeight1, // Set chart height to match canvas height
         scales: {
             x: {
-                min: -2,
-                max: 10
+                min: -0.2,
+                max: 0.6
             },
             y: {
-                min: -2,
-                max: 8
+                min: -0.2,
+                max: 1
             }
         },
         plugins: {
@@ -99,16 +104,18 @@ function updateScatterPlot(dataPoints) {
     scatterPlot.data.datasets[0].data[0]['y'] = dataPoints[0]['y'];
     scatterPlot.data.datasets[1].data[0]['x'] = dataPoints[0]['x'];
     scatterPlot.data.datasets[1].data[0]['y'] = dataPoints[0]['y'];
+
+    // scatterPlot.data.datasets[1].data = newData;
     // scatterPlot.data.datasets[1].data = newData;
 
     var userHeading = dataPoints[0]['yaw'];
     if (userHeading < 0) {
-        userHeading = 360 - Math.abs(userHeading);
+        userHeading = Math.abs(userHeading) - 360;
     }
 
-    userHeading = 90 - userHeading;
+    userHeading = 90 + userHeading;
 
-    console.log(userHeading);
+    // console.log(userHeading);
 
     scatterPlot.data.datasets[1].rotation = userHeading;
     scatterPlot.data.datasets[0].rotation = 90 + userHeading;
@@ -116,8 +123,7 @@ function updateScatterPlot(dataPoints) {
     scatterPlot.update();
 }
 
-function updateMap() {
-    obj = getObj();
+function updateMap(obj) {
     // console.log([{ x: obj[0]['x'], y: obj[0]['y'], yaw: obj[0]['yaw'] }])
     updateScatterPlot([{ x: obj[0]['x'], y: obj[0]['y'], yaw: obj[0]['yaw'] }]);
     updateCoordinates(obj[0]['x'], obj[0]['y'], obj[0]['yaw'])
@@ -129,7 +135,30 @@ function updateCoordinates(x, y, yaw) {
     document.getElementById('yaw-coordinate').textContent = 'Yaw: ' + yaw;
 }
 
-updateMap()
+function alertUser(obj) {
+    var f = false;
+    for (let i = 1; i < obj.length; i++) {
+        if (Math.abs(obj[i]['x'] - obj[0]['x']) < 0.05 && Math.abs(obj[i]['x'] - obj[0]['x']) < 0.05) {
+            f = true;
+            if (!reached) {
+                reached = true;
+                speech.text = obj[i]['voice_message'];
+                window.speechSynthesis.speak(speech);
+                console.log("reached !!!, " + i)
+            }
+        }
+    }
+    reached = f;
+}
+
+function update() {
+    obj1 = getObj();
+    updateMap(obj1);
+    alertUser(obj1);
+}
+
+update();
+
 const interval = setInterval(() => {
-    updateMap()
+    update();
 }, 100); // Start the update initially

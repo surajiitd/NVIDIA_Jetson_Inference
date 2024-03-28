@@ -17,7 +17,7 @@ localizationMode=$(read_yaml "$settingsDirectory" localizationMode)
 echo "Value of localizationMode is: $localizationMode"
 
 if [ "$localizationMode" -eq 0 ]; then
-    trajectoryFileName='dataset-Hostel_Map'
+    trajectoryFileName='dataset-VisionLab_Map'
     timeStampFileName='timestamps'
     DatasetFolderName='custom_data'
 
