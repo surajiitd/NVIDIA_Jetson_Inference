@@ -7,18 +7,10 @@
 # When the variables are commented, the system doesn't load a previous session or not store the current one
 
 # If the LoadFile doesn't exist, the system give a message and create a new Atlas from scratch
-# System.LoadAtlasFromFile: "Session_Webcam_Mono"
-# System.LoadAtlasFromFile: "Session_Recorded_Mono_v1"
-# System.LoadAtlasFromFile: "Session_Recorded_Mono"
-# System.LoadAtlasFromFile: "Session_Webcam_Mono_1709894974"
-# System.LoadAtlasFromFile: "Session_Webcam_Mono_1711517278"
-# System.LoadAtlasFromFile: "Hostel_Map_1710573133_v1"
-# System.LoadAtlasFromFile: "Hostel_Map_1710573133_v2"
 System.LoadAtlasFromFile: "VisionLab_Map_1711617032"
 
 # The store file is created from the current session, if a file with the same name exists it is deleted
-# System.SaveAtlasToFile: "Session_Webcam_Mono"
-# System.SaveAtlasToFile: "VisionLab_Map"
+# System.SaveAtlasToFile: "VisionLab_Map_1711617032"
 
 #--------------------------------------------------------------------------------------------
 # My Custom Parameters

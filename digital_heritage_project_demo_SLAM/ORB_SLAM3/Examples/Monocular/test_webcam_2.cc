@@ -60,10 +60,10 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    else if (localizationMode && argc == 2)
+    else if (localizationMode && argc == 3)
     {
         cerr << endl
-             << "Usage: ./test_webcam path_to_vocabulary path_to_settings" << endl;
+             << "Usage: ./test_webcam path_to_vocabulary path_to_settings (trajectory_file_name)" << endl;
         return 1;
     }
 
@@ -103,9 +103,6 @@ int main(int argc, char **argv)
     sigaction(SIGINT, &sigIntHandler, NULL);
     b_continue_session = true;
 
-    // cv::VideoCapture cap("http://192.168.29.81:8000/camera/mjpeg");
-    // cv::VideoCapture cap("http://10.194.18.91:8000/camera/mjpeg");
-
     int cameraCap;
     fs["Camera.cap"] >> cameraCap;
     std::cout << "Camera.cap = " << cameraCap << std::endl;
@@ -130,6 +127,15 @@ int main(int argc, char **argv)
     cap.set(cv::CAP_PROP_FRAME_WIDTH, width);
     cap.set(cv::CAP_PROP_FRAME_HEIGHT, height);
     cap.set(cv::CAP_PROP_FPS, fps);
+
+    bool bFileName = true;
+    string file_name;
+
+    if (bFileName)
+    {
+        file_name = string(argv[argc - 1]);
+        cout << "Trajectory Filename: " << file_name << endl;
+    }
 
     // Load SLAM system
     ORB_SLAM3::System SLAM(argv[1], argv[2], ORB_SLAM3::System::MONOCULAR, showGUI);
@@ -162,14 +168,6 @@ int main(int argc, char **argv)
     }
     else if (!localizationMode)
     {
-        bool bFileName = true;
-        string file_name;
-
-        if (bFileName)
-        {
-            file_name = string(argv[argc - 1]);
-            cout << "file name: " << file_name << endl;
-        }
         // Get the current system time point
         auto now = std::chrono::system_clock::now();
 

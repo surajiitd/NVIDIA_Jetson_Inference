@@ -10,7 +10,24 @@ read_yaml() {
 }
 
 settingsFileName='test_recorded.yaml'
-trajectoryFileName='dataset-Hostel_Map'
+settingsDirectory="../Setup_Files/"$settingsFileName
+
+checkpoint=$(read_yaml "$settingsDirectory" checkpoint)
+echo "Value of $key is: $checkpoint"
+
+load_file=$(read_yaml $settingsDirectory "System.LoadAtlasFromFile")
+if [ ! -z "$load_file" ]; then
+    echo 1
+    load_file="${load_file//\"/}"
+    trajectoryFileName=$load_file"_load"
+else
+    echo 3
+    save_file="${save_file//\"/}"
+    save_file=$(read_yaml $settingsDirectory "System.SaveAtlasToFile")
+    if [ ! -z "$save_file" ]; then
+        trajectoryFileName=$save_file"_save"
+    fi
+fi
 
 # change these variable(s) accordingly
 # timeStampFileName='timestamps.txt'
@@ -18,10 +35,6 @@ trajectoryFileName='dataset-Hostel_Map'
 
 # timeStampFileName='timestamps_IITD_campus_failed.txt'
 # DatasetFolderName='custom_data_IITD_campus_failed'
-
-settingsDirectory="../Setup_Files/"$settingsFileName
-checkpoint=$(read_yaml "$settingsDirectory" checkpoint)
-echo "Value of $key is: $checkpoint"
 
 timeStampFileName='timestamps_'$checkpoint'.txt'
 DatasetFolderName='custom_data_'$checkpoint

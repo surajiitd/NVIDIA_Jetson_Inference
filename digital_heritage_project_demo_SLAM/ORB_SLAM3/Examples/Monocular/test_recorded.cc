@@ -96,7 +96,7 @@ int main(int argc, char **argv)
     if (bFileName)
     {
         file_name = string(argv[argc - 1]);
-        cout << "file name: " << file_name << endl;
+        cout << "Trajectory Filename: " << file_name << endl;
     }
 
     // Load all sequences:

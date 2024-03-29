@@ -16,14 +16,27 @@ settingsDirectory="../Setup_Files/"$settingsFileName
 localizationMode=$(read_yaml "$settingsDirectory" localizationMode)
 echo "Value of localizationMode is: $localizationMode"
 
+load_file=$(read_yaml $settingsDirectory "System.LoadAtlasFromFile")
+if [ ! -z "$load_file" ]; then
+    echo 1
+    load_file="${load_file//\"/}"
+    trajectoryFileName=$load_file
+else
+    echo 3
+    save_file="${save_file//\"/}"
+    save_file=$(read_yaml $settingsDirectory "System.SaveAtlasToFile")
+    if [ ! -z "$save_file" ]; then
+        trajectoryFileName=$save_file
+    fi
+fi
+
 if [ "$localizationMode" -eq 0 ]; then
-    trajectoryFileName='dataset-VisionLab_Map'
     timeStampFileName='timestamps'
     DatasetFolderName='custom_data'
 
     ../test_webcam_2 ../../../Vocabulary/ORBvoc.txt "$settingsDirectory" ../../Datasets/"$DatasetFolderName" ../Datasets_TimeStamps/Lab_TimeStamps/"$timeStampFileName" "$trajectoryFileName"
 elif [ "$localizationMode" -eq 1 ]; then
-    ../test_webcam_2 ../../../Vocabulary/ORBvoc.txt "$settingsDirectory"
+    ../test_webcam_2 ../../../Vocabulary/ORBvoc.txt "$settingsDirectory" "$trajectoryFileName"
 else
     echo "Invalid localization mode"
     exit 1
