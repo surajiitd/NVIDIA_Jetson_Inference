@@ -9,6 +9,8 @@ var speech = new SpeechSynthesisUtterance();
 // window.speechSynthesis.speak(speech);
 // console.log("Speak")
 
+var locationColor = ['orange', 'purple'];
+
 function getObj() {
     const xmlHttp = new XMLHttpRequest();
     xmlHttp.open("GET", hostName + "/locations/", false); // false for synchronous request
@@ -16,6 +18,31 @@ function getObj() {
     const obj = JSON.parse(xmlHttp.responseText);
     return obj
 }
+
+// Function to add text dynamically
+function addText(msg) {
+    // Get the container element where you want to add text
+    var container = document.getElementById("alertUser");
+    
+    // Create a new text node
+    var newText = document.createTextNode(msg);
+    
+    // Append the text node to the container
+    container.appendChild(newText);
+  }
+
+// Function to remove dynamically added text
+function removeText() {
+    // Get the container element
+    var container = document.getElementById("alertUser");
+
+    // Check if the container has any child nodes
+    if (container.firstChild) {
+        // Remove the first child node (which is the text node)
+        container.removeChild(container.firstChild);
+    }
+}
+
 
 obj = getObj();
 
@@ -47,12 +74,14 @@ const initialData = {
             label: 'location1',
             data: [{ x: obj[1]['x'], y: obj[1]['y'], yaw: obj[1]['yaw'] }],
             pointStyle: 'rect',
+            backgroundColor: locationColor[0],
             pointRadius: 10
         },
         {
             label: 'location2',
             data: [{ x: obj[2]['x'], y: obj[2]['y'], yaw: obj[2]['yaw'] }],
             pointStyle: 'rect',
+            backgroundColor: locationColor[1],
             pointRadius: 10
         }]
 };
@@ -110,10 +139,10 @@ function updateScatterPlot(dataPoints) {
 
     var userHeading = dataPoints[0]['yaw'];
     if (userHeading < 0) {
-        userHeading = Math.abs(userHeading) - 360;
+        userHeading = 360 - Math.abs(userHeading);
     }
 
-    userHeading = 90 + userHeading;
+    userHeading = 90 - userHeading;
 
     // console.log(userHeading);
 
@@ -138,14 +167,22 @@ function updateCoordinates(x, y, yaw) {
 function alertUser(obj) {
     var f = false;
     for (let i = 1; i < obj.length; i++) {
-        if (Math.abs(obj[i]['x'] - obj[0]['x']) < 0.05 && Math.abs(obj[i]['x'] - obj[0]['x']) < 0.05) {
+        if (Math.abs(obj[i]['x'] - obj[0]['x']) < 0.05 && Math.abs(obj[i]['y'] - obj[0]['y']) < 0.05) {
             f = true;
             if (!reached) {
                 reached = true;
                 speech.text = obj[i]['voice_message'];
                 window.speechSynthesis.speak(speech);
                 console.log("reached !!!, " + i)
+                scatterPlot.data.datasets[i + 1].backgroundColor = 'green';
+                scatterPlot.data.datasets[i + 1].pointRadius = 15;
             }
+            // addText(obj[i]['voice_message']);
+        }
+        else {
+            scatterPlot.data.datasets[i + 1].backgroundColor = locationColor[i - 1];
+            scatterPlot.data.datasets[i + 1].pointRadius = 10;
+            // removeText();
         }
     }
     reached = f;

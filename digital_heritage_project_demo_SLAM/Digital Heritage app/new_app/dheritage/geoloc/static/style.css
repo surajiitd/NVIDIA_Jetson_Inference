@@ -6,3 +6,8 @@
     text-align: center; /* Align text within the items */
     /* Add other styling properties as needed */
 }
+
+#alertUser {
+    text-align: center; /* Center align the text */
+    color: green; /* Set the text color to green */
+  }
