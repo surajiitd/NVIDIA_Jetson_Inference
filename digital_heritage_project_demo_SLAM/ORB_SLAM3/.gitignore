@@ -23,6 +23,10 @@ Examples/Monocular/mono_kitti
 Examples/Monocular/mono_tum
 Examples/Monocular/mono_tum_vi
 Examples/Monocular/mono_realsense_t265
+Examples/Monocular/frame_extract
+Examples/Monocular/test_recorded
+Examples/Monocular/test_webcam
+Examples/Monocular/test_webcam_2
 
 Examples/Stereo/stereo_euroc
 Examples/Stereo/stereo_kitti
@@ -93,6 +97,7 @@ borrar/*
 */ExecMean.txt
 
 Examples/Datasets/*
-Examples/Datasets/EuRoC/
-Examples/Datasets/lab_data/
-Examples/Datasets/*.mp4
+
+Examples/Monocular/CameraTrajectory/*
+Examples/Monocular/KeyFramesTrajectory/*
+Examples/Monocular/Maps/*
