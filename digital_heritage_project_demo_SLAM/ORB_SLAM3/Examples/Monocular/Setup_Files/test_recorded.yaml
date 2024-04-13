@@ -18,6 +18,7 @@ System.LoadAtlasFromFile: "VisionLab_Map_1711617032"
 checkpoint: 1711617032
 showGUI: 0
 performPost: 1
+hostip: "127.0.0.1"
 portNum: "8080"
 
 #--------------------------------------------------------------------------------------------

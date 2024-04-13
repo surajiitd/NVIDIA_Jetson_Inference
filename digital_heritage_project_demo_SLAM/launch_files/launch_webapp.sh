@@ -20,15 +20,6 @@ else
     exit 1
 fi
 
-# Use the ip command to get the IP address of the default gateway
-gateway_ip=$(ip route | grep default | awk '{print $3}')
-
-# Use the ip command again to get the IP address associated with the default gateway's interface
-hostip=$(ip -4 addr show dev $(ip route | grep default | awk '{print $5}') | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
-
-# Display the obtained IP address
-echo "IP address of the network: $network_ip"
-
 read_yaml() {
     local yaml_file="$1"
     local key="$2"
@@ -38,7 +29,7 @@ read_yaml() {
 cd ../
 
 settingsDirectory="ORB_SLAM3/Examples/Monocular/Setup_Files/"$settingsFileName
-hostip=$network_ip
+hostip=$(read_yaml "$settingsDirectory" hostip)
 portNum=$(read_yaml "$settingsDirectory" portNum)
 # Remove quotes from hostip and portNum
 hostip="${hostip//\"/}"  # Remove double quotes
