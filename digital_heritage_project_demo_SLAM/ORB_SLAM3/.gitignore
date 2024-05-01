@@ -101,3 +101,7 @@ Examples/Datasets/*
 Examples/Monocular/CameraTrajectory/*
 Examples/Monocular/KeyFramesTrajectory/*
 Examples/Monocular/Maps/*
+
+Examples/RGB-D/Result/*
+Examples/RGB-D/CameraTrajectory/*
+Examples/RGB-D/KeyFramesTrajectory/*

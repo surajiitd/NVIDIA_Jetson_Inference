@@ -116,7 +116,6 @@ int main(int argc, char **argv)
         // std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
 #endif
-
         double ttrack = std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1).count();
 
         vTimesTrack[ni] = ttrack;
@@ -154,8 +153,7 @@ int main(int argc, char **argv)
     return 0;
 }
 
-void LoadImages(const string &strAssociationFilename, vector<string> &vstrImageFilenamesRGB,
-                vector<string> &vstrImageFilenamesD, vector<double> &vTimestamps)
+void LoadImages(const string &strAssociationFilename, vector<string> &vstrImageFilenamesRGB, vector<string> &vstrImageFilenamesD, vector<double> &vTimestamps)
 {
     ifstream fAssociation;
     fAssociation.open(strAssociationFilename.c_str());

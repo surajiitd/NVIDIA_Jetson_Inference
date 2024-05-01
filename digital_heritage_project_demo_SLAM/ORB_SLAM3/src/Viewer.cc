@@ -174,8 +174,8 @@ namespace ORB_SLAM3
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         pangolin::CreatePanel("menu").SetBounds(0.0, 1.0, 0.0, pangolin::Attach::Pix(175));
-        pangolin::Var<bool> menuFollowCamera("menu.Follow Camera", false, true);
-        pangolin::Var<bool> menuCamView("menu.Camera View", false, false);
+        pangolin::Var<bool> menuFollowCamera("menu.Follow Camera", true, true);
+        pangolin::Var<bool> menuCamView("menu.Camera View", true, false);
         pangolin::Var<bool> menuTopView("menu.Top View", false, false);
         // pangolin::Var<bool> menuSideView("menu.Side View",false,false);
         pangolin::Var<bool> menuShowPoints("menu.Show Points", true, true);
@@ -189,10 +189,10 @@ namespace ORB_SLAM3
         pangolin::Var<bool> menuShowOptLba("menu.Show LBA opt", false, true);
 
         // localizaton ON
-        pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode", true, true);
+        // pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode", true, true);
 
         // Localization OFF
-        // pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode", false, true);
+        pangolin::Var<bool> menuLocalizationMode("menu.Localization Mode", false, true);
 
         // Define Camera Render Object (for view / scene browsing)
         pangolin::OpenGlRenderState s_cam(
