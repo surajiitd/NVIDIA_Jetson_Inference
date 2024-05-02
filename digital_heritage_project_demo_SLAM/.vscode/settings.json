@@ -69,5 +69,6 @@
         "valarray": "cpp",
         "variant": "cpp",
         "*.ipp": "cpp"
-    }
+    },
+    "files.autoSave": "afterDelay"
 }

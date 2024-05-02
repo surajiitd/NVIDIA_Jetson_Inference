@@ -253,15 +253,15 @@ int main(int argc, char **argv)
     // Stop all threads
     SLAM.Shutdown();
 
-    const string KF_Trajectory_pathSaveFileName = "../KeyFramesTrajectory/";
+    const string KF_Trajectory_pathSaveFileName = "KeyFramesTrajectory/";
 
-    const string C_Trajectory_pathSaveFileName = "../CameraTrajectory/";
+    const string C_Trajectory_pathSaveFileName = "CameraTrajectory/";
 
     // Save camera trajectory
     if (bFileName)
     {
-        const string kf_file = KF_Trajectory_pathSaveFileName + "EuRoC_kf_" + string(argv[argc - 1]) + ".txt";
-        const string f_file = C_Trajectory_pathSaveFileName + "EuRoC_f_" + string(argv[argc - 1]) + ".txt";
+        const string kf_file = KF_Trajectory_pathSaveFileName + "kf_" + string(argv[argc - 1]) + ".txt";
+        const string f_file = C_Trajectory_pathSaveFileName + "f_" + string(argv[argc - 1]) + ".txt";
         SLAM.SaveTrajectoryEuRoC(f_file);
         SLAM.SaveKeyFrameTrajectoryEuRoC(kf_file);
     }

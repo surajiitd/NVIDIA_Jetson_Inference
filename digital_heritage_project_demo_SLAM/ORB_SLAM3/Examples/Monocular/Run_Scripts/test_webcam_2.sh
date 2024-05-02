@@ -2,6 +2,8 @@
 
 echo "ORB_SLAM3" | figlet
 
+cd ../
+
 # Function to read YAML file
 read_yaml() {
     local yaml_file="$1"
@@ -9,9 +11,8 @@ read_yaml() {
     grep "$key:" "$yaml_file" | awk -F ': ' '{print $2}'
 }
 
-# change these variable(s) accordingly
 settingsFileName='test_webcam_2.yaml'
-settingsDirectory="../Setup_Files/"$settingsFileName
+settingsDirectory="Setup_Files/"$settingsFileName
 
 localizationMode=$(read_yaml "$settingsDirectory" localizationMode)
 echo "Value of localizationMode is: $localizationMode"
@@ -32,11 +33,14 @@ fi
 
 if [ "$localizationMode" -eq 0 ]; then
     timeStampFileName='timestamps'
-    DatasetFolderName='custom_data'
+    timeStampDirectory='../Datasets/Monocular/Custom_TimeStamps/'$timeStampFileName
 
-    ../test_webcam_2 ../../../Vocabulary/ORBvoc.txt "$settingsDirectory" ../../Datasets/"$DatasetFolderName" ../Datasets_TimeStamps/Lab_TimeStamps/"$timeStampFileName" "$trajectoryFileName"
+    DatasetFolderName='custom_data'
+    DatasetDirectory='../Datasets/Monocular/'$DatasetFolderName
+
+    ./test_webcam_2 ../../Vocabulary/ORBvoc.txt $settingsDirectory $DatasetDirectory $timeStampDirectory $trajectoryFileName
 elif [ "$localizationMode" -eq 1 ]; then
-    ../test_webcam_2 ../../../Vocabulary/ORBvoc.txt "$settingsDirectory" "$trajectoryFileName"
+    ./test_webcam_2 ../../Vocabulary/ORBvoc.txt $settingsDirectory $trajectoryFileName
 else
     echo "Invalid localization mode"
     exit 1

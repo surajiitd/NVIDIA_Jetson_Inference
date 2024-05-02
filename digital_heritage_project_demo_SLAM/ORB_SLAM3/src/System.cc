@@ -1428,7 +1428,7 @@ namespace ORB_SLAM3
             cout << "Save Atlas 1 \n";
             mpAtlas->PreSave();
             cout << "Save Atlas 2 \n";
-            string pathSaveFileName = "../Maps/";
+            string pathSaveFileName = "Maps/";
 
             // Print the current date and time
             std::cout << "############# Checkpoint inside System.cc ###############" << std::endl;
@@ -1479,7 +1479,7 @@ namespace ORB_SLAM3
         string strFileVoc, strVocChecksum;
         bool isRead = false;
 
-        string pathLoadFileName = "../Maps/";
+        string pathLoadFileName = "Maps/";
         pathLoadFileName = pathLoadFileName.append(mStrLoadAtlasFromFile);
         pathLoadFileName = pathLoadFileName.append(".osa");
 
