@@ -61,8 +61,8 @@ Examples/Tests/sophus_test
 Examples/ROS/ORB_SLAM3/CMakeLists.txt.user
 Examples/ROS/ORB_SLAM3/build/
 
-kf_*.txt
-f_*.txt
+# kf_*.txt
+# f_*.txt
 # Thirdparty/DBoW2/build/
 # Thirdparty/DBoW2/lib/
 # Thirdparty/g2o/build/
@@ -102,6 +102,6 @@ Examples/Monocular/CameraTrajectory/*
 Examples/Monocular/KeyFramesTrajectory/*
 Examples/Monocular/Maps/*
 
-Examples/Result/*
+Examples/Result/*.png
 Examples/RGB-D/CameraTrajectory/*
 Examples/RGB-D/KeyFramesTrajectory/*
