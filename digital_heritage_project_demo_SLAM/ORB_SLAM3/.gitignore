@@ -103,5 +103,7 @@ Examples/Monocular/KeyFramesTrajectory/*
 Examples/Monocular/Maps/*
 
 Examples/Result/*.png
+Examples/Result/resultCompilation.md
+Examples/Result/result.sh
 Examples/RGB-D/CameraTrajectory/*
 Examples/RGB-D/KeyFramesTrajectory/*
