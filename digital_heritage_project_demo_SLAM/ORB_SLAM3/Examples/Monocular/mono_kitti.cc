@@ -33,10 +33,10 @@ void LoadImages(const string &strSequence, vector<string> &vstrImageFilenames,
 
 int main(int argc, char **argv)
 {
-    if (argc != 4)
+    if (argc != 5)
     {
         cerr << endl
-             << "Usage: ./mono_kitti path_to_vocabulary path_to_settings path_to_sequence" << endl;
+             << "Usage: ./mono_kitti path_to_vocabulary path_to_settings path_to_sequence trajectory_file_name" << endl;
         return 1;
     }
 
@@ -44,6 +44,9 @@ int main(int argc, char **argv)
     vector<string> vstrImageFilenames;
     vector<double> vTimestamps;
     LoadImages(string(argv[3]), vstrImageFilenames, vTimestamps);
+
+    string file_name = string(argv[argc - 1]);
+    cout << "Trajectory Filename: " << file_name << endl;
 
     int nImages = vstrImageFilenames.size();
 
@@ -152,8 +155,15 @@ int main(int argc, char **argv)
     cout << "median tracking time: " << vTimesTrack[nImages / 2] << endl;
     cout << "mean tracking time: " << totaltime / nImages << endl;
 
+    const string KF_Trajectory_pathSaveFileName = "KeyFramesTrajectory/";
+
+    const string C_Trajectory_pathSaveFileName = "CameraTrajectory/";
+
     // Save camera trajectory
-    SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");
+    const string kf_file = KF_Trajectory_pathSaveFileName + "kf_" + file_name + "_mono.txt";
+    const string f_file = C_Trajectory_pathSaveFileName + "f_" + file_name + "_mono.txt";
+    SLAM.SaveTrajectoryEuRoC(f_file);
+    SLAM.SaveKeyFrameTrajectoryEuRoC(kf_file);
 
     return 0;
 }

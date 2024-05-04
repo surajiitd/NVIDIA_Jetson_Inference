@@ -153,10 +153,13 @@ int main(int argc, char **argv)
     const string C_Trajectory_pathSaveFileName = "CameraTrajectory/";
 
     // Save camera trajectory
-    const string kf_file = KF_Trajectory_pathSaveFileName + "kf_" + file_name + "_p-rgbd.txt";
-    const string f_file = C_Trajectory_pathSaveFileName + "f_" + file_name + "_p-rgbd.txt";
-    SLAM.SaveTrajectoryTUM(f_file);
-    SLAM.SaveKeyFrameTrajectoryTUM(kf_file);
+    const string kf_file_tum = KF_Trajectory_pathSaveFileName + "kf_" + file_name + "_p-rgbd.tum";
+    const string f_file_tum = C_Trajectory_pathSaveFileName + "f_" + file_name + "_p-rgbd.tum";
+    SLAM.SaveTrajectoryTUM(f_file_tum);
+    SLAM.SaveKeyFrameTrajectoryTUM(kf_file_tum);
+
+    const string f_file_kitti = C_Trajectory_pathSaveFileName + "f_" + file_name + "_p-rgbd.kitti";
+    SLAM.SaveTrajectoryKITTI(f_file_kitti);
 
     return 0;
 }
