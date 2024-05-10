@@ -187,19 +187,24 @@ int main(int argc, char **argv)
     // Stop all threads
     SLAM.Shutdown();
 
+    const string KF_Trajectory_pathSaveFileName = "KeyFramesTrajectory/";
+
+    const string C_Trajectory_pathSaveFileName = "CameraTrajectory/";
+
     // Save camera trajectory
     if (bFileName)
     {
-        const string kf_file = "kf_" + string(argv[argc - 1]) + ".txt";
-        const string f_file = "f_" + string(argv[argc - 1]) + ".txt";
+        const string kf_file = KF_Trajectory_pathSaveFileName + "kf_" + string(argv[argc - 1]) + "_mono.euroc";
+        const string f_file = C_Trajectory_pathSaveFileName + "f_" + string(argv[argc - 1]) + "_mono.euroc";
         SLAM.SaveTrajectoryEuRoC(f_file);
         SLAM.SaveKeyFrameTrajectoryEuRoC(kf_file);
     }
     else
     {
-        SLAM.SaveTrajectoryEuRoC("CameraTrajectory.txt");
-        SLAM.SaveKeyFrameTrajectoryEuRoC("KeyFrameTrajectory.txt");
+        cout << "give names to trajectory files" << endl;
+        return 1;
     }
+
 
     return 0;
 }

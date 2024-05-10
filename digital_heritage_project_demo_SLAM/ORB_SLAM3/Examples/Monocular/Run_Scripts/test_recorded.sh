@@ -15,7 +15,7 @@ settingsFileName='test_recorded.yaml'
 settingsDirectory="Setup_Files/"$settingsFileName
 
 checkpoint=$(read_yaml "$settingsDirectory" checkpoint)
-echo "Value of $key is: $checkpoint"
+echo "Value of checkpoint is: $checkpoint"
 
 load_file=$(read_yaml $settingsDirectory "System.LoadAtlasFromFile")
 if [ ! -z "$load_file" ]; then
@@ -23,7 +23,6 @@ if [ ! -z "$load_file" ]; then
     load_file="${load_file//\"/}"
     trajectoryFileName=$load_file"_load"
 else
-    echo 3
     save_file="${save_file//\"/}"
     save_file=$(read_yaml $settingsDirectory "System.SaveAtlasToFile")
     if [ ! -z "$save_file" ]; then
@@ -32,10 +31,10 @@ else
 fi
 
 DatasetFolderName='custom_data_'$checkpoint
-DatasetDirectory='../Datasets/Monocular/'$DatasetFolderName
+DatasetDirectory='../Datasets/Custom/'$DatasetFolderName
 
 timeStampFileName='timestamps_'$checkpoint'.txt'
-timeStampDirectory='../Datasets/Monocular/Custom_TimeStamps/'$timeStampFileName
+timeStampDirectory='../Datasets/Custom_TimeStamps/'$timeStampFileName
 
 # change these variable(s) accordingly
 # timeStampFileName='timestamps.txt'

@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 #endif
 
         // Pass the image to the SLAM system
-        SLAM.TrackMonocular(im, tframe, vector<ORB_SLAM3::IMU::Point>(), vstrImageFilenames[ni]);
+        SLAM.TrackMonocular(im, tframe);
 
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
@@ -159,11 +159,10 @@ int main(int argc, char **argv)
 
     const string C_Trajectory_pathSaveFileName = "CameraTrajectory/";
 
-    // Save camera trajectory
-    const string kf_file = KF_Trajectory_pathSaveFileName + "kf_" + file_name + "_mono.txt";
-    const string f_file = C_Trajectory_pathSaveFileName + "f_" + file_name + "_mono.txt";
-    SLAM.SaveTrajectoryEuRoC(f_file);
-    SLAM.SaveKeyFrameTrajectoryEuRoC(kf_file);
+    const string kf_file_euroc = KF_Trajectory_pathSaveFileName + "kf_" + file_name + "_mono.euroc";
+    const string f_file_euroc = C_Trajectory_pathSaveFileName + "f_" + file_name + "_mono.euroc";
+    SLAM.SaveTrajectoryEuRoC(f_file_euroc);
+    SLAM.SaveKeyFrameTrajectoryEuRoC(kf_file_euroc);
 
     return 0;
 }

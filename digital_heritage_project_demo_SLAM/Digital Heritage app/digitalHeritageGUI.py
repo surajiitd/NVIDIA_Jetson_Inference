@@ -1,3 +1,8 @@
+'''
+This app I just made as a proof of concept 
+Just to see how can I make 
+'''
+
 # Import the Tkinter library
 import tkinter as tk
 import os

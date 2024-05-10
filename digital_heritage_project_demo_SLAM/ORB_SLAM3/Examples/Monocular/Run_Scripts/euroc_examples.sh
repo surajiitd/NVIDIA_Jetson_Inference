@@ -1,4 +1,6 @@
 #!/bin/bash
+cd ../
+
 pathDatasetEuroc='../../Datasets/EuRoC' #Example, it is necesary to change it by the dataset path
 
 #------------------------------------

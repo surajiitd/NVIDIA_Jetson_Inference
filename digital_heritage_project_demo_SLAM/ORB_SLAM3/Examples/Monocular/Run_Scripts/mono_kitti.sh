@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "ORB_SLAM3" | figlet
-echo "running pseudo rgbd in kitti"
+echo "running monocular in kitti"
 
 cd ../
 
@@ -18,4 +18,4 @@ trajectoryFileName=$DatasetFolderName
 echo "settings directory = $settingsDirectory"
 echo "dataset directory = $DatasetDirectory"
 
-./p-rgbd_kitti ../../Vocabulary/ORBvoc.txt $settingsDirectory $DatasetDirectory $trajectoryFileName
+./mono_kitti ../../Vocabulary/ORBvoc.txt $settingsDirectory $DatasetDirectory $trajectoryFileName

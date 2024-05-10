@@ -102,9 +102,9 @@ Examples/Monocular/CameraTrajectory/*
 Examples/Monocular/KeyFramesTrajectory/*
 Examples/Monocular/Maps/*
 
-Examples/Result/*.png
+Examples/Result/ORBSLAM3_mono_kitti/
+Examples/Result/ORBSLAM3_p-rgbd_ecodepth_kitti/
 Examples/Result/resultCompilation.md
-Examples/Result/result.sh
 
 Examples/RGB-D/CameraTrajectory/*
 Examples/RGB-D/KeyFramesTrajectory/*
