@@ -2,6 +2,22 @@
 
 echo "dheritage" | figlet
 
+# Function to check Wi-Fi connection status
+check_wifi() {
+    if nmcli -t -f GENERAL.STATE device show wlan0 | grep -q "100"; then
+        echo "Wi-Fi connected."
+        return 0
+    else
+        echo "Waiting for Wi-Fi connection..."
+        return 1
+    fi
+}
+
+# Main loop to wait for Wi-Fi connection
+while ! check_wifi; do
+    sleep 5
+done
+
 # Check if the first argument is provided
 if [ -z "$1" ]; then
     echo "Usage: $0 <mode: {recorded, webcam2}>"
@@ -26,7 +42,7 @@ read_yaml() {
     grep "$key:" "$yaml_file" | awk -F ': ' '{print $2}'
 }
 
-cd ../
+cd /home/vision/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/
 
 settingsDirectory="ORB_SLAM3/Examples/Monocular/Setup_Files/"$settingsFileName
 hostip=$(read_yaml "$settingsDirectory" hostip)
@@ -44,5 +60,5 @@ url="http://$hostAddr/"
 echo "launch dheritage webapp"
 cd Digital\ Heritage\ app/new_app/dheritage
 
-python manage.py runserver $hostAddr
+python3 manage.py runserver $hostAddr
 # xdg-open "$url"

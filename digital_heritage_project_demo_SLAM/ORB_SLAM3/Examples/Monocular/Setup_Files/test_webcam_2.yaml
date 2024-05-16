@@ -7,7 +7,7 @@
 # When the variables are commented, the system doesn't load a previous session or not store the current one
 
 # If the LoadFile doesn't exist, the system give a message and create a new Atlas from scratch
-# System.LoadAtlasFromFile: "VisionLab_Map_1711617032"
+System.LoadAtlasFromFile: "VisionLab_Map_1711617032"
 
 # The store file is created from the current session, if a file with the same name exists it is deleted
 # System.SaveAtlasToFile: "VisionLab_Map_1711617032"
@@ -17,9 +17,9 @@
 #--------------------------------------------------------------------------------------------
 showGUI: 0
 performPost: 1
-hostip: "172.20.10.2"
+hostip: "192.168.43.100"
 portNum: "8080"
-localizationMode: 1
+localizationMode: 0
 
 #--------------------------------------------------------------------------------------------
 # Camera Parameters. Adjust them!

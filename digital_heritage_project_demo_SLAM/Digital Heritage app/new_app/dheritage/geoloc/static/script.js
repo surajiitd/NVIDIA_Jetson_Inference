@@ -194,6 +194,36 @@ function update() {
     alertUser(obj1);
 }
 
+// Function to toggle fullscreen mode
+function toggleFullscreen() {
+    console.log("...going full screen");
+    var elem = document.documentElement; // Fullscreen the document's root element
+
+    // Check if fullscreen mode is currently active
+    var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+
+    if (!isFullscreen) {
+        // Enter fullscreen mode
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Safari */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE11 */
+            elem.msRequestFullscreen();
+        }
+    } else {
+        // Exit fullscreen mode
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { /* Safari */
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { /* IE11 */
+            document.msExitFullscreen();
+        }
+    }
+}
+
+toggleFullscreen();
 update();
 
 const interval = setInterval(() => {

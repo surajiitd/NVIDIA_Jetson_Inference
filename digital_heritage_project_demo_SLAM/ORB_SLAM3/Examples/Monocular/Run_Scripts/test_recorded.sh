@@ -34,7 +34,7 @@ DatasetFolderName='custom_data_'$checkpoint
 DatasetDirectory='../Datasets/Custom/'$DatasetFolderName
 
 timeStampFileName='timestamps_'$checkpoint'.txt'
-timeStampDirectory='../Datasets/Custom_TimeStamps/'$timeStampFileName
+timeStampDirectory='../Datasets/Custom/Custom_TimeStamps/'$timeStampFileName
 
 # change these variable(s) accordingly
 # timeStampFileName='timestamps.txt'
