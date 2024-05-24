@@ -5,9 +5,6 @@ console.log(hostName);
 var reached = false;
 
 var speech = new SpeechSynthesisUtterance();
-// speech.text = "Hello World";
-// window.speechSynthesis.speak(speech);
-// console.log("Speak")
 
 var locationColor = ['orange', 'purple'];
 
@@ -18,31 +15,6 @@ function getObj() {
     const obj = JSON.parse(xmlHttp.responseText);
     return obj
 }
-
-// Function to add text dynamically
-function addText(msg) {
-    // Get the container element where you want to add text
-    var container = document.getElementById("alertUser");
-    
-    // Create a new text node
-    var newText = document.createTextNode(msg);
-    
-    // Append the text node to the container
-    container.appendChild(newText);
-  }
-
-// Function to remove dynamically added text
-function removeText() {
-    // Get the container element
-    var container = document.getElementById("alertUser");
-
-    // Check if the container has any child nodes
-    if (container.firstChild) {
-        // Remove the first child node (which is the text node)
-        container.removeChild(container.firstChild);
-    }
-}
-
 
 obj = getObj();
 
@@ -164,66 +136,12 @@ function updateCoordinates(x, y, yaw) {
     document.getElementById('yaw-coordinate').textContent = 'Yaw: ' + yaw;
 }
 
-function alertUser(obj) {
-    var f = false;
-    for (let i = 1; i < obj.length; i++) {
-        if (Math.abs(obj[i]['x'] - obj[0]['x']) < 0.05 && Math.abs(obj[i]['y'] - obj[0]['y']) < 0.05) {
-            f = true;
-            if (!reached) {
-                reached = true;
-                speech.text = obj[i]['voice_message'];
-                window.speechSynthesis.speak(speech);
-                console.log("reached !!!, " + i)
-                scatterPlot.data.datasets[i + 1].backgroundColor = 'green';
-                scatterPlot.data.datasets[i + 1].pointRadius = 15;
-            }
-            // addText(obj[i]['voice_message']);
-        }
-        else {
-            scatterPlot.data.datasets[i + 1].backgroundColor = locationColor[i - 1];
-            scatterPlot.data.datasets[i + 1].pointRadius = 10;
-            // removeText();
-        }
-    }
-    reached = f;
-}
-
 function update() {
     obj1 = getObj();
     updateMap(obj1);
     alertUser(obj1);
 }
 
-// Function to toggle fullscreen mode
-function toggleFullscreen() {
-    console.log("...going full screen");
-    var elem = document.documentElement; // Fullscreen the document's root element
-
-    // Check if fullscreen mode is currently active
-    var isFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-
-    if (!isFullscreen) {
-        // Enter fullscreen mode
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) { /* Safari */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) { /* IE11 */
-            elem.msRequestFullscreen();
-        }
-    } else {
-        // Exit fullscreen mode
-        if (document.exitFullscreen) {
-            document.exitFullscreen();
-        } else if (document.webkitExitFullscreen) { /* Safari */
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) { /* IE11 */
-            document.msExitFullscreen();
-        }
-    }
-}
-
-toggleFullscreen();
 update();
 
 const interval = setInterval(() => {

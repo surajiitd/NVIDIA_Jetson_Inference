@@ -7,7 +7,30 @@
     /* Add other styling properties as needed */
 }
 
-#alertUser {
-    text-align: center; /* Center align the text */
-    color: green; /* Set the text color to green */
-  }
+.wf-force-outline-none[tabindex="-1"]:focus {
+    outline: none;
+}
+
+#on-button {
+    padding: 15px 30px;
+    font-size: 20px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#on-button:hover {
+    background-color: #0056b3;
+}
+
+#on-button:active {
+    background-color: #28a745;
+}
+
+/* For touch devices */
+#on-button:focus {
+    background-color: #28a745;
+}
