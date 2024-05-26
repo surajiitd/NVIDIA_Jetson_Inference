@@ -36,13 +36,6 @@ DatasetDirectory='../Datasets/Custom/'$DatasetFolderName
 timeStampFileName='timestamps_'$checkpoint'.txt'
 timeStampDirectory='../Datasets/Custom/Custom_TimeStamps/'$timeStampFileName
 
-# change these variable(s) accordingly
-# timeStampFileName='timestamps.txt'
-# DatasetFolderName='custom_data'
-
-# timeStampFileName='timestamps_IITD_campus_failed.txt'
-# DatasetFolderName='custom_data_IITD_campus_failed'
-
 #------------------------------------
 # Monocular Examples
 echo "Launching ORB_SLAM3 with Pre-recorded custom dataset"

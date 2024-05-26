@@ -11,11 +11,6 @@
 <style lang="en" type="text/css" id="dark-mode-native-sheet"></style>
 
 <head>
-    <style>
-        .wf-force-outline-none[tabindex="-1"]:focus {
-            outline: none;
-        }
-    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Webflow" name="generator">
@@ -34,38 +29,8 @@
     <link href="https://y7v4p6k4.ssl.hwcdn.net/placeholder/favicon.ico" rel="shortcut icon" type="image/x-icon">
     <link href="https://uploads-ssl.webflow.com/img/webclip.png" rel="apple-touch-icon">
     <title>Digital Heritage</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=2">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        .wf-force-outline-none[tabindex="-1"]:focus {
-            outline: none;
-        }
-
-        #on-button {
-            padding: 15px 30px;
-            font-size: 20px;
-            color: white;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        #on-button:hover {
-            background-color: #0056b3;
-        }
-
-        #on-button:active {
-            background-color: #28a745;
-        }
-
-        /* For touch devices */
-        #on-button:focus {
-            background-color: #28a745;
-        }
-    </style>
 </head>
 
 <body>
@@ -82,52 +47,22 @@
             </div>
         </div>
     </div>
-    <!-- <div class="section hero wf-section">
-        <div class="hero-container w-container"><a href="#Main" data-w-id="03d46e96-9960-52cb-8e2e-e7abf5240a10"
-                class="start w-button">Start</a></div>
-    </div> -->
-    <!-- <button id="play-button" onclick="buttonPress()">OFF</button>
-    <button id="geo-button" onclick="mark()">Mark Location</button> -->
+
     <div class="coordinates" align="center">
         <p><strong>Current Coordinates:</strong></p>
         <p id="x-coordinate">X: </p>
         <p id="y-coordinate">Y: </p>
         <p id="yaw-coordinate">Yaw: </p>
     </div>
-    <div id="alertUser"></div>
     <div class="map" align="center">
         <canvas id="myMap" width="400" height="400"></canvas>
     </div>
 
-    <script src="{% static 'script.js' %}"></script>
-    
-    <div class="section grey wf-section">
-        <button id="on-button" onclick="turnOn()">ON</button>
+    <div class="on-button_section">
+        <button id="on-button" onclick="toggleButton()">OFF</button>
     </div>
 
-     <script>
-        function turnOn() {
-            // Make the page fullscreen
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-                document.documentElement.msRequestFullscreen();
-            }
-
-            // Change button color for touch devices
-            document.getElementById('on-button').style.backgroundColor = '#28a745';
-        }
-
-        // Ensure the color change works for touch devices
-        document.getElementById('on-button').addEventListener('touchstart', function() {
-            this.style.backgroundColor = '#28a745';
-        });
-    </script>
-
+    <script src="{% static 'script.js' %}?v=2"></script>
 </body>
 
 </html>

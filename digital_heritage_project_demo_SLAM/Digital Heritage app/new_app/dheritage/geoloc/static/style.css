@@ -11,26 +11,20 @@
     outline: none;
 }
 
+.on-button_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 75px;
+}
+
 #on-button {
     padding: 15px 30px;
     font-size: 20px;
     color: white;
-    background-color: #007BFF;
+    background-color: #ff0000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-#on-button:hover {
-    background-color: #0056b3;
-}
-
-#on-button:active {
-    background-color: #28a745;
-}
-
-/* For touch devices */
-#on-button:focus {
-    background-color: #28a745;
 }

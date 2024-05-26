@@ -3,10 +3,10 @@ const hostName = "http://" + currentHost;
 console.log(hostName);
 
 var reached = false;
-
 var speech = new SpeechSynthesisUtterance();
-
 var locationColor = ['orange', 'purple'];
+var buttonState = 0;
+var button = document.getElementById('on-button')
 
 function getObj() {
     const xmlHttp = new XMLHttpRequest();
@@ -17,7 +17,6 @@ function getObj() {
 }
 
 obj = getObj();
-
 // console.log(obj[0])
 
 // Initialize the scatter plot with initial data
@@ -106,16 +105,12 @@ function updateScatterPlot(dataPoints) {
     scatterPlot.data.datasets[1].data[0]['x'] = dataPoints[0]['x'];
     scatterPlot.data.datasets[1].data[0]['y'] = dataPoints[0]['y'];
 
-    // scatterPlot.data.datasets[1].data = newData;
-    // scatterPlot.data.datasets[1].data = newData;
-
     var userHeading = dataPoints[0]['yaw'];
     if (userHeading < 0) {
         userHeading = 360 - Math.abs(userHeading);
     }
 
     userHeading = 90 - userHeading;
-
     // console.log(userHeading);
 
     scatterPlot.data.datasets[1].rotation = userHeading;
@@ -139,11 +134,34 @@ function updateCoordinates(x, y, yaw) {
 function update() {
     obj1 = getObj();
     updateMap(obj1);
-    alertUser(obj1);
+}
+
+function toggleButton() {
+    // Make the page fullscreen
+    // if (document.documentElement.requestFullscreen) {
+    //     document.documentElement.requestFullscreen();
+    // } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+    //     document.documentElement.mozRequestFullScreen();
+    // } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+    //     document.documentElement.webkitRequestFullscreen();
+    // } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+    //     document.documentElement.msRequestFullscreen();
+    // }
+
+    if (!buttonState) {
+        button.innerText = "ON"
+        button.style.backgroundColor = '#00ff00';
+        buttonState = 1;
+    } else {
+        button.innerText = "OFF"
+        button.style.backgroundColor = '#ff0000';
+        buttonState = 0;
+    }
 }
 
 update();
-
 const interval = setInterval(() => {
-    update();
+    if (buttonState) {
+        update();
+    }
 }, 100); // Start the update initially
