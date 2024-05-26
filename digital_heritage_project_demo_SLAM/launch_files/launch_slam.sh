@@ -1,6 +1,6 @@
 # !/bin/bash
 
-cd ../ORB_SLAM3/Examples/Monocular/Run_Scripts
+cd /home/vision/NVIDIA_Jetson_Inference/digital_heritage_project_demo_SLAM/ORB_SLAM3/Examples/Monocular/Run_Scripts
 
 # Check if the first argument is provided
 if [ -z "$1" ]; then

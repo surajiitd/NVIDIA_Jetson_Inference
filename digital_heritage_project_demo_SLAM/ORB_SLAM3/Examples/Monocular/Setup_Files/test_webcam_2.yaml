@@ -17,7 +17,7 @@ System.LoadAtlasFromFile: "VisionLab_Map_1711617032"
 #--------------------------------------------------------------------------------------------
 showGUI: 0
 performPost: 1
-hostip: "192.168.43.100"
+hostip: "192.168.60.18"
 portNum: "8080"
 localizationMode: 0
 
